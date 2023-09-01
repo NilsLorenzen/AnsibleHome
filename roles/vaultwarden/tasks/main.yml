@@ -52,8 +52,3 @@
     name: vaultwarden.service
   register: vaultwarden_started
 
-- name: add firewalld rules
-  ansible.builtin.include_tasks: roles/firewalld/tasks/docker-app-task.yml
-  vars:
-    services: ["http", "https"]
-    interface: eth1
