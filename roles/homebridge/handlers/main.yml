@@ -1,0 +1,5 @@
+- name: restart homebridge.service
+  when: homebridge_started is not changed
+  ansible.builtin.systemd:
+    name: homebridge.service
+    state: restarted

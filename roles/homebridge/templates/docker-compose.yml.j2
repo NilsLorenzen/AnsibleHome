@@ -1,0 +1,17 @@
+networks:
+  default:
+
+services:
+
+  app:
+    image: homebridge/homebridge:latest
+    container_name: homebridge
+    network_mode: host
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - {{ root }}/homebridge-data:/homebridge
+    logging:
+      driver: json-file
+      options:
+        max-size: "10mb"
+        max-file: "1"

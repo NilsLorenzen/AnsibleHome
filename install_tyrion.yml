@@ -11,3 +11,5 @@
       tags: portainer
     - name: heimdall
       tags: heimdall
+    - name: homebridge
+      tags: homebridge
