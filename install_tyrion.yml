@@ -7,6 +7,8 @@
       tags: nic_configuration_tyrion
     - name: docker
       tags: docker
+    - name: nginx
+      tags: nginx
     - name: portainer
       tags: portainer
     - name: heimdall

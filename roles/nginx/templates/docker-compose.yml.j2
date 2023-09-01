@@ -11,7 +11,8 @@ services:
     environment:
       - TZ=Europe/Berlin
     volumes:
-      - /home/nils/nginx/config.json:/app/config/production.json
-      - /home/nils/nginx/data:/data
-      - /home/nils/nginx/letsencrypt:/etc/letsencrypt
-    image: jc21/nginx-proxy-manager
+      - /etc/localtime:/etc/localtime:ro
+      - {{ root }}/nginxdata:/data/
+      - {{ root }}/config.json:/app/config/production.json
+      - {{ root }}/letsencrypt:/etc/letsencrypt
+    image: jc21/nginx-proxy-manager:latest
