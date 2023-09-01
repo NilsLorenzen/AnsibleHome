@@ -23,3 +23,8 @@
     mode: "640"
   notify: restart docker.service
 
+- name: Add user "{{ passwordless_sudo_user | default(ansible_env.SUDO_USER, true) }}" to group "docker"
+  ansible.builtin.user:
+    name: "{{ passwordless_sudo_user | default(ansible_env.SUDO_USER, true) }}"
+    groups: "docker"
+    append: true
