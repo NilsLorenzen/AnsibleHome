@@ -1,0 +1,59 @@
+- name: copy systemd unit
+  ansible.builtin.template:
+    src: vaultwarden.service.j2
+    dest: /etc/systemd/system/vaultwarden.service
+    owner: root
+    group: root
+    mode: "644"
+  notify: restart vaultwarden.service
+
+- name: create /data/vaultwarden dir
+  ansible.builtin.file:
+    path: "{{ root }}"
+    state: directory
+
+- name: create /data/vaultwarden/conf dir
+  ansible.builtin.file:
+    path: "{{ root }}/conf"
+    state: directory
+
+- name: copy docker-compose file
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ root }}/docker-compose.yml"
+    owner: root
+    group: root
+    mode: "644"
+  notify: restart vaultwarden.service
+
+- name: copy traefik.yml file
+  ansible.builtin.template:
+    src: traefik.yml.j2
+    dest: "{{ root }}/conf/traefik.yml"
+    owner: root
+    group: root
+    mode: "644"
+  notify: restart vaultwarden.service
+
+- name: copy certs-traefik.yml file
+  ansible.builtin.template:
+    src: certs-traefik.yml.j2
+    dest: "{{ root }}/conf/certs-traefik.yml"
+    owner: root
+    group: root
+    mode: "644"
+  notify: restart vaultwarden.service
+
+- name: start vaultwarden.service
+  ansible.builtin.systemd:
+    state: started
+    daemon_reload: true
+    enabled: true
+    name: vaultwarden.service
+  register: vaultwarden_started
+
+- name: add firewalld rules
+  ansible.builtin.include_tasks: roles/firewalld/tasks/docker-app-task.yml
+  vars:
+    services: ["http", "https"]
+    interface: eth1

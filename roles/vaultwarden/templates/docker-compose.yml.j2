@@ -1,0 +1,11 @@
+
+services:
+
+  app:
+    image: vaultwarden/server:alpine
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - {{ root }}/vaultwardendata:/data/
+    environment:
+      - WEBSOCKET_ENABLED=true
+      - DOMAIN=https://{{ vaultwarden_domain }}
