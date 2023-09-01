@@ -21,8 +21,5 @@
     owner: root
     group: root
     mode: "640"
+  notify: restart docker.service
 
-- name: restart docker.service
-  ansible.builtin.systemd:
-    name: docker.service
-    state: restarted
