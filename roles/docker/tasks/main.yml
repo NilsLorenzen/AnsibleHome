@@ -1,0 +1,28 @@
+- name: Install docker
+  ansible.builtin.include_role:
+    name: geerlingguy.docker
+  vars:
+    docker_install_compose_plugin: true
+    docker_install_compose: false
+    docker_users:
+      - "{{ ansible_env.SUDO_USER | default(ansible_user_id) }}"
+
+- name: Support docker management via ansible
+  ansible.builtin.include_role:
+    name: geerlingguy.pip
+  vars:
+    pip_install_packages:
+      - name: docker
+
+- name: copy docker daemon.json
+  ansible.builtin.template:
+    src: daemon.json.j2
+    dest: /etc/docker/daemon.json
+    owner: root
+    group: root
+    mode: "640"
+
+- name: restart docker.service
+  ansible.builtin.systemd:
+    name: seq_logging.service
+    state: restarted

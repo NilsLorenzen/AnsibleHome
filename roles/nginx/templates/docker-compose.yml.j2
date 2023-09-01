@@ -1,0 +1,17 @@
+networks:
+  default:
+
+services:
+
+  app:
+    ports:
+      - 80:80
+      - 81:81
+      - 443:443
+    environment:
+      - TZ=Europe/Berlin
+    volumes:
+      - /home/nils/nginx/config.json:/app/config/production.json
+      - /home/nils/nginx/data:/data
+      - /home/nils/nginx/letsencrypt:/etc/letsencrypt
+    image: jc21/nginx-proxy-manager

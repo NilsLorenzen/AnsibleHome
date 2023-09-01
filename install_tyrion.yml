@@ -1,0 +1,13 @@
+---
+
+- hosts: tyrion
+  become: true
+  roles:
+    - name: nic_configuration_tyrion
+      tags: nic_configuration_tyrion
+    - name: docker
+      tags: docker
+    - name: portainer
+      tags: portainer
+    - name: heimdall
+      tags: heimdall

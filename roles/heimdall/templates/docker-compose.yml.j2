@@ -1,0 +1,14 @@
+networks:
+  default:
+
+services:
+
+  app:
+    image: lscr.io/linuxserver/heimdall:latest
+    container_name: heimdall
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - {{ root }}/heimdall-config:/config
+    ports:
+      - 4041:80
+      - 4040:443
