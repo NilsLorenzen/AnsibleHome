@@ -12,11 +12,6 @@
     path: "{{ root }}"
     state: directory
 
-- name: create /data/homebridge/conf dir
-  ansible.builtin.file:
-    path: "{{ root }}/conf"
-    state: directory
-
 - name: copy docker-compose file
   ansible.builtin.template:
     src: docker-compose.yml.j2

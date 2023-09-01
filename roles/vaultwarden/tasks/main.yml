@@ -12,33 +12,10 @@
     path: "{{ root }}"
     state: directory
 
-- name: create /data/vaultwarden/conf dir
-  ansible.builtin.file:
-    path: "{{ root }}/conf"
-    state: directory
-
 - name: copy docker-compose file
   ansible.builtin.template:
     src: docker-compose.yml.j2
     dest: "{{ root }}/docker-compose.yml"
-    owner: root
-    group: root
-    mode: "644"
-  notify: restart vaultwarden.service
-
-- name: copy traefik.yml file
-  ansible.builtin.template:
-    src: traefik.yml.j2
-    dest: "{{ root }}/conf/traefik.yml"
-    owner: root
-    group: root
-    mode: "644"
-  notify: restart vaultwarden.service
-
-- name: copy certs-traefik.yml file
-  ansible.builtin.template:
-    src: certs-traefik.yml.j2
-    dest: "{{ root }}/conf/certs-traefik.yml"
     owner: root
     group: root
     mode: "644"
