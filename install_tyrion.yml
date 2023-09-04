@@ -15,3 +15,5 @@
       tags: heimdall
     - name: homebridge
       tags: homebridge
+    - name: openspeedtest
+      tags: openspeedtest
