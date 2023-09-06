@@ -1,0 +1,15 @@
+networks:
+  default:
+
+services:
+
+  smokeping:
+    image: lscr.io/linuxserver/smokeping:latest
+    container_name: smokeping
+    environment:
+      - TZ=Europe/Berlin
+    volumes:
+      - {{ root }}/config:/config
+      - {{ root }}/data:/data
+    ports:
+      - 9090:80

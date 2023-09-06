@@ -17,3 +17,5 @@
       tags: homebridge
     - name: openspeedtest
       tags: openspeedtest
+    - name: smokeping
+      tags: smokeping
