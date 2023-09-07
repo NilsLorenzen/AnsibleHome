@@ -1,0 +1,30 @@
+- name: copy systemd unit
+  ansible.builtin.template:
+    src: tautulli.service.j2
+    dest: /etc/systemd/system/tautulli.service
+    owner: root
+    group: root
+    mode: "644"
+  notify: restart tautulli.service
+
+- name: create /data/tautulli dir
+  ansible.builtin.file:
+    path: "{{ root }}"
+    state: directory
+
+- name: copy docker-compose file
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ root }}/docker-compose.yml"
+    owner: root
+    group: root
+    mode: "644"
+  notify: restart tautulli.service
+
+- name: start tautulli.service
+  ansible.builtin.systemd:
+    state: started
+    daemon_reload: true
+    enabled: true
+    name: tautulli.service
+  register: tautulli_started

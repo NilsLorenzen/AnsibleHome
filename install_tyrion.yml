@@ -19,3 +19,5 @@
       tags: openspeedtest
     - name: smokeping
       tags: smokeping
+    - name: tautulli
+      tags: tautulli

@@ -1,0 +1,13 @@
+networks:
+  default:
+
+services:
+
+  tautulli:
+    image: lscr.io/linuxserver/tautulli:latest
+    container_name: tautulli
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - {{ root }}/tautullidata:/config
+    ports:
+      - 8181:8181

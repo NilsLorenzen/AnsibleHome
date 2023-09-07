@@ -1,0 +1,5 @@
+- name: restart tautulli.service
+  when: tautulli_started is not changed
+  ansible.builtin.systemd:
+    name: tautulli.service
+    state: restarted
