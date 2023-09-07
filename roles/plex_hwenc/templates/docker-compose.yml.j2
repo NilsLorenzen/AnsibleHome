@@ -1,0 +1,13 @@
+networks:
+  default:
+
+services:
+
+  app:
+    image: 
+    container_name: plex_hwenc
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - {{ root }}/plex-data:/data
+    ports:
+      - 

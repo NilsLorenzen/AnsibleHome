@@ -21,3 +21,5 @@
       tags: smokeping
     - name: tautulli
       tags: tautulli
+    - name: plex_hwenc
+      tags: plex_hwenc
