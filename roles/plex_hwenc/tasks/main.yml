@@ -8,10 +8,10 @@
 
 - name: Mount network share
   ansible.posix.mount:
-    src: "{{ uri }}"
+    src: "{{ plex_hwenc_uri }}"
     path: "{{ mountpoint }}"
     fstype: btrfs
-    opts: 'username={{ username }},password={{ password }}'
+    opts: 'username={{ plex_hwenc_username }},password={{ plex_hwenc_password }}'
     state: mounted
 
 # - name: copy systemd unit

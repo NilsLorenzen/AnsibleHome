@@ -1,0 +1,3 @@
+plex_hwenc_uri: "//nas1.fritz.box/Plex"
+plex_hwenc_username: "plex-user"
+plex_hwenc_password: "{{ vault_plex_hwenc_password }}"
