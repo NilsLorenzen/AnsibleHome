@@ -1,2 +1,2 @@
-root: /data/plex
-mountpoint: /mnt/plex_nas
+root: "/data/plex"
+mountpoint: "{{ root }}/media"
