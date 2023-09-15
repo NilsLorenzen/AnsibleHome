@@ -4,10 +4,20 @@ networks:
 services:
 
   app:
-    image: 
+    image: linuxserver/plex:latest
     container_name: plex_hwenc
+    network_mode: host
+    environment:
+      - PUID=0
+      - PGID=0
+      - PLEX_UID=0
+      - PLEX_GID=0
+      - VERSION=docker
+    devices:
+      - /dev/dri:/dev/dri
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - {{ root }}/plex-data:/data
-    ports:
-      - 
+      - {{ root }}/media:/media
+      - {{ root }}/config:/config
+      - {{ root }}/data:/data
+      - {{ root }}/transcode:/transcode

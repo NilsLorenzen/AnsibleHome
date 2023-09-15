@@ -25,7 +25,7 @@
     dest: /etc/systemd/system/plex.service
     owner: root
     group: root
-    mode: "644"
+    mode: "666"
   notify: restart plex.service
 
 - name: create /data/plex dir
@@ -39,7 +39,7 @@
     dest: "/etc/systemd/system/data-plex-media.mount"
     owner: root
     group: root
-    mode: "644"
+    mode: "666"
   notify: restart data-plex-media.mount
 
 - name: start data-plex-media.mount
@@ -56,13 +56,13 @@
     dest: "{{ root }}/docker-compose.yml"
     owner: root
     group: root
-    mode: "644"
-#   notify: restart plex.service
+    mode: "666"
+  notify: restart plex.service
 
-# - name: start plex.service
-#   ansible.builtin.systemd:
-#     state: started
-#     daemon_reload: true
-#     enabled: true
-#     name: plex.service
-#   register: plex_started
+- name: start plex.service
+  ansible.builtin.systemd:
+    state: started
+    daemon_reload: true
+    enabled: true
+    name: plex.service
+  register: plex_started
