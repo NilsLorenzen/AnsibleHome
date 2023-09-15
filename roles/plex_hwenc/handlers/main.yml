@@ -3,3 +3,10 @@
   ansible.builtin.systemd:
     name: plex.service
     state: restarted
+
+
+- name: restart data-plex-media.mount
+  when: plexmedia_started is not changed
+  ansible.builtin.systemd:
+    name: data-plex-media.mount
+    state: restarted
