@@ -1,6 +1,2 @@
 .vscode/settings.json
-/roles/wildcard_heco/templates/*
-!/roles/wildcard_heco/templates/.gitkeep
-/roles/wildcard_coit/templates/*
-!/roles/wildcard_coit/templates/.gitkeep
 .DS_Store
