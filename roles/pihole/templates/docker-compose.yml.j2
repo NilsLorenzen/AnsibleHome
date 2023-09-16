@@ -1,0 +1,13 @@
+networks:
+  default:
+
+services:
+
+  app:
+    container_name: pihole
+    image: pihole/pihole:latest
+    ports:
+      - 
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - {{ root }}/data:/data/

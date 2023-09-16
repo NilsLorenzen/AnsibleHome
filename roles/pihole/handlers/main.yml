@@ -1,0 +1,5 @@
+- name: restart pihole.service
+  when: pihole_started is not changed
+  ansible.builtin.systemd:
+    name: pihole.service
+    state: restarted
