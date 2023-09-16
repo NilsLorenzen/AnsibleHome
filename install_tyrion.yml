@@ -11,6 +11,8 @@
       tags: nginx
     - name: portainer
       tags: portainer
+    - name: pihole
+      tags: pihole
     - name: heimdall
       tags: heimdall
     - name: homebridge
