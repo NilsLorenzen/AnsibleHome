@@ -18,16 +18,17 @@ Installiert werden sie mit dem folgenden Befehl:
 # To-Dos:
 
 - [X] Portainer 
+- [X] Portainer-Agent
 - [X] Heimdall
-- [ ] Plex
-- [ ] Speedtest
+- [X] Plex_docker
+- [X] OpenSpeedtest
 - [ ] SpeedtestTracker
-- [ ] NGINX
+- [X] NGINX
 - [ ] Minecraft
 - [ ] Teamspeak
-- [ ] Pihole
-- [ ] Smokeping
-- [ ] Tautalui
+- [X] Pihole
+- [X] Smokeping
+- [X] Tautalui
 - [ ] Vaultwarden
 - [ ] Teslamate
 
