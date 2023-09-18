@@ -10,3 +10,7 @@
   ansible.builtin.systemd:
     name: data-plex-media.mount
     state: restarted
+
+
+- name: update initramfs
+  ansible.builtin.command: sudo update-initramfs -u

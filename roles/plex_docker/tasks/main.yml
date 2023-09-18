@@ -1,18 +1,8 @@
-# - name: check mountpoint exist
-#   ansible.builtin.file:
-#     path: "{{ mountpoint }}"
-#     state: directory
-#     mode: '0755'
-#     owner: root
-#     group: root
-
-# - name: Mount network share
-#   ansible.posix.mount:
-#     src: "{{ plex_hwenc_fileserver }}"
-#     path: "{{ mountpoint }}"
-#     fstype: cifs
-#     opts: "rw,vers=3,file_mode=0600,dir_mode=0700,username={{ plex_hwenc_username }},password={{ plex_hwenc_password }}"
-#     state: ephemeral
+# I followed the steps here:
+# Create/edit /etc/modprobe.d/i915.conf
+# Add the line options i915 enable_guc=2 and save it
+# Run sudo update-initramfs -u
+# Reboot
 
 - name: Update repositories cache and install "nfs-common" package
   ansible.builtin.apt:
@@ -49,6 +39,15 @@
     enabled: true
     name: data-plex-media.mount
   register: plexmedia_started
+
+- name: copy initramfs conf file for enabling hardware transcoding #source: https://forums.plex.tv/t/ubuntu-intel-n5105-qsv-hw-transcoder-not-detected/803491/141?u=thomas_9
+  ansible.builtin.template:
+    src: i915.conf.j2
+    dest: "/etc/modprobe.d/i915.conf"
+    owner: root
+    group: root
+    mode: "644"
+  notify: update initramfs
 
 - name: copy docker-compose file
   ansible.builtin.template:
