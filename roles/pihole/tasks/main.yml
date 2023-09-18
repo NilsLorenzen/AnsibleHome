@@ -29,6 +29,43 @@
     mode: "644"
   notify: restart pihole.service
 
+- name: create /data/pihole/data
+  ansible.builtin.file:
+    path: "{{ root }}/data"
+    state: directory
+
+- name: create /data/pihole/dnsmasq.d
+  ansible.builtin.file:
+    path: "{{ root }}/dnsmasq.d"
+    state: directory
+
+- name: copy custom.list - local dns-entrys
+  ansible.builtin.template:
+    src: config/custom.list.j2
+    dest: "{{ root }}/data/custom.list"
+    owner: root
+    group: root
+    mode: "644"
+  notify: restart pihole.service
+
+- name: copy setupVars.conf - pihole settings
+  ansible.builtin.template:
+    src: config/setupVars.conf.j2
+    dest: "{{ root }}/data/setupVars.conf"
+    owner: root
+    group: root
+    mode: "644"
+  notify: restart pihole.service
+
+- name: copy 05-pihole-custom-cname.conf - local cnames 
+  ansible.builtin.template:
+    src: config/05-pihole-custom-cname.conf.j2
+    dest: "{{ root }}/dnsmasq.d/05-pihole-custom-cname.conf"
+    owner: root
+    group: root
+    mode: "644"
+  notify: restart pihole.service
+
 - name: start pihole.service
   ansible.builtin.systemd:
     state: started
