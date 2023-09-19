@@ -25,3 +25,5 @@
       tags: plex_docker
     - name: tautulli
       tags: tautulli
+    - name: it-tools
+      tags: it-tools

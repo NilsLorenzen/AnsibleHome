@@ -1,0 +1,5 @@
+- name: restart it-tools.service
+  when: it_tools_started is not changed
+  ansible.builtin.systemd:
+    name: it-tools.service
+    state: restarted
