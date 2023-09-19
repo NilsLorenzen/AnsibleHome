@@ -13,8 +13,6 @@ services:
     ports:
       - 80:80
       - 443:443
-    environment:
-      - TZ=Europe/Berlin
     volumes:
       - /etc/localtime:/etc/localtime:ro #zeitzone
       - /var/run/docker.sock:/var/run/docker.sock #Docker zugriff
