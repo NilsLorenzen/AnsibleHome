@@ -7,8 +7,8 @@
       tags: nic_configuration_tyrion
     - name: docker
       tags: docker
-    - name: nginx
-      tags: nginx
+    - name: traefik
+      tags: traefik
     - name: portainer
       tags: portainer
     - name: pihole
