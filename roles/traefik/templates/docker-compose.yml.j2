@@ -1,0 +1,29 @@
+networks:
+  default:
+  web:
+
+services:
+
+  app:
+    image: traefik:latest
+    container_name: traefik
+    networks:
+      - web
+    ports:
+      - 80:80
+      - 443:443
+    environment:
+      - TZ=Europe/Berlin
+    volumes:
+      - /etc/localtime:/etc/localtime:ro #zeitzone
+      - /var/run/docker.sock:/var/run/docker.sock #Docker zugriff
+      - {{ root }}/conf/traefik.yml:/etc/traefik/traefik.yml:ro #statische Konfigurationsdatei
+      - {{ root }}/conf/certs-traefik.yml:/etc/traefik/certs-traefik.yml:ro #dynamische Konfigurationsdatei
+    privileged: true
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.entrypoints=https
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.rule=Host(`{{ traefik_domain }}`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.service=api@internal
+    healthcheck:
+      test: traefik healthcheck
