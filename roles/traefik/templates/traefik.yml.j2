@@ -3,7 +3,7 @@ providers:
     # Need to configure label traefik.enable=true.
     exposedByDefault: false
     # All traefik-enabled containers must be on this network.
-    network: vaultwarden_web
+    network: web
   file:
     directory: /etc/traefik
     watch: true
