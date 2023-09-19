@@ -21,7 +21,7 @@
       tags: openspeedtest
     - name: smokeping
       tags: smokeping
-    - name: tautulli
-      tags: tautulli
     - name: plex_docker
       tags: plex_docker
+    - name: tautulli
+      tags: tautulli
