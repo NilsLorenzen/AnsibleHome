@@ -1,14 +1,22 @@
 networks:
   default:
+  web:
+    external: true
 
 services:
 
   app:
     image: lscr.io/linuxserver/heimdall:latest
     container_name: heimdall
+    networks:
+      - web
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - {{ root }}/heimdall-config:/config
     ports:
       - 4041:80
       - 4040:443
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.rule=Host(`{{ heimdall_domain | mandatory }}`)
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.entrypoints=https
