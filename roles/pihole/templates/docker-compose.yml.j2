@@ -1,10 +1,14 @@
 networks:
   default:
+  web:
+    external: true
 
 services:
   app:
-    container_name: pihole
     image: pihole/pihole:latest
+    container_name: pihole
+    networks:
+      - web
     ports:
       - 53:53/tcp
       - 53:53/udp
@@ -14,3 +18,9 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - {{ root }}/data:/etc/pihole
       - {{ root }}/dnsmasq.d:/etc/dnsmasq.d
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.rule=Host(`{{ pihole_domain | mandatory }}`)
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.entrypoints=https
+      #- traefik.http.services.${COMPOSE_PROJECT_NAME}-app.loadbalancer.server.port=9000
+      #- traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.tls=true
