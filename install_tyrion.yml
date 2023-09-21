@@ -8,22 +8,42 @@
     - name: docker
       tags: docker
     - name: traefik
-      tags: traefik
+      tags:
+        - traefik
+        - container
     - name: portainer
-      tags: portainer
+      tags:
+        - portainer
+        - container
     - name: pihole
-      tags: pihole
+      tags:
+        - pihole
+        - container
     - name: heimdall
-      tags: heimdall
+      tags:
+        - heimdall
+        - container
     - name: homebridge
-      tags: homebridge
+      tags:
+        - homebridge
+        - container
     - name: openspeedtest
-      tags: openspeedtest
+      tags:
+        - openspeedtest
+        - container
     - name: smokeping
-      tags: smokeping
+      tags:
+        - smokeping
+        - container
     - name: plex_docker
-      tags: plex_docker
+      tags:
+        - plex
+        - container
     - name: tautulli
-      tags: tautulli
+      tags:
+        - tautulli
+        - container
     - name: it-tools
-      tags: it-tools
+      tags:
+        - it-tools
+        - container
