@@ -18,6 +18,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock #Docker zugriff
       - {{ root }}/conf/traefik.yml:/etc/traefik/traefik.yml:ro #statische Konfigurationsdatei
       - {{ root }}/conf/acme/:/etc/traefik/acme/
+      - {{ root }}/conf/dynamic/traefik-homebridge.yml:/etc/traefik/traefik-homebridge.yml:ro #dynamische Konfigurationsdateien
       #- {{ root }}/conf/certs-traefik.yml:/etc/traefik/certs-traefik.yml:ro #dynamische Konfigurationsdatei
     privileged: true
     environment:

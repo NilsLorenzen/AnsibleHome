@@ -17,6 +17,11 @@
     path: "{{ root }}/conf"
     state: directory
 
+- name: create /data/traefik/conf/dynamic dir
+  ansible.builtin.file:
+    path: "{{ root }}/conf/dynamic"
+    state: directory
+
 - name: copy traefik.yml file
   ansible.builtin.template:
     src: traefik.yml.j2
@@ -25,6 +30,14 @@
     group: root
     mode: "644"
   notify: restart traefik.service
+
+- name: copy traefik-homebridge.yml file
+  ansible.builtin.template:
+    src: traefik-homebridge.yml.j2
+    dest: "{{ root }}/conf/dynamic/traefik-homebridge.yml"
+    owner: root
+    group: root
+    mode: "644"
 
 - name: copy docker-compose file
   ansible.builtin.template:
