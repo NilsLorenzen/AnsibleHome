@@ -17,12 +17,21 @@ services:
       - /etc/localtime:/etc/localtime:ro #zeitzone
       - /var/run/docker.sock:/var/run/docker.sock #Docker zugriff
       - {{ root }}/conf/traefik.yml:/etc/traefik/traefik.yml:ro #statische Konfigurationsdatei
-      - {{ root }}/conf/certs-traefik.yml:/etc/traefik/certs-traefik.yml:ro #dynamische Konfigurationsdatei
+      - {{ root }}/conf/acme/:/etc/traefik/acme/
+      #- {{ root }}/conf/certs-traefik.yml:/etc/traefik/certs-traefik.yml:ro #dynamische Konfigurationsdatei
     privileged: true
+    environment:
+      - LEGO_DISABLE_CNAME_SUPPORT=true
+      - INWX_USERNAME={{ inwx.username }}
+      - INWX_PASSWORD={{ inwx.password }}
+      - INWX_PROPAGATION_TIMEOUT=0
     labels:
       - traefik.enable=true
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.entrypoints=https
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.rule=Host(`{{ traefik_domain }}`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.service=api@internal
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.tls.certresolver=letsencrypt-inwx-dns
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.tls.domains[0].main={{ traefik_acme_domain }}
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.tls.domains[0].sans=*.{{ traefik_acme_domain }}
     healthcheck:
       test: traefik healthcheck

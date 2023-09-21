@@ -30,4 +30,27 @@ entryPoints:
   https:
     address: ":443"
     http:
-      tls: {}
+      tls:
+        certResolver: letsencrypt-inwx-dns
+
+certificatesResolvers:
+  letsencrypt-inwx-dns:
+    acme:
+      email: {{ inwx.acme_email }}
+      storage: /etc/traefik/acme/inwx-dns.json
+      dnsChallenge:
+        provider: inwx
+        # By default, the Traefik provider verifies the TXT record before
+        # letting ACME verify. Wait 360 seconds (6 minutes) for the TXT record
+        # to be available before starting validation using the go-acme/lego
+        # library that Traefik uses. It is configured using the INWX_
+        # environment variables. The INWX_PROPAGATION_TIMEOUT is set to 0
+        # because propagation was pre-verified by Traefik.
+        # https://go-acme.github.io/lego/dns/inwx/
+        # LEGO_DISABLE_CNAME_SUPPORT needs to be set to true because
+        # https://letsencrypt.org/2019/10/09/onboarding-your-customers-with-lets-encrypt-and-acme.html#the-advantages-of-a-cname
+        delayBeforeCheck: 360
+        resolvers:
+          - ns.inwx.de
+          - ns2.inwx.de
+          - ns3.inwx.eu
