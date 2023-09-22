@@ -33,8 +33,16 @@
 
 - name: copy traefik-homebridge.yml file
   ansible.builtin.template:
-    src: traefik-homebridge.yml.j2
+    src: dynamic/traefik-homebridge.yml.j2
     dest: "{{ root }}/conf/dynamic/traefik-homebridge.yml"
+    owner: root
+    group: root
+    mode: "644"
+
+- name: copy traefik-plex.yml file
+  ansible.builtin.template:
+    src: dynamic/traefik-plex.yml.j2
+    dest: "{{ root }}/conf/dynamic/traefik-plex.yml"
     owner: root
     group: root
     mode: "644"
