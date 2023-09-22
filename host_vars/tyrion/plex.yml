@@ -1,1 +1,3 @@
 plex_fileserver: "192.168.10.12:/volume1/Plex"
+plex_domain: plex.home-lorenzen.de
+plex_ip: "192.168.10.16"
