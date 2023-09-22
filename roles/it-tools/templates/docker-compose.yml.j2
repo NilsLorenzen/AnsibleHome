@@ -1,11 +1,17 @@
 networks:
   default:
+  web:
+    external: true
 
 services:
-
   app:
-        container_name: it-tools
-        restart: unless-stopped
-        ports:
-            - '3030:80'
-        image: 'corentinth/it-tools:latest'
+    container_name: it-tools
+    image: 'corentinth/it-tools:latest'
+    networks:
+      - web
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.tls=true
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.rule=Host(`{{ ittools_domain | mandatory }}`)
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.entrypoints=https
+      - traefik.http.services.${COMPOSE_PROJECT_NAME}-app.loadbalancer.server.port=80
