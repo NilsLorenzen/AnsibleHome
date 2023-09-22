@@ -1,15 +1,24 @@
 networks:
   default:
+  web:
+    external: true
 
 services:
 
-  smokeping:
+  app:
     image: lscr.io/linuxserver/smokeping:latest
     container_name: smokeping
-    environment:
-      - TZ=Europe/Berlin
+    networks:
+      - web
     volumes:
+      - /etc/localtime:/etc/localtime:ro
       - {{ root }}/config:/config
       - {{ root }}/data:/data
-    ports:
-      - 9090:80
+    #ports:
+    #  - 9090:80
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.rule=Host(`{{ smokeping_domain | mandatory }}`)
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.entrypoints=https
+      - traefik.http.services.${COMPOSE_PROJECT_NAME}-app.loadbalancer.server.port=80
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.tls=true
