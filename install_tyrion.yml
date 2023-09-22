@@ -35,7 +35,7 @@
       tags:
         - smokeping
         - container
-    - name: plex_docker
+    - name: plex
       tags:
         - plex
         - container
