@@ -1,7 +1,19 @@
+networks:
+  default:
+  web:
+    external: true
+
 services:
-    app:
-        container_name: openspeedtest
-        ports:
-            - '7070:3000'
-            - '7071:3001'
-        image: openspeedtest/latest
+  app:
+    container_name: openspeedtest
+    image: openspeedtest/latest
+    ports:
+      - '7070:3000'
+      - '7071:3001'
+    networks:
+      - web
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.rule=Host(`{{ openspeedtest_domain | mandatory }}`)
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.entrypoints=https
+    
