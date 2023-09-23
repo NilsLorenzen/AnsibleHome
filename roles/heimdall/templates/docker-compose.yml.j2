@@ -4,12 +4,14 @@ networks:
     external: true
 
 services:
-
   app:
     image: lscr.io/linuxserver/heimdall:latest
     container_name: heimdall
     networks:
       - web
+    hostname: heimdall
+    dns:
+      - {{ heimdall_dns }}
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - {{ root }}/heimdall-config:/config
