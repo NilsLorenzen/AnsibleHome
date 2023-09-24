@@ -1,2 +1,2 @@
 heimdall_domain: heimdall.home-lorenzen.de
-heimdall_dns: "10.201.10.4" #should use "pihole" as dns-server: docker exec pihole nslookup pihole
+heimdall_dns: "pihole" #give an ip to a dns-server or type "pihole" to automaticly get the docker internal ip of an pihole instance on the same host

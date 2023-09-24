@@ -11,7 +11,7 @@ services:
       - web
     hostname: heimdall
     dns:
-      - {{ heimdall_dns }}
+      - "{{ heimdall_dns }}"
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - {{ root }}/heimdall-config:/config

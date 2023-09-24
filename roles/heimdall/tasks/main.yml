@@ -12,6 +12,15 @@
     path: "{{ root }}"
     state: directory
 
+- name: Return internal pihole ip to temp var
+  ansible.builtin.command: "docker exec pihole dig +short pihole"
+  register: raw_pihole_ip
+  when: heimdall_dns == "pihole"
+
+- set_fact:
+    heimdall_dns: "{{ raw_pihole_ip.stdout }}"
+  when: heimdall_dns == "pihole"
+
 - name: copy docker-compose file
   ansible.builtin.template:
     src: docker-compose.yml.j2
