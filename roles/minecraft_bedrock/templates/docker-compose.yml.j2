@@ -1,0 +1,20 @@
+networks:
+  default:
+
+services:
+  server:
+    image: itzg/minecraft-bedrock-server
+    container_name: minecraft_bedrock
+    networks:
+      - default
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - {{ root }}/data:/data
+    ports:
+      - 19132:19132/udp
+    environment:
+      EULA: "TRUE"
+      GAMEMODE: survival
+      DIFFICULTY: easy
+    stdin_open: true   ## needed so you can attach to the mc-server console via docker attach
+    tty: true          ## ^^

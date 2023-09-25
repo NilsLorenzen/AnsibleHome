@@ -47,3 +47,7 @@
       tags:
         - it-tools
         - container
+    - name: minecraft_bedrock
+      tags:
+        - minecraft_bedrock
+        - container

@@ -1,0 +1,5 @@
+- name: restart minecraft_bedrock.service
+  when: minecraft_bedrock_started is not changed
+  ansible.builtin.systemd:
+    name: minecraft_bedrock.service
+    state: restarted
