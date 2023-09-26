@@ -1,0 +1,5 @@
+- name: restart teamspeak.service
+  when: teamspeak_started is not changed
+  ansible.builtin.systemd:
+    name: teamspeak.service
+    state: restarted

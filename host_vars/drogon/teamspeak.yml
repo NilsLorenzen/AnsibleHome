@@ -1,0 +1,2 @@
+teamspeak_mysql_pw: "{{ vault_teamspeak_mysql_pw }}"
+teamspeak_mysql_dbname: teamspeak

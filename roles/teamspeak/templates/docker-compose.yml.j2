@@ -1,0 +1,37 @@
+networks:
+  default:
+
+services:
+  server:
+    image: teamspeak:latest
+    container_name: teamspeak-server
+    networks:
+      - default
+    ports:
+      - 9987:9987/udp
+      - 10011:10011
+      - 30033:30033
+    environment:
+      TS3SERVER_DB_PLUGIN: ts3db_mariadb
+      TS3SERVER_DB_SQLCREATEPATH: create_mariadb
+      TS3SERVER_DB_HOST: teamspeak-db
+      TS3SERVER_DB_USER: root
+      TS3SERVER_DB_PASSWORD: {{ teamspeak_mysql_pw }}
+      TS3SERVER_DB_NAME: {{ teamspeak_mysql_dbname }}
+      TS3SERVER_DB_WAITUNTILREADY: 30
+      TS3SERVER_LICENSE: accept
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - {{ root }}/tsdata:/var/ts3server/
+
+  db:
+    image: mariadb:latest
+    container_name: teamspeak-db
+    networks:
+      - default
+    environment:
+      MYSQL_ROOT_PASSWORD: {{ teamspeak_mysql_pw }}
+      MYSQL_DATABASE: {{ teamspeak_mysql_dbname }}
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - {{ root }}/mariadbdata:/var/lib/mysql/
