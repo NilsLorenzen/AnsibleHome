@@ -5,3 +5,7 @@
   roles:
     - name: docker
       tags: docker
+    - name: teamspeak
+      tags:
+        - teamspeak
+        - container
