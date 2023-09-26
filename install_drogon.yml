@@ -1,0 +1,7 @@
+---
+
+- hosts: drogon
+  become: true
+  roles:
+    - name: docker
+      tags: docker
