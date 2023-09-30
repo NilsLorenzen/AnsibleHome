@@ -31,9 +31,10 @@ Installiert werden sie mit dem folgenden Befehl:
 - [ ] Teslamate
 - [X] IT-Tools
 - [X] Traefik with dns challenge
+- [X] Traefik with http challenge
 - [X] Minecraft Bedrock Server
 - [ ] Minecraft Java Server
-- [ ] Teamspeak Server
+- [X] Teamspeak Server
 
 # SSL Zertifikate
 
