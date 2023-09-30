@@ -38,6 +38,7 @@
     owner: root
     group: root
     mode: "644"
+  when: homebridge_config
 
 - name: copy traefik-plex.yml file
   ansible.builtin.template:
@@ -46,6 +47,7 @@
     owner: root
     group: root
     mode: "644"
+  when: plex_config
 
 - name: copy docker-compose file
   ansible.builtin.template:

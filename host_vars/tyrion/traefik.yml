@@ -1,2 +1,4 @@
 traefik_domain: "traefik.{{ traefik_acme_domain }}"
 traefik_acme_domain: home-lorenzen.de
+homebridge_config: true
+plex_config: true
