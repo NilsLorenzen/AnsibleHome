@@ -1,4 +1,4 @@
 inwx:
-  acme_email: "vault_inwx_acme_email"
-  username: "vault_inwx_username"
-  password: "vault_inwx_password"
+  acme_email: "{{ vault_inwx_acme_email }}"
+  username: "{{ vault_inwx_username }}"
+  password: "{{ vault_inwx_password }}"

@@ -1,0 +1,34 @@
+networks:
+  default:
+  web:
+    external: true
+
+services:
+
+  app:
+    image: traefik:latest
+    container_name: traefik
+    networks:
+      - web
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - /etc/localtime:/etc/localtime:ro #zeitzone
+      - /var/run/docker.sock:/var/run/docker.sock #Docker zugriff
+      - {{ root }}/conf/traefik.yml:/etc/traefik/traefik.yml:ro #statische Konfigurationsdatei
+      - {{ root }}/conf/acme/:/etc/traefik/acme/
+      - {{ root }}/conf/dynamic/:/etc/traefik/dynamic/:ro #dynamische Konfigurationsdateien
+    privileged: true
+    environment:
+      - LEGO_DISABLE_CNAME_SUPPORT=true
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.entrypoints=https
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.rule=Host(`{{ traefik_domain }}`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.service=api@internal
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.tls.certresolver=letsencrypt_http
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.tls.domains[0].main={{ traefik_domain }}
+      #- traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.tls.domains[0].sans=*.{{ traefik_acme_domain }}
+    healthcheck:
+      test: traefik healthcheck

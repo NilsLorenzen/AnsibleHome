@@ -1,0 +1,53 @@
+- name: copy systemd unit
+  ansible.builtin.template:
+    src: traefik.service.j2
+    dest: /etc/systemd/system/traefik.service
+    owner: root
+    group: root
+    mode: "644"
+  notify: restart traefik.service
+
+- name: create /data/traefik dir
+  ansible.builtin.file:
+    path: "{{ root }}"
+    state: directory
+
+- name: create /data/traefik/conf dir
+  ansible.builtin.file:
+    path: "{{ root }}/conf"
+    state: directory
+
+- name: create /data/traefik/conf/dynamic dir
+  ansible.builtin.file:
+    path: "{{ root }}/conf/dynamic"
+    state: directory
+
+- name: copy traefik.yml file
+  ansible.builtin.template:
+    src: traefik.yml.j2
+    dest: "{{ root }}/conf/traefik.yml"
+    owner: root
+    group: root
+    mode: "644"
+  notify: restart traefik.service
+
+- name: copy docker-compose file
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ root }}/docker-compose.yml"
+    owner: root
+    group: root
+    mode: "644"
+  notify: restart traefik.service
+
+- name: Create docker network "web"
+  docker_network:
+    name: web
+
+- name: start traefik.service
+  ansible.builtin.systemd:
+    state: started
+    daemon_reload: true
+    enabled: true
+    name: traefik.service
+  register: traefik_started

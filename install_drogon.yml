@@ -5,6 +5,10 @@
   roles:
     - name: docker
       tags: docker
+    - name: traefik_httpchallenge
+      tags:
+        - traefik
+        - container
     - name: teamspeak
       tags:
         - teamspeak

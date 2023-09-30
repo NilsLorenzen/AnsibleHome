@@ -1,0 +1,4 @@
+traefik_domain: "traefik.{{ traefik_acme_domain }}"
+traefik_acme_domain: n1ls.wtf
+homebridge_config: false
+plex_config: false
