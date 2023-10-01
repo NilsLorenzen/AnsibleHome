@@ -1,0 +1,3 @@
+wordpress_mfw_domain: alpha.motorradfreunde-wilferdingen.de
+wordpress_mfw_mysql_pw: "{{ vault_wordpress_mfw_mysql_pw }}"
+wordpress_mfw_mysql_dbname: wordpress_mfw_db

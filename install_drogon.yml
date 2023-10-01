@@ -18,3 +18,8 @@
         - wordpress_nl
         - wordpress
         - container
+    - name: wordpress_mfw
+      tags:
+        - wordpress_mfw
+        - wordpress
+        - container

@@ -1,0 +1,5 @@
+- name: restart wordpress_mfw.service
+  when: wordpress_mfw_started is not changed
+  ansible.builtin.systemd:
+    name: wordpress_mfw.service
+    state: restarted

@@ -1,0 +1,30 @@
+- name: copy systemd unit
+  ansible.builtin.template:
+    src: wordpress_mfw.service.j2
+    dest: /etc/systemd/system/wordpress_mfw.service
+    owner: root
+    group: root
+    mode: "644"
+  notify: restart wordpress_mfw.service
+
+- name: create /data/wordpress_mfw dir
+  ansible.builtin.file:
+    path: "{{ root }}"
+    state: directory
+
+- name: copy docker-compose file
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ root }}/docker-compose.yml"
+    owner: root
+    group: root
+    mode: "644"
+  notify: restart wordpress_mfw.service
+
+- name: start wordpress_mfw.service
+  ansible.builtin.systemd:
+    state: started
+    daemon_reload: true
+    enabled: true
+    name: wordpress_mfw.service
+  register: wordpress_mfw_started
