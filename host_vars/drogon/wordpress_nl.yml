@@ -1,0 +1,3 @@
+wordpress_nl_domain: nilslorenzen.de
+wordpress_nl_mysql_pw: "{{ vault_wordpress_nl_mysql_pw }}"
+wordpress_nl_mysql_dbname: wordpress_nl_db

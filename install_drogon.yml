@@ -13,3 +13,8 @@
       tags:
         - teamspeak
         - container
+    - name: wordpress_nl
+      tags:
+        - wordpress_nl
+        - wordpress
+        - container

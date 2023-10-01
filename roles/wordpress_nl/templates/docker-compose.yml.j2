@@ -1,0 +1,37 @@
+networks:
+  default:
+  web:
+    external: true
+
+services:
+  app:
+    image: wordpress:latest
+    container_name: wordpress_nl-app
+    networks:
+      - web
+      - default
+    environment:
+      WORDPRESS_DB_HOST: wordpress_nl-db
+      WORDPRESS_DB_USER: root
+      WORDPRESS_DB_PASSWORD: {{ wordpress_nl_mysql_pw }}
+      WORDPRESS_DB_NAME: {{ wordpress_nl_mysql_dbname }}
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - {{ root }}/wpdata:/var/www/html
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.rule=Host(`{{ wordpress_nl_domain | mandatory }}`)
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.entrypoints=https
+      #- traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.tls=true
+
+  db:
+    image: mariadb:latest
+    container_name: wordpress_nl-db
+    networks:
+      - default
+    environment:
+      MYSQL_DATABASE: {{ wordpress_nl_mysql_dbname }}
+      MYSQL_ROOT_PASSWORD: {{ wordpress_nl_mysql_pw }}
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - {{ root }}/mysqldata:/var/lib/mysql
