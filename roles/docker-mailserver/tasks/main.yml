@@ -1,0 +1,39 @@
+- name: copy systemd unit
+  ansible.builtin.template:
+    src: docker-mailserver.service.j2
+    dest: /etc/systemd/system/docker-mailserver.service
+    owner: root
+    group: root
+    mode: "644"
+  notify: restart docker-mailserver.service
+
+- name: create /data/docker-mailserver dir
+  ansible.builtin.file:
+    path: "{{ root }}"
+    state: directory
+
+- name: copy docker-compose file
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ root }}/docker-compose.yml"
+    owner: root
+    group: root
+    mode: "644"
+  notify: restart docker-mailserver.service
+
+- name: copy mailserver env file
+  ansible.builtin.template:
+    src: mailserver.env.j2
+    dest: "{{ root }}/mailserver.env"
+    owner: root
+    group: root
+    mode: "644"
+  notify: restart docker-mailserver.service
+
+- name: start docker-mailserver.service
+  ansible.builtin.systemd:
+    state: started
+    daemon_reload: true
+    enabled: true
+    name: docker-mailserver.service
+  register: docker_mailserver_started

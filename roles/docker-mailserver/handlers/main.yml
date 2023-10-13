@@ -1,0 +1,5 @@
+- name: restart docker-mailserver.service
+  when: docker_mailserver_started is not changed
+  ansible.builtin.systemd:
+    name: docker-mailserver.service
+    state: restarted
