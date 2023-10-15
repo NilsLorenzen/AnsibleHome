@@ -23,3 +23,7 @@
         - wordpress_mfw
         - wordpress
         - container
+    - name: webserver
+      tags:
+        - webserver
+        - container
