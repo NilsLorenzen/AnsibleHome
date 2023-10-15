@@ -1,0 +1,21 @@
+networks:
+  web:
+    external: true
+
+services:
+  app:
+    image: nginx:latest
+    container_name: webserver
+    networks:
+      - web
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      #- {{ root }}/nginx.conf:/etc/nginx/nginx.conf:ro # NGINX config
+      - {{ root }}/data:/usr/share/nginx/html:ro # Website content
+    environment:
+    - NGINX_HOST={{ webserver_domain | mandatory }}
+    - NGINX_PORT=80
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.rule=Host(`{{ webserver_domain | mandatory }}`)
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.entrypoints=https
