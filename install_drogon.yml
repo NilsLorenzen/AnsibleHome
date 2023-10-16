@@ -9,6 +9,10 @@
       tags:
         - traefik
         - container
+    - name: vaultwarden
+      tags:
+        - vaultwarden
+        - container
     - name: teamspeak
       tags:
         - teamspeak
