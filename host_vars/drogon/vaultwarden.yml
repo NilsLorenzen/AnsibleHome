@@ -1,0 +1,4 @@
+vaultwarden_domain: vault.n1ls.wtf
+vaultwarden_admin_token: "{{ vault_vaultwarden_admin_token }}"
+vaultwarden_smtp_password: "{{ vault_vaultwarden_smtp_password }}"
+vaultwarden_smtp_user: "{{ vault_vaultwarden_smtp_user }}"

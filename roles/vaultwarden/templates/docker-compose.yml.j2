@@ -1,11 +1,51 @@
+networks:
+  web:
+    external: true
 
 services:
-
   app:
-    image: vaultwarden/server:alpine
+    image: vaultwarden/server:latest
+    networks:
+      - web
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - {{ root }}/vaultwardendata:/data/
+      - {{ root }}/data:/data/
     environment:
+      - DOMAIN=https://{{ vaultwarden_domain | mandatory }}
+      - ADMIN_TOKEN={{ vaultwarden_admin_token | mandatory }}
       - WEBSOCKET_ENABLED=true
-      - DOMAIN=https://{{ vaultwarden_domain }}
+      - WEBSOCKET_PORT=3012
+      - LOGIN_RATELIMIT_SECONDS=240
+      - LOGIN_RATELIMIT_MAX_BURST=5
+      - ADMIN_RATELIMIT_SECONDS=10000
+      - ADMIN_RATELIMIT_MAX_BURST=2
+      - ADMIN_SESSION_LIFETIME=10 #in Minuten
+
+      # E-Mail Einstellungen
+      - SMTP_HOST=smtp.strato.de
+      - SMTP_FROM={{ vaultwarden_smtp_user | mandatory }}
+      - SMTP_FROM_NAME=Vaultwarden von Nils
+      - SMTP_SECURITY=starttls # ("starttls", "force_tls", "off")
+      - SMTP_PORT=587
+      - SMTP_USERNAME={{ vaultwarden_smtp_user | mandatory }}
+      - SMTP_PASSWORD={{ vaultwarden_smtp_password | mandatory }}
+      - SMTP_TIMEOUT=15
+
+      - SIGNUPS_ALLOWED=false
+      - SIGNUPS_VERIFY=true
+
+      - INVITATIONS_ALLOWED=false #erlaube Einladungen auch wenn neue Anmeldungen blockiert sind
+      - INVITATION_ORG_NAME=Familie Lorenzen
+      - SENDS_ALLOWED=true
+      - ORG_CREATION_USERS=mail@nilslorenzen.de # alternativ: all
+      - EMERGENCY_ACCESS_ALLOWED=true
+      - SHOW_PASSWORD_HINT=false
+
+      - ORG_ATTACHMENT_LIMIT=500000 #Limit pro Organisation in kb - aktuell 500 MB
+      - USER_ATTACHMENT_LIMIT=100000 #Limit pro User in kb - aktuell 100 MB
+      - TRASH_AUTO_DELETE_DAYS=365
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.rule=Host(`{{ vaultwarden_domain | mandatory }}`)
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.entrypoints=https
+      
