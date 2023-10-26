@@ -1,0 +1,16 @@
+http:
+    ## EXTERNAL ROUTING ##
+  routers:
+    # plex routing
+    plex:
+      entryPoints:
+        - https
+      rule: 'Host(`plex.n1ls.wtf`)'
+      service: plex
+  ## SERVICES ##
+  services:
+    # plex service
+    plex:
+      loadBalancer:
+        servers:
+          - url: http://home.n1ls.wtf:32400/

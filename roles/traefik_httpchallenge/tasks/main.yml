@@ -31,6 +31,14 @@
     mode: "644"
   notify: restart traefik.service
 
+- name: copy traefik-plex.yml file
+  ansible.builtin.template:
+    src: dynamic/traefik-plex.yml.j2
+    dest: "{{ root }}/conf/dynamic/traefik-plex.yml"
+    owner: root
+    group: root
+    mode: "644"
+
 - name: copy docker-compose file
   ansible.builtin.template:
     src: docker-compose.yml.j2
