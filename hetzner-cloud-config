@@ -1,0 +1,24 @@
+#cloud-config
+users:
+  - name: nils
+    groups: users, admin
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    shell: /bin/bash
+    ssh_authorized_keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCiJ0IydZLs1CuB06XQJQgM/fP9sDFkccThZBZZlttYXa3uNRpabyZIz/G/siR5iocYM6s3iQ+NorSnIiQrKLCzaaLD/NZ5o545ncj3BlcNXycNNISmoz3GAP9abBYOgTO3RLCVg7KzGgcWnSo+Eme93iSWiy4h9sAvvETBxKVgMWB/7x+2AJnpbfSvpvpjKQP/v3w1CYqZEPZLUu9QcBitN7jwhPYaIJ23OS/5zciWJ3bY2rVQrUyKoYjQrLQuB9bY2FCiIHKHlW2Unzci2wlvf4iygG5ELE6bYM/jETEaqLttTS4P9sYgt0OcPKyy+DQ2LVY8Ulpy3NYoLRRbMNL6f5IknAz48qZDQYlo36OTThM0HEjRqc6j+D/Uo2VU6iLkx/W+xE/snU9wGoki239UvgXUT5pzrF/TUqsqKx9n5iLVJSRlLPFkaKCroXwIC0jS4MQi2a16K7LWZ2JfY7exifgxyRYywP+sNj5aA4K5PcXxZr6MnnjMDD9DXBZGBn0=
+packages:
+  - fail2ban
+package_update: true
+package_upgrade: true
+runcmd:
+  - printf "[sshd]\nenabled = true\nbanaction = iptables-multiport" > /etc/fail2ban/jail.local
+  - systemctl enable fail2ban
+  - sed -i -e '/^\(#\|\)PermitRootLogin/s/^.*$/PermitRootLogin no/' /etc/ssh/sshd_config
+  - sed -i -e '/^\(#\|\)PasswordAuthentication/s/^.*$/PasswordAuthentication no/' /etc/ssh/sshd_config
+  - sed -i -e '/^\(#\|\)X11Forwarding/s/^.*$/X11Forwarding no/' /etc/ssh/sshd_config
+  - sed -i -e '/^\(#\|\)MaxAuthTries/s/^.*$/MaxAuthTries 2/' /etc/ssh/sshd_config
+  - sed -i -e '/^\(#\|\)AllowTcpForwarding/s/^.*$/AllowTcpForwarding no/' /etc/ssh/sshd_config
+  - sed -i -e '/^\(#\|\)AllowAgentForwarding/s/^.*$/AllowAgentForwarding no/' /etc/ssh/sshd_config
+  - sed -i -e '/^\(#\|\)AuthorizedKeysFile/s/^.*$/AuthorizedKeysFile .ssh\/authorized_keys/' /etc/ssh/sshd_config
+  - sed -i '$a AllowUsers nils' /etc/ssh/sshd_config
+  - reboot
