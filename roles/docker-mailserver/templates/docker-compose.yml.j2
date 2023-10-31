@@ -9,15 +9,16 @@ services:
     container_name: mailserver
     hostname: {{ mx_domain | mandatory }} #mx-record
     env_file: mailserver.env
-    networks:
-      - default
-      - web
-    ports:
-      - "25:25"    # SMTP  (explicit TLS => STARTTLS, Authentication is DISABLED => use port 465/587 instead)
+    network_mode: host
+    #networks:
+      #- default
+      # web
+    #ports:
+      #- "25:25"    # SMTP  (explicit TLS => STARTTLS, Authentication is DISABLED => use port 465/587 instead)
       #- "143:143"  # IMAP4 (explicit TLS => STARTTLS)
-      - "465:465"  # ESMTP (implicit TLS)
-      - "587:587"  # ESMTP (explicit TLS => STARTTLS)
-      - "993:993"  # IMAP4 (implicit TLS)
+      #- "465:465"  # ESMTP (implicit TLS)
+      #- "587:587"  # ESMTP (explicit TLS => STARTTLS)
+      #- "993:993"  # IMAP4 (implicit TLS)
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - {{ root }}/mail-data/:/var/mail/
