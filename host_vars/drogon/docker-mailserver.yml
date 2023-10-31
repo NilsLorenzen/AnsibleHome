@@ -1,3 +1,3 @@
-mx_domain: mail.n1ls.wtf
+mx_domain: mail.nilslorenzen.de
 MX_MAILBOX_SIZE_LIMIT: 512000000 # ca. 500 MB
 MX_MESSAGE_SIZE_LIMIT: 10240000  # 10240000 ca. 10 MB
