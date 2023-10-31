@@ -7,9 +7,14 @@
     mode: "644"
   notify: restart docker-mailserver.service
 
-- name: create /data/docker-mailserver dir
+- name: create {{ root }} dir
   ansible.builtin.file:
     path: "{{ root }}"
+    state: directory
+
+- name: create {{ root }}/config/ dir
+  ansible.builtin.file:
+    path: "{{ root }}/config/"
     state: directory
 
 - name: copy docker-compose file
@@ -33,7 +38,7 @@
 - name: copy fail2ban config file
   ansible.builtin.template:
     src: config/fail2ban-fail2ban.cf.j2
-    dest: "{{ root }}/dms/config/fail2ban-fail2ban.cf"
+    dest: "{{ root }}/config/fail2ban-fail2ban.cf"
     owner: root
     group: root
     mode: "644"
@@ -42,7 +47,7 @@
 - name: copy fail2ban jail config file
   ansible.builtin.template:
     src: config/fail2ban-jail.cf.j2
-    dest: "{{ root }}/dms/config/fail2ban-jail.cf"
+    dest: "{{ root }}/config/fail2ban-jail.cf"
     owner: root
     group: root
     mode: "644"

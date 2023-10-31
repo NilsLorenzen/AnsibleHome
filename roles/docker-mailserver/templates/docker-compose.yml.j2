@@ -21,10 +21,10 @@ services:
       #- "993:993"  # IMAP4 (implicit TLS)
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - {{ root }}/mail-data/:/var/mail/
-      - {{ root }}/mail-state/:/var/mail-state/
-      - {{ root }}/dms/mail-logs/:/var/log/mail/
-      - {{ root }}/dms/config/:/tmp/docker-mailserver/
+      - /mnt/mailserver/mail-data/:/var/mail/
+      - /mnt/mailserver/mail-state/:/var/mail-state/
+      - /mnt/mailserver/mail-logs/:/var/log/mail/
+      - {{ root }}/config/:/tmp/docker-mailserver/
       - {{ root }}/le.json:/etc/letsencrypt/acme.json:ro
     environment:
       SSL_TYPE: letsencrypt
