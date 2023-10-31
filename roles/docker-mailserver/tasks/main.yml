@@ -30,6 +30,24 @@
     mode: "644"
   notify: restart docker-mailserver.service
 
+- name: copy fail2ban config file
+  ansible.builtin.template:
+    src: config/fail2ban-fail2ban.cf.j2
+    dest: "{{ root }}/dms/config/fail2ban-fail2ban.cf"
+    owner: root
+    group: root
+    mode: "644"
+  notify: restart docker-mailserver.service
+
+- name: copy fail2ban jail config file
+  ansible.builtin.template:
+    src: config/fail2ban-jail.cf.j2
+    dest: "{{ root }}/dms/config/fail2ban-jail.cf"
+    owner: root
+    group: root
+    mode: "644"
+  notify: restart docker-mailserver.service
+
 - name: start docker-mailserver.service
   ansible.builtin.systemd:
     state: started
