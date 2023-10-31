@@ -31,3 +31,7 @@
       tags:
         - webserver
         - container
+    - name: portainer
+      tags:
+        - portainer
+        - container
