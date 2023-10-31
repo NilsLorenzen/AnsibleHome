@@ -31,6 +31,10 @@
       tags:
         - webserver
         - container
+    - name: docker-mailserver
+      tags:
+        - docker-mailserver
+        - container
     - name: portainer
       tags:
         - portainer
