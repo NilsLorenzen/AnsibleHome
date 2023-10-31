@@ -1,0 +1,44 @@
+networks:
+  web:
+    external: true
+
+services:
+  app:
+    image: ghcr.io/techno-tim/littlelink-server:latest
+    container_name: littlelink
+    networks:
+      - web
+    hostname: littlelink
+    environment:
+      - META_TITLE=Nils Lorenzen
+      - META_DESCRIPTION=Network-Administrator
+      - META_AUTHOR=Nils Lorenzen
+      - META_KEYWORDS=Ansible, IT-Security, Windows, PowerShell, Hyper-V, Sophos, Linux
+      - LANG=de
+      - META_INDEX_STATUS=all
+      - OG_SITE_NAME=Nils Lorenzen
+      - OG_TITLE=Nils Lorenzen
+      - OG_DESCRIPTION=Profile Page of Nils Lorenzen
+      - OG_URL=https://{{ littlelink_domain }}
+      - OG_IMAGE=https://n1ls.wtf/images/profile-img.webp
+      - OG_IMAGE_WIDTH=400
+      - OG_IMAGE_HEIGHT=400
+      - THEME=Dark
+      - FAVICON_URL=https://n1ls.wtf/images/profile-img.webp
+      - AVATAR_URL=https://n1ls.wtf/images/profile-img.webp
+      - AVATAR_2X_URL=https://n1ls.wtf/images/profile-img.webp
+      - AVATAR_ALT=Nils Lorenzen Profile Pic
+      - NAME=Nils Lorenzen
+      - BIO=Network-Administrator
+      # use ENV variable names for order, listed buttons will be boosted to the top
+      - BUTTON_ORDER=GITHUB,INSTAGRAM,XING
+      # you can render an unlimited amount of custom buttons by adding 
+      # the CUSTOM_BUTTON_* variables and by using a comma as a separator.
+      - GITHUB=https://github.com/NilsLorenzen
+      - INSTAGRAM=https://www.instagram.com/n1ls.lo/
+      - XING=https://www.xing.com/profile/Nils_Lorenzen9/
+      - FOOTER=Nils Lorenzen © 2023
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.rule=Host(`{{ littlelink_domain | mandatory }}`)
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.entrypoints=https

@@ -1,0 +1,5 @@
+- name: restart littlelink.service
+  when: littlelink_started is not changed
+  ansible.builtin.systemd:
+    name: littlelink.service
+    state: restarted

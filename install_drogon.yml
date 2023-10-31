@@ -39,3 +39,7 @@
       tags:
         - portainer
         - container
+    - name: littlelink
+      tags:
+        - littlelink
+        - container
