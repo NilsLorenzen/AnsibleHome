@@ -53,6 +53,12 @@
     mode: "644"
   notify: restart docker-mailserver.service
 
+- name: Download mailserver setup script
+  ansible.builtin.get_url:
+    url: https://raw.githubusercontent.com/docker-mailserver/docker-mailserver/master/setup.sh
+    dest: "{{ root }}/setup.sh"
+    mode: '744'
+
 - name: Copy Traefik Cert file with different permissions
   ansible.builtin.copy:
     src: "/data/traefik/conf/acme/le.json"
