@@ -17,14 +17,27 @@
     path: "{{ root }}/config/"
     state: directory
 
-- name: copy docker-compose file
+
+- name: copy docker-compose file with cert companion
   ansible.builtin.template:
     src: docker-compose.yml.j2
     dest: "{{ root }}/docker-compose.yml"
     owner: root
     group: root
     mode: "644"
+  when: mx_use_webmail == "no"
   notify: restart docker-mailserver.service
+
+- name: copy docker-compose file with out cert companion
+  ansible.builtin.template:
+    src: docker-compose-without-certcompanion.yml.j2
+    dest: "{{ root }}/docker-compose.yml"
+    owner: root
+    group: root
+    mode: "644"
+  when: mx_use_webmail == "yes"
+  notify: restart docker-mailserver.service
+
 
 - name: copy mailserver env file
   ansible.builtin.template:

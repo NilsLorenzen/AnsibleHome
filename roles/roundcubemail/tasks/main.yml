@@ -7,6 +7,10 @@
     mode: "644"
   notify: restart roundcubemail.service
 
+- set_fact:
+    roundcubemail_domain: "{{ mx_domain }}"
+  when: mx_use_webmail == "yes"
+
 - name: create /data/roundcubemail dir
   ansible.builtin.file:
     path: "{{ root }}"

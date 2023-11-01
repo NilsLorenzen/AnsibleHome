@@ -34,15 +34,3 @@ services:
       test: "ss --listening --tcp | grep -P 'LISTEN.+:smtp' || exit 1"
       timeout: 3s
       retries: 0
-
-  whoami:
-    image: docker.io/traefik/whoami:latest
-    container_name: mailserver-cert-companion
-    networks:
-      - web
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.mailserver.rule=Host(`{{ mx_domain | mandatory }}`)"   
-      - "traefik.http.routers.mailserver.entrypoints=http"
-      - "traefik.http.routers.mailserver.entrypoints=https"
-      - "traefik.http.routers.mailserver.tls.certresolver=letsencrypt_http"  

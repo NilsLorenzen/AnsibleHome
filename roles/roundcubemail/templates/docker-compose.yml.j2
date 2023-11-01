@@ -6,7 +6,6 @@ services:
   app:
     image: roundcube/roundcubemail:latest
     container_name: roundcubemail
-    hostname: {{ roundcubemail_domain | mandatory }}
     networks:
       - web
     volumes:
