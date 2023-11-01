@@ -1,0 +1,27 @@
+networks:
+  web:
+    external: true
+
+services:
+  app:
+    image: roundcube/roundcubemail:latest
+    container_name: roundcubemail
+    hostname: {{ roundcubemail_domain | mandatory }}
+    networks:
+      - web
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - {{ root }}/sqlite:/var/roundcube/db
+      #- {{ root }}/config:/var/roundcube/config not needed
+      - {{ root }}/www:/var/www/html
+    environment:
+      - ROUNDCUBEMAIL_DB_TYPE=sqlite
+      - ROUNDCUBEMAIL_SKIN=elastic
+      - ROUNDCUBEMAIL_DEFAULT_HOST=tls://{{ mx_domain }}
+      - ROUNDCUBEMAIL_SMTP_SERVER=tls://{{ mx_domain }}
+      - ROUNDCUBEMAIL_SMTP_PORT=587
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.rule=Host(`{{ roundcubemail_domain | mandatory }}`)
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.entrypoints=https
+      

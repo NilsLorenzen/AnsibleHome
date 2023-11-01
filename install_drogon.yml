@@ -43,3 +43,7 @@
       tags:
         - littlelink
         - container
+    - name: roundcubemail
+      tags:
+        - roundcubemail
+        - container
