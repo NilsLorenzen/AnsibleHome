@@ -31,10 +31,16 @@
       tags:
         - webserver
         - container
-    - name: docker-mailserver
+    - name: mailserver
       tags:
-        - docker-mailserver
+        - mailserver
         - container
+        - mail
+    - name: roundcubemail
+      tags:
+        - roundcubemail
+        - container
+        - mail
     - name: portainer
       tags:
         - portainer
@@ -42,8 +48,4 @@
     - name: littlelink
       tags:
         - littlelink
-        - container
-    - name: roundcubemail
-      tags:
-        - roundcubemail
         - container

@@ -9,7 +9,7 @@ WorkingDirectory={{ root }}
 
 # Required for the database healthcheck which uses an environment variable.
 #EnvironmentFile={{ root }}/.env.db
-Environment=COMPOSE_PROJECT_NAME=docker-mailserver
+Environment=COMPOSE_PROJECT_NAME=mailserver
 
 ExecStartPre=/usr/bin/docker compose config
 ExecStart=/usr/bin/docker compose up --abort-on-container-exit

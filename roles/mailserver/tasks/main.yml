@@ -1,11 +1,11 @@
 - name: copy systemd unit
   ansible.builtin.template:
-    src: docker-mailserver.service.j2
-    dest: /etc/systemd/system/docker-mailserver.service
+    src: mailserver.service.j2
+    dest: /etc/systemd/system/mailserver.service
     owner: root
     group: root
     mode: "644"
-  notify: restart docker-mailserver.service
+  notify: restart mailserver.service
 
 - name: create {{ root }} dir
   ansible.builtin.file:
@@ -26,7 +26,7 @@
     group: root
     mode: "644"
   when: mx_use_webmail == "no"
-  notify: restart docker-mailserver.service
+  notify: restart mailserver.service
 
 - name: copy docker-compose file with out cert companion
   ansible.builtin.template:
@@ -36,7 +36,7 @@
     group: root
     mode: "644"
   when: mx_use_webmail == "yes"
-  notify: restart docker-mailserver.service
+  notify: restart mailserver.service
 
 
 - name: copy mailserver env file
@@ -46,7 +46,7 @@
     owner: root
     group: root
     mode: "644"
-  notify: restart docker-mailserver.service
+  notify: restart mailserver.service
 
 - name: copy fail2ban config file
   ansible.builtin.template:
@@ -55,7 +55,7 @@
     owner: root
     group: root
     mode: "644"
-  notify: restart docker-mailserver.service
+  notify: restart mailserver.service
 
 - name: copy fail2ban jail config file
   ansible.builtin.template:
@@ -64,7 +64,7 @@
     owner: root
     group: root
     mode: "644"
-  notify: restart docker-mailserver.service
+  notify: restart mailserver.service
 
 - name: Download mailserver setup script
   ansible.builtin.get_url:
@@ -81,10 +81,10 @@
     mode: '0644'
     remote_src: yes
 
-- name: start docker-mailserver.service
+- name: start mailserver.service
   ansible.builtin.systemd:
     state: started
     daemon_reload: true
     enabled: true
-    name: docker-mailserver.service
-  register: docker_mailserver_started
+    name: mailserver.service
+  register: mailserver_started
