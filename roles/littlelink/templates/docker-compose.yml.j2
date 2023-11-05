@@ -11,34 +11,38 @@ services:
     hostname: littlelink
     environment:
       - META_TITLE=Nils Lorenzen
-      - META_DESCRIPTION=Network-Administrator
+      - META_DESCRIPTION=Network-Administrator, Homelab-Enthusiast and motorcycle rider :)
       - META_AUTHOR=Nils Lorenzen
       - META_KEYWORDS=Ansible, IT-Security, Windows, PowerShell, Hyper-V, Sophos, Linux
-      - LANG=de
+      - LANG=en
       - META_INDEX_STATUS=all
       - OG_SITE_NAME=Nils Lorenzen
       - OG_TITLE=Nils Lorenzen
       - OG_DESCRIPTION=Profile Page of Nils Lorenzen
       - OG_URL=https://{{ littlelink_domain }}
       - OG_IMAGE=https://n1ls.wtf/images/profile-img.webp
-      - OG_IMAGE_WIDTH=400
-      - OG_IMAGE_HEIGHT=400
+      - OG_IMAGE_WIDTH=500
+      - OG_IMAGE_HEIGHT=500
       - THEME=Dark
       - FAVICON_URL=https://n1ls.wtf/images/profile-img.webp
       - AVATAR_URL=https://n1ls.wtf/images/profile-img.webp
       - AVATAR_2X_URL=https://n1ls.wtf/images/profile-img.webp
       - AVATAR_ALT=Nils Lorenzen Profile Pic
       - NAME=Nils Lorenzen
-      - BIO=Network-Administrator
+      - BIO=Network-Administrator, Homelab-Enthusiast and motorcycle rider :)
       # use ENV variable names for order, listed buttons will be boosted to the top
-      - BUTTON_ORDER=GITHUB,INSTAGRAM,XING
+      - BUTTON_ORDER=GITHUB,INSTAGRAM,XING,LINKED_IN
       # you can render an unlimited amount of custom buttons by adding 
       # the CUSTOM_BUTTON_* variables and by using a comma as a separator.
       - GITHUB=https://github.com/NilsLorenzen
       - INSTAGRAM=https://www.instagram.com/n1ls.lo/
       - XING=https://www.xing.com/profile/Nils_Lorenzen9/
+      - LINKED_IN=https://www.linkedin.com/in/nils-lorenzen-a9b35a29a/
       - FOOTER=Nils Lorenzen © 2023
     labels:
       - traefik.enable=true
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.rule=Host(`{{ littlelink_domain | mandatory }}`)
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.entrypoints=https
+
+
+# Vorlage https://github.com/techno-tim/littlelink-server/blob/master/docker-compose.yml
