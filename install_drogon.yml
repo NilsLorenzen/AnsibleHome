@@ -49,3 +49,7 @@
       tags:
         - littlelink
         - container
+    - name: minecraft_java
+      tags:
+        - minecraft_java
+        - container

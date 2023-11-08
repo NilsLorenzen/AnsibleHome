@@ -1,0 +1,41 @@
+networks:
+  default:
+
+services:
+  server:
+    image: itzg/minecraft-server:latest
+    container_name: minecraft_java
+    networks:
+      - default
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - {{ root }}/data:/data
+    stdin_open: true   ## needed so you can attach to the mc-server console via docker attach
+    tty: true  
+    ports:
+      - 25565:25565
+    environment:
+      EULA: "TRUE"
+      TYPE: SPIGOT
+      VERSION: "1.20.1"
+      ICON: "https://n1ls.wtf/images/favicon.png"
+      MOTD: "\u00A74\u22D9\u00A74\u00A7kXXXX\u00A74\u22D9\u00A72 Drogon Bauserver\u00A74 \u22D8\u00A74\u00A7kXXXX\u00A74\u22D8\u00A7r\n \u00A77\u255A\u2550\u2550\u2550\u2550\u00A7b von n1ls.lo\u00A77 \u2550\u2550\u2550\u2550\u255D"
+      DIFFICULTY: "easy"
+      MAX_PLAYERS: 42
+      PVP: "true"
+      ANNOUNCE_PLAYER_ACHIEVEMENTS: "true"
+      ENABLE_COMMAND_BLOCK: "true"
+      VIEW_DISTANCE: 16
+      MEMORY: 4G
+
+  # backup:
+  #   container_name: minecraft_java_backup
+  #   image: itzg/mc-backup
+  #   environment:
+  #     BACKUP_INTERVAL: "24h"
+  #     RCON_HOST: server
+  #     PRUNE_BACKUPS_DAYS: 7
+  #   volumes:
+  #     - /etc/localtime:/etc/localtime:ro # mount the same volume used by server, but read-only
+  #     - {{ root }}/data:/data:ro
+  #     - ./backups:/backups  # use a host attached directory so that it in turn can be backed up to external/cloud storage
