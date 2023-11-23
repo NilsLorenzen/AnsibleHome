@@ -1,12 +1,10 @@
 networks:
-  default:
   web:
     external: true
 
 services:
   app:
-    image: lscr.io/linuxserver/heimdall:2.5.7
-    container_name: heimdall
+    image: lscr.io/linuxserver/heimdall:2.5.8
     networks:
       - web
     hostname: heimdall
