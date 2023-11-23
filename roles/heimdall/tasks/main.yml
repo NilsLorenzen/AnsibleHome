@@ -1,17 +1,3 @@
-- name: copy systemd unit
-  ansible.builtin.template:
-    src: heimdall.service.j2
-    dest: /etc/systemd/system/heimdall.service
-    owner: root
-    group: root
-    mode: "644"
-  notify: restart heimdall.service
-
-- name: create /data/heimdall dir
-  ansible.builtin.file:
-    path: "{{ root }}"
-    state: directory
-
 - name: Return internal pihole ip to temp var
   ansible.builtin.command: "docker exec pihole dig +short pihole"
   register: raw_pihole_ip
@@ -21,10 +7,16 @@
     heimdall_dns: "{{ raw_pihole_ip.stdout }}"
   when: heimdall_dns == "pihole"
 
-- name: copy docker-compose file
+- name: Copy templates
+  ansible.builtin.import_tasks: copy-all-templates.yml
+  vars:
+    directory: ../templates
+    notify: restart heimdall.service
+
+- name: copy systemd unit
   ansible.builtin.template:
-    src: docker-compose.yml.j2
-    dest: "{{ root }}/docker-compose.yml"
+    src: heimdall.service.j2
+    dest: /etc/systemd/system/heimdall.service
     owner: root
     group: root
     mode: "644"
