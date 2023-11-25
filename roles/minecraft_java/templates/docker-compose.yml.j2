@@ -18,15 +18,15 @@ services:
       EULA: "TRUE"
       TYPE: SPIGOT
       VERSION: "1.20.1"
-      ICON: "https://n1ls.wtf/images/favicon.png"
-      MOTD: "\u00A74\u22D9\u00A74\u00A7kXXXX\u00A74\u22D9\u00A72 Drogon Bauserver\u00A74 \u22D8\u00A74\u00A7kXXXX\u00A74\u22D8\u00A7r\n \u00A77\u255A\u2550\u2550\u2550\u2550\u00A7b von n1ls.lo\u00A77 \u2550\u2550\u2550\u2550\u255D"
-      DIFFICULTY: "easy"
-      MAX_PLAYERS: 42
+      ICON: "{{ minecraft_java_icon }}"
+      MOTD: "{{ minecraft_java_motd }}"
+      DIFFICULTY: "{{ minecraft_java_difficulty }}"
+      MAX_PLAYERS: "{{ minecraft_java_players }}"
       PVP: "true"
       ANNOUNCE_PLAYER_ACHIEVEMENTS: "true"
       ENABLE_COMMAND_BLOCK: "true"
-      VIEW_DISTANCE: 16
-      MEMORY: 4G
+      VIEW_DISTANCE: "{{ minecraft_java_viewdistance }}"
+      MEMORY: "{{ minecraft_java_memory }}"
 
   # backup:
   #   container_name: minecraft_java_backup
