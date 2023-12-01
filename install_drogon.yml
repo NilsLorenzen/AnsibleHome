@@ -3,53 +3,53 @@
 - hosts: drogon
   become: true
   roles:
-    - name: docker
+    - role: docker
       tags: docker
-    - name: traefik_httpchallenge
+    - role: traefik_httpchallenge
       tags:
         - traefik
         - container
-    - name: vaultwarden
+    - role: vaultwarden
       tags:
         - vaultwarden
         - container
-    - name: teamspeak
+    - role: teamspeak
       tags:
         - teamspeak
         - container
-    - name: wordpress_nl
+    - role: wordpress_nl
       tags:
         - wordpress_nl
         - wordpress
         - container
-    - name: wordpress_mfw
+    - role: wordpress_mfw
       tags:
         - wordpress_mfw
         - wordpress
         - container
-    - name: webserver
+    - role: webserver
       tags:
         - webserver
         - container
-    - name: mailserver
+    - role: mailserver
       tags:
         - mailserver
         - container
         - mail
-    - name: roundcubemail
+    - role: roundcubemail
       tags:
         - roundcubemail
         - container
         - mail
-    - name: portainer
+    - role: portainer
       tags:
         - portainer
         - container
-    - name: littlelink
+    - role: littlelink
       tags:
         - littlelink
         - container
-    - name: minecraft_java
+    - role: minecraft_java
       tags:
         - minecraft_java
         - container

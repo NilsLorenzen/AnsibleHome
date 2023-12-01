@@ -3,59 +3,59 @@
 - hosts: tyrion
   become: true
   roles:
-    - name: nic_configuration_tyrion
+    - role: nic_configuration_tyrion
       tags: nic_configuration_tyrion
-    - name: docker
+    - role: docker
       tags: docker
-    - name: traefik
+    - role: traefik
       tags:
         - traefik
         - container
-    - name: portainer
+    - role: portainer
       tags:
         - portainer
         - container
-    - name: pihole
+    - role: pihole
       tags:
         - pihole
         - container
-    - name: heimdall
+    - role: heimdall
       tags:
         - heimdall
         - container
-    - name: homebridge
+    - role: homebridge
       tags:
         - homebridge
         - container
-    - name: openspeedtest
+    - role: openspeedtest
       tags:
         - openspeedtest
         - container
-    - name: smokeping
+    - role: smokeping
       tags:
         - smokeping
         - container
-    - name: plex
+    - role: plex
       tags:
         - plex
         - container
-    - name: tautulli
+    - role: tautulli
       tags:
         - tautulli
         - container
-    - name: it-tools
+    - role: it-tools
       tags:
         - it-tools
         - container
-    - name: minecraft_bedrock
+    - role: minecraft_bedrock
       tags:
         - minecraft_bedrock
         - container
-    - name: minecraft_java
+    - role: minecraft_java
       tags:
         - minecraft_java
         - container
-    - name: uptimekuma
+    - role: uptimekuma
       tags:
         - uptimekuma
         - container
