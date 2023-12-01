@@ -1,0 +1,5 @@
+- name: restart uptimekuma.service
+  when: uptimekuma_started is not changed
+  ansible.builtin.systemd:
+    name: uptimekuma.service
+    state: restarted

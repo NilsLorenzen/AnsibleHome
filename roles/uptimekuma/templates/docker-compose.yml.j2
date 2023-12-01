@@ -1,0 +1,17 @@
+networks:
+  web:
+    external: true
+
+services:
+  app:
+    image: louislam/uptime-kuma:latest
+    networks:
+      - web
+    volumes:
+      - {{ root }}/data
+    #ports:
+    #  - 3001:3001
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.rule=Host(`{{ uptimekuma_domain | mandatory }}`)
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.entrypoints=https

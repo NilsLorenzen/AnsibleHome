@@ -55,3 +55,7 @@
       tags:
         - minecraft_java
         - container
+    - name: uptimekuma
+      tags:
+        - uptimekuma
+        - container
