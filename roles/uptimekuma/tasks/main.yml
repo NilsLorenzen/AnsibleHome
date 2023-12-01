@@ -1,3 +1,12 @@
+- name: Return internal pihole ip to temp var
+  ansible.builtin.command: "docker exec pihole dig +short pihole"
+  register: raw_pihole_ip
+  when: uptimekuma_dns == "pihole"
+
+- set_fact:
+    uptimekuma_dns: "{{ raw_pihole_ip.stdout }}"
+  when: uptimekuma_dns == "pihole"
+
 - name: copy systemd unit
   ansible.builtin.template:
     src: uptimekuma.service.j2

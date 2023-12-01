@@ -7,6 +7,9 @@ services:
     image: louislam/uptime-kuma:latest
     networks:
       - web
+    hostname: uptimekuma
+    dns:
+      - "{{ uptimekuma_dns | mandatory }}"
     volumes:
       - {{ root }}/data
     #ports:

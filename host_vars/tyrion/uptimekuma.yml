@@ -1,1 +1,2 @@
 uptimekuma_domain: uptime.home-lorenzen.de
+uptimekuma_dns: "pihole" #give an ip to a dns-server or type "pihole" to automaticly get the docker internal ip of an pihole instance on the same host
