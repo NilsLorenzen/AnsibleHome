@@ -4,7 +4,7 @@ networks:
 
 services:
   mailserver:
-    image: ghcr.io/docker-mailserver/docker-mailserver:latest
+    image: ghcr.io/docker-mailserver/docker-mailserver:{{ version | mandatory }}
     container_name: mailserver
     hostname: {{ mx_domain | mandatory }} #mx-record
     env_file: mailserver.env
