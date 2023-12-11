@@ -31,10 +31,6 @@
       tags:
         - openspeedtest
         - container
-    - role: smokeping
-      tags:
-        - smokeping
-        - container
     - role: plex
       tags:
         - plex
