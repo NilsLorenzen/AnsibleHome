@@ -4,7 +4,7 @@ networks:
 
 services:
   app:
-    image: vaultwarden/server:latest
+    image: vaultwarden/server:1.30.1
     networks:
       - web
     volumes:
@@ -14,7 +14,6 @@ services:
       - DOMAIN=https://{{ vaultwarden_domain | mandatory }}
       - ADMIN_TOKEN={{ vaultwarden_admin_token | mandatory }}
       - WEBSOCKET_ENABLED=true
-      - WEBSOCKET_PORT=3012
       - LOGIN_RATELIMIT_SECONDS=240
       - LOGIN_RATELIMIT_MAX_BURST=5
       - ADMIN_RATELIMIT_SECONDS=10000
