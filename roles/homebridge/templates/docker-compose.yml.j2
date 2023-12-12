@@ -1,11 +1,6 @@
-networks:
-  default:
-
 services:
-
   app:
-    image: homebridge/homebridge:latest
-    container_name: homebridge
+    image: homebridge/homebridge:2023-11-28
     network_mode: host
     volumes:
       - /etc/localtime:/etc/localtime:ro
