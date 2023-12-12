@@ -1,12 +1,6 @@
-networks:
-  default:
-
 services:
   server:
     image: itzg/minecraft-bedrock-server
-    container_name: minecraft_bedrock
-    networks:
-      - default
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - {{ root }}/data:/data
