@@ -1,12 +1,6 @@
-networks:
-  default:
-
 services:
   server:
     image: itzg/minecraft-server:latest
-    container_name: minecraft_java
-    networks:
-      - default
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - {{ root }}/data:/data
