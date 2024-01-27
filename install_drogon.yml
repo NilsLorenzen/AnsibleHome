@@ -13,10 +13,6 @@
       tags:
         - vaultwarden
         - container
-    - role: teamspeak
-      tags:
-        - teamspeak
-        - container
     - role: wordpress_nl
       tags:
         - wordpress_nl
@@ -41,10 +37,6 @@
         - roundcubemail
         - container
         - mail
-    - role: portainer
-      tags:
-        - portainer
-        - container
     - role: littlelink
       tags:
         - littlelink
