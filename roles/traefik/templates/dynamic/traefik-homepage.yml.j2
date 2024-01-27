@@ -1,0 +1,16 @@
+http:
+    ## EXTERNAL ROUTING ##
+  routers:
+    # homepage routing
+    homepage:
+      entryPoints:
+        - https
+      rule: 'Host(`{{ homepage_domain }}`)'
+      service: homepage
+  ## SERVICES ##
+  services:
+    # homepage service
+    homepage:
+      loadBalancer:
+        servers:
+          - url: http://{{ homepage_ip }}:3000/

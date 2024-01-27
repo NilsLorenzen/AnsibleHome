@@ -1,2 +1,2 @@
 homepage_domain: dashboard.home-lorenzen.de
-homepage_dns: "pihole" #give an ip to a dns-server or type "pihole" to automaticly get the docker internal ip of an pihole instance on the same host
+homepage_ip: "192.168.10.16"
