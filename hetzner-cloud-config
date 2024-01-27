@@ -1,7 +1,7 @@
 #cloud-config
 users:
   - name: nils
-    groups: users, admin
+    groups: users, admin, adm
     sudo: ALL=(ALL) NOPASSWD:ALL
     shell: /bin/bash
     ssh_authorized_keys:
