@@ -19,9 +19,9 @@
       tags:
         - pihole
         - container
-    - role: heimdall
+    - role: homepage-dashboard
       tags:
-        - heimdall
+        - homepage
         - container
     - role: homebridge
       tags:
