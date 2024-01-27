@@ -1,1 +1,2 @@
 tautulli_domain: tautulli.home-lorenzen.de
+tautulli_apikey: "{{ vault_tautulli_apikey }}"
