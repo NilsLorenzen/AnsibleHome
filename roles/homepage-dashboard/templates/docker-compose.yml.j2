@@ -1,0 +1,20 @@
+networks:
+  web:
+    external: true
+
+services:
+  app:
+    image: ghcr.io/gethomepage/homepage:latest
+    networks:
+      - web
+    hostname: homepage-dashboard
+    dns:
+      - "{{ homepage_dns }}"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - {{ root }}/config:/app/config
+      #- /var/run/docker.sock:/var/run/docker.sock # (optional) For docker integrations
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.rule=Host(`{{ homepage_domain | mandatory }}`)
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.entrypoints=https

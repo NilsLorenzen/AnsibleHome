@@ -1,0 +1,5 @@
+- name: restart homepage.service
+  when: homepage_started is not changed
+  ansible.builtin.systemd:
+    name: homepage.service
+    state: restarted

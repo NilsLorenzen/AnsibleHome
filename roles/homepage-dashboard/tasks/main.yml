@@ -1,0 +1,31 @@
+- name: Return internal pihole ip to temp var
+  ansible.builtin.command: "docker exec pihole dig +short pihole"
+  register: raw_pihole_ip
+  when: homepage_dns == "pihole"
+
+- set_fact:
+    homepage_dns: "{{ raw_pihole_ip.stdout }}"
+  when: homepage_dns == "pihole"
+
+- name: Copy templates
+  ansible.builtin.import_tasks: copy-all-templates.yml
+  vars:
+    directory: ../templates
+    notify: restart homepage.service
+
+- name: copy systemd unit
+  ansible.builtin.template:
+    src: homepage.service.j2
+    dest: /etc/systemd/system/homepage.service
+    owner: root
+    group: root
+    mode: "644"
+  notify: restart homepage.service
+
+- name: start homepage.service
+  ansible.builtin.systemd:
+    state: started
+    daemon_reload: true
+    enabled: true
+    name: homepage.service
+  register: homepage_started
