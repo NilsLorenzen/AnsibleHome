@@ -1,5 +1,0 @@
-- name: restart wordpress_nl.service
-  when: wordpress_nl_started is not changed
-  ansible.builtin.systemd:
-    name: wordpress_nl.service
-    state: restarted

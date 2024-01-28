@@ -13,11 +13,6 @@
       tags:
         - vaultwarden
         - container
-    - role: wordpress_nl
-      tags:
-        - wordpress_nl
-        - wordpress
-        - container
     - role: wordpress_mfw
       tags:
         - wordpress_mfw
