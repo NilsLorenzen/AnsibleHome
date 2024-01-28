@@ -1,0 +1,94 @@
+---
+# For configuration options and examples, please see:
+# https://gethomepage.dev/latest/configs/services
+
+- Sonstiges:
+    - FritzBox:
+        icon: avmfritzbox.svg
+        href: http://fritz.box/
+        widget:
+          type: fritzbox
+          fields: ["uptime", "externalIPAddress", "down", "up"]
+          url: https://fritz.box/
+    - Synology:
+        icon: synology.svg
+        href: http://nas.n1ls.wtf/
+        widget:
+          type: diskstation
+          url: https://home.n1ls.wtf:5001/
+          username: username
+          password: password
+
+- HomeNetwork:
+    - Traefik Tyrion:
+        icon: traefik.svg
+        href: https://traefik.home-lorenzen.de/dashboard/
+        widget:
+          type: traefik
+          url: https://traefik.home-lorenzen.de
+    - Plex:
+        icon: plex.svg
+        href: https://plex.home-lorenzen.de
+        widget:
+          type: tautulli
+          url: https://tautulli.home-lorenzen.de
+          key: "{{ tautulli_apikey }}"
+    - Tautulli:
+        icon: tautulli.svg
+        href: https://tautulli.home-lorenzen.de
+    - PiHole:
+        icon: pi-hole.svg
+        href: https://pihole.home-lorenzen.de
+        widget:
+          type: pihole
+          url: "http://pihole.home-lorenzen.de:8080"
+          key: {{ vault_pihole_apikey }} # optional
+    - Homebridge:
+        icon: homebridge.svg
+        href: https://homebridge.home-lorenzen.de
+        widget:
+          type: homebridge
+          url: https://homebridge.home-lorenzen.de
+          username: {{ homebridge_username }}
+          password: {{ homebridge_password }}
+    - Minecraft NiNi Server - Tyrion:
+        icon: minecraft.svg
+        widget:
+          type: minecraft
+          url: udp://mc.home-lorenzen.de:25565
+    - OpenSpeedTest:
+        icon: openspeedtest.png
+        href: http://speedtest.home-lorenzen.de:7070/
+
+- CloudHosted:
+    - Traefik Drogon:
+        icon: traefik.svg
+        href: https://traefik.n1ls.wtf/dashboard/
+        widget:
+          type: traefik
+          url: https://traefik.n1ls.wtf
+          username: {{ traefik_username }} # optional
+          password: {{ traefik_password }} # optional
+    - Minecraft Bauserver - Drogon:
+        icon: minecraft.svg
+        widget:
+          type: minecraft
+          url: udp://mc.n1ls.wtf:25565
+    - RoundCubeMail:
+        icon: roundcube.svg
+        href: https://mail.nilslorenzen.de/
+    - VaultWarden:
+        icon: vaultwarden.svg
+        href: https://vault.n1ls.wtf/
+    - IT-Tools:
+        icon: it-tools.svg
+        href: https://tools.n1ls.wtf/
+    - Wordpress MFW:
+        icon: wordpress.svg
+        href: https://motorradfreunde-wilferdingen.de/
+    - N1ls Website:
+        icon: nginx.svg
+        href: https://n1ls.wtf/
+    - LittleLink (me.nilslorenzen.de):
+        icon: littlelink-custom.svg
+        href: https://me.nilslorenzen.de/
