@@ -39,10 +39,6 @@
       tags:
         - tautulli
         - container
-    - role: it-tools
-      tags:
-        - it-tools
-        - container
     - role: minecraft_bedrock
       tags:
         - minecraft_bedrock
