@@ -1,0 +1,22 @@
+- name: Copy templates
+  ansible.builtin.import_tasks: copy-all-templates.yml
+  vars:
+    directory: ../templates
+    notify: restart ghost.service
+
+- name: copy systemd unit
+  ansible.builtin.template:
+    src: ghost.service.j2
+    dest: /etc/systemd/system/ghost.service
+    owner: root
+    group: root
+    mode: "644"
+  notify: restart ghost.service
+
+- name: start ghost.service
+  ansible.builtin.systemd:
+    state: started
+    daemon_reload: true
+    enabled: true
+    name: ghost.service
+  register: ghost_started
