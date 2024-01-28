@@ -1,3 +1,9 @@
+- name: Copy templates
+  ansible.builtin.import_tasks: copy-all-templates.yml
+  vars:
+    directory: ../templates
+    notify: restart traefik.service
+
 - name: copy systemd unit
   ansible.builtin.template:
     src: traefik.service.j2
@@ -7,49 +13,8 @@
     mode: "644"
   notify: restart traefik.service
 
-- name: create /data/traefik dir
-  ansible.builtin.file:
-    path: "{{ root }}"
-    state: directory
-
-- name: create /data/traefik/conf dir
-  ansible.builtin.file:
-    path: "{{ root }}/conf"
-    state: directory
-
-- name: create /data/traefik/conf/dynamic dir
-  ansible.builtin.file:
-    path: "{{ root }}/conf/dynamic"
-    state: directory
-
-- name: copy traefik.yml file
-  ansible.builtin.template:
-    src: traefik.yml.j2
-    dest: "{{ root }}/conf/traefik.yml"
-    owner: root
-    group: root
-    mode: "644"
-  notify: restart traefik.service
-
-- name: copy traefik-plex.yml file
-  ansible.builtin.template:
-    src: dynamic/traefik-plex.yml.j2
-    dest: "{{ root }}/conf/dynamic/traefik-plex.yml"
-    owner: root
-    group: root
-    mode: "644"
-
-- name: copy docker-compose file
-  ansible.builtin.template:
-    src: docker-compose.yml.j2
-    dest: "{{ root }}/docker-compose.yml"
-    owner: root
-    group: root
-    mode: "644"
-  notify: restart traefik.service
-
 - name: Create docker network web
-  community.docker.docker_network:
+  community.general.docker_network:
     name: web
 
 - name: start traefik.service
