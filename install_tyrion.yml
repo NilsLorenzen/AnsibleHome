@@ -11,10 +11,6 @@
       tags:
         - traefik
         - container
-    - role: portainer
-      tags:
-        - portainer
-        - container
     - role: pihole
       tags:
         - pihole
