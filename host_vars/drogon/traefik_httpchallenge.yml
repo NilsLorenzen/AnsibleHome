@@ -1,5 +1,5 @@
 traefik_domain: "traefik.{{ traefik_acme_domain }}"
 traefik_acme_domain: n1ls.wtf
 traefik_username: n1ls
-traefik_password_hash: $$2a$$10$$oja1xavy5eTr68TgnBgTVufhLumFkOomW3J2yAYBmTiHC/ngGa/FO
+traefik_password_hash: $2a$10$AhkXo/wekWjk6d/JXlv29.ryMfa3tO9S8EglpJuUNfZVflTtlx9Jy
 traefik_password: "{{ vault_traefik_password }}"
