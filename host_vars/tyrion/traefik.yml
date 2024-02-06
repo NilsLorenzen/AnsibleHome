@@ -1,7 +1,7 @@
 traefik_domain: "traefik.{{ traefik_acme_domain }}"
 traefik_acme_domain: home-lorenzen.de
 traefik_username: n1ls
-traefik_password_hash: $2a$10$AhkXo/wekWjk6d/JXlv29.ryMfa3tO9S8EglpJuUNfZVflTtlx9Jy
+traefik_password_hash: $$2a$$10$$XsoNxa6t/0CSrsUtmEnyrO44dVD4wNkAoORLEAPWWesZs9ksxQUCS
 traefik_password: "{{ vault_traefik_password }}"
 homebridge_config: true
 plex_config: true

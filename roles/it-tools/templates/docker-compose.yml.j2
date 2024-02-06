@@ -14,5 +14,5 @@ services:
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.entrypoints=https
       - traefik.http.services.${COMPOSE_PROJECT_NAME}-app.loadbalancer.server.port=80
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.tls.certresolver=letsencrypt_http
-      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.middlewares=basic-auth-global
-      - traefik.http.middlewares.basic-auth-global.basicauth.users={{ traefik_username }}:{{ traefik_password_hash }}
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.middlewares=basic-auth-it-tools
+      - traefik.http.middlewares.basic-auth-it-tools.basicauth.users={{ traefik_username }}:{{ traefik_password_hash }}
