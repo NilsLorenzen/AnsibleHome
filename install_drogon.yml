@@ -44,3 +44,7 @@
       tags:
         - it-tools
         - container
+    - role: ghost
+      tags:
+        - ghost
+        - container
