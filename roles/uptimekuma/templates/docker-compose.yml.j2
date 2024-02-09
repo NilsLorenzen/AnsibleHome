@@ -9,9 +9,9 @@ services:
       - web
     hostname: uptimekuma
     dns:
-      - "{{ uptimekuma_dns | mandatory }}"
+      - {{ uptimekuma_dns | mandatory }}
     volumes:
-      - {{ root }}/data
+      - {{ root }}/data:/app/data/
     #ports:
     #  - 3001:3001
     labels:
