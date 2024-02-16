@@ -1,9 +1,0 @@
----
-
-- hosts: arya
-  become: true
-  roles:
-    - role: docker
-      tags: docker
-    - role: portainer_agent
-      tags: portainer_agent
