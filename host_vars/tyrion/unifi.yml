@@ -1,0 +1,3 @@
+unifi_domain: unifi.home-lorenzen.de
+unifi_mongo_pw: "{{ vault_unifi_mongo_pw }}"
+unifi_mongo_user: "unifi"
