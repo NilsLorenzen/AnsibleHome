@@ -3,6 +3,3 @@ traefik_acme_domain: nlor.de
 traefik_username: n1ls
 traefik_password_hash: $$2a$$10$$XsoNxa6t/0CSrsUtmEnyrO44dVD4wNkAoORLEAPWWesZs9ksxQUCS
 traefik_password: "{{ vault_traefik_password }}"
-homebridge_config: true
-plex_config: true
-homepage_config: true
