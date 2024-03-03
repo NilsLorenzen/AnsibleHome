@@ -1,0 +1,2 @@
+pihole_domain: pihole.home-lorenzen.de
+pihole_apikey: "{{ vault_pihole_apikey }}"

@@ -11,10 +11,6 @@
       tags:
         - traefik
         - container
-    - role: pihole
-      tags:
-        - pihole
-        - container
     - role: homepage-dashboard
       tags:
         - homepage

@@ -5,3 +5,11 @@
   roles:
     - role: docker
       tags: docker
+    - role: traefik
+      tags:
+        - traefik
+        - container
+    - role: pihole
+      tags:
+        - pihole
+        - container
