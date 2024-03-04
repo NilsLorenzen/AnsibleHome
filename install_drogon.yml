@@ -22,16 +22,6 @@
       tags:
         - webserver
         - container
-    - role: mailserver
-      tags:
-        - mailserver
-        - container
-        - mail
-    - role: roundcubemail
-      tags:
-        - roundcubemail
-        - container
-        - mail
     - role: littlelink
       tags:
         - littlelink
