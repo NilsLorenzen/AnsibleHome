@@ -13,14 +13,40 @@
     - Synology:
         icon: synology.svg
         href: http://nas.n1ls.wtf/
-
-- HomeNetwork:
-    - Traefik Tyrion:
+    - OpenSpeedTest:
+        icon: openspeedtest.png
+        href: http://192.168.10.10:7070/
+    - PaperlessNGX:
+        icon: paperless-ngx.svg
+        href: https://dms.home-lorenzen.de
+        widget:
+          type: paperlessngx
+          url: https://dms.home-lorenzen.de
+          username: {{ paperlessngx_username }}
+          password: {{ paperlessngx_password }}
+    - Traefik Brandon:
         icon: traefik.svg
         href: https://traefik.home-lorenzen.de/dashboard/
         widget:
           type: traefik
           url: https://traefik.home-lorenzen.de
+    - Unifi Controller:
+        icon: unifi.svg
+        href: https://brandon-1.fritz.box:8443/
+        widget:
+            type: unifi
+            url: https://brandon-1.fritz.box:8443/
+            fields: ["lan_devices", "wlan_devices", "wan", "lan"]
+            username: {{ unifi_username }}
+            password: {{ unifi_password }}
+
+- HomeNetwork:
+    - Traefik Tyrion:
+        icon: traefik.svg
+        href: https://traefik.nlor.de/dashboard/
+        widget:
+          type: traefik
+          url: https://traefik.nlor.de
     - Plex:
         icon: plex.svg
         href: https://plex.home-lorenzen.de
@@ -46,14 +72,6 @@
           url: https://homebridge.home-lorenzen.de
           username: {{ homebridge_username }}
           password: {{ homebridge_password }}
-    - PaperlessNGX:
-        icon: paperless-ngx.svg
-        href: https://dms.home-lorenzen.de
-        widget:
-          type: paperlessngx
-          url: https://dms.home-lorenzen.de
-          username: {{ paperlessngx_username }}
-          password: {{ paperlessngx_password }}
     - UptimeKuma:
         icon: uptime-kuma.svg
         href: https://uptime.home-lorenzen.de
@@ -67,9 +85,6 @@
         widget:
           type: minecraft
           url: udp://mc.home-lorenzen.de:25565
-    - OpenSpeedTest:
-        icon: openspeedtest.png
-        href: http://speedtest.home-lorenzen.de:7070/
 
 - CloudHosted:
     - Traefik Drogon:
@@ -85,9 +100,6 @@
         widget:
           type: minecraft
           url: udp://mc.n1ls.wtf:25565
-    - RoundCubeMail:
-        icon: roundcube.svg
-        href: https://mail.nilslorenzen.de/
     - VaultWarden:
         icon: vaultwarden.svg
         href: https://passwords.nlor.de/
