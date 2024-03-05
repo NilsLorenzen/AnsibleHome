@@ -13,3 +13,7 @@
       tags:
         - pihole
         - container
+    - role: homebridge
+      tags:
+        - homebridge
+        - container

@@ -15,10 +15,6 @@
       tags:
         - homepage
         - container
-    - role: homebridge
-      tags:
-        - homebridge
-        - container
     - role: openspeedtest
       tags:
         - openspeedtest
