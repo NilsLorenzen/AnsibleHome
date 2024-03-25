@@ -8,8 +8,6 @@ services:
     networks:
       - web
     hostname: uptimekuma
-    dns:
-      - {{ uptimekuma_dns | mandatory }}
     volumes:
       - {{ root }}/data:/app/data/
     #ports:

@@ -38,3 +38,7 @@
       tags:
         - ghost
         - container
+    - role: uptimekuma
+      tags:
+        - uptimekuma
+        - container
