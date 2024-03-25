@@ -12,7 +12,7 @@
           url: https://fritz.box/
     - Synology:
         icon: synology.svg
-        href: http://nas.n1ls.wtf/
+        href: https://192.168.10.11:5001/
     - OpenSpeedTest:
         icon: openspeedtest.png
         href: http://192.168.10.10:7070/
@@ -24,39 +24,14 @@
           url: https://dms.home-lorenzen.de
           username: {{ paperlessngx_username }}
           password: {{ paperlessngx_password }}
+
+- Brandon:
     - Traefik Brandon:
         icon: traefik.svg
         href: https://traefik.home-lorenzen.de/dashboard/
         widget:
           type: traefik
           url: https://traefik.home-lorenzen.de
-    - Unifi Controller:
-        icon: unifi.svg
-        href: https://brandon-1.fritz.box:8443/
-        widget:
-            type: unifi
-            url: https://brandon-1.fritz.box:8443/
-            fields: ["lan_devices", "wlan_devices", "wan", "lan"]
-            username: {{ unifi_username }}
-            password: {{ unifi_password }}
-
-- HomeNetwork:
-    - Traefik Tyrion:
-        icon: traefik.svg
-        href: https://traefik.nlor.de/dashboard/
-        widget:
-          type: traefik
-          url: https://traefik.nlor.de
-    - Plex:
-        icon: plex.svg
-        href: https://plex.home-lorenzen.de
-        widget:
-          type: tautulli
-          url: https://tautulli.home-lorenzen.de
-          key: "{{ tautulli_apikey }}"
-    - Tautulli:
-        icon: tautulli.svg
-        href: https://tautulli.home-lorenzen.de
     - PiHole:
         icon: pi-hole.svg
         href: https://pihole.home-lorenzen.de
@@ -72,21 +47,40 @@
           url: https://homebridge.home-lorenzen.de
           username: {{ homebridge_username }}
           password: {{ homebridge_password }}
-    - UptimeKuma:
-        icon: uptime-kuma.svg
-        href: https://uptime.home-lorenzen.de
+    - Unifi Controller:
+        icon: unifi.svg
+        href: https://192.168.10.41:8443/
         widget:
-            widget:
-            type: uptimekuma
-            url: https://uptime.home-lorenzen.de
-            slug: standard
+            type: unifi
+            url: https://unifi.home-lorenzen.de:8443/
+            fields: ["lan_devices", "wlan_devices", "wan", "lan"]
+            username: {{ unifi_username }}
+            password: {{ unifi_password }}
+
+- Tyrion:
+    - Traefik Tyrion:
+        icon: traefik.svg
+        href: https://traefik.nlor.de/dashboard/
+        widget:
+          type: traefik
+          url: https://traefik.nlor.de
+    - Plex:
+        icon: plex.svg
+        href: https://plex.nlor.de
+        widget:
+          type: tautulli
+          url: https://tautulli.home-lorenzen.de
+          key: "{{ tautulli_apikey }}"
+    - Tautulli:
+        icon: tautulli.svg
+        href: https://tautulli.home-lorenzen.de
     - Minecraft NiNi Server - Tyrion:
         icon: minecraft.svg
         widget:
           type: minecraft
           url: udp://mc.home-lorenzen.de:25565
 
-- CloudHosted:
+- Drogon:
     - Traefik Drogon:
         icon: traefik.svg
         href: https://traefik.nlor.de/dashboard/
@@ -95,6 +89,14 @@
           url: https://traefik.nlor.de
           username: {{ traefik_username }} # optional
           password: {{ traefik_password }} # optional
+    - UptimeKuma:
+        icon: uptime-kuma.svg
+        href: https://status.nlor.de
+        widget:
+            widget:
+            type: uptimekuma
+            url: https://status.nlor.de
+            slug: standard
     - Minecraft Bauserver - Drogon:
         icon: minecraft.svg
         widget:
