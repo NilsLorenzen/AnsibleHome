@@ -13,7 +13,7 @@ services:
       - META_TITLE=Nils Lorenzen
       - META_DESCRIPTION=Network-Administrator, Homelab-Enthusiast and motorcycle rider :)
       - META_AUTHOR=Nils Lorenzen
-      - META_KEYWORDS=Ansible, IT-Security, Windows, PowerShell, Hyper-V, Sophos, Linux
+      - META_KEYWORDS=Ansible, IT-Security, Windows, Firewall, Administrator, PowerShell, Hyper-V, Sophos, Linux
       - LANG=en
       - META_INDEX_STATUS=all
       - OG_SITE_NAME=Nils Lorenzen
@@ -29,16 +29,23 @@ services:
       - AVATAR_2X_URL=https://n1ls.wtf/images/profile-img.webp
       - AVATAR_ALT=Nils Lorenzen Profile Pic
       - NAME=Nils Lorenzen
-      - BIO=Network-Administrator, Homelab-Enthusiast and motorcycle rider :)
+      - BIO=Network-Administrator, Homelab-Enthusiast, Hobbyist Photographer and Motorcycle Rider :)
       # use ENV variable names for order, listed buttons will be boosted to the top
-      - BUTTON_ORDER=GITHUB,INSTAGRAM,XING,LINKED_IN
+      - BUTTON_ORDER=GITHUB,INSTAGRAM,LINKED_IN,XING
       # you can render an unlimited amount of custom buttons by adding 
       # the CUSTOM_BUTTON_* variables and by using a comma as a separator.
       - GITHUB=https://github.com/NilsLorenzen
       - INSTAGRAM=https://www.instagram.com/n1ls.lo/
-      - XING=https://www.xing.com/profile/Nils_Lorenzen9/
       - LINKED_IN=https://www.linkedin.com/in/nils-lorenzen-a9b35a29a/
-      - FOOTER=Nils Lorenzen © 2023
+      - XING=https://www.xing.com/profile/Nils_Lorenzen9/
+      - CUSTOM_BUTTON_TEXT=Shutterstock,E-Mail
+      - CUSTOM_BUTTON_URL=https://www.shutterstock.com/de/g/Nils+Lorenzen,mailto:contact@nilslorenzen.de
+      - CUSTOM_BUTTON_COLOR=#a51e1e,#000000
+      - CUSTOM_BUTTON_TEXT_COLOR=#ffffff,#ffffff
+      - CUSTOM_BUTTON_ALT_TEXT=My selfmade picture Library,Contact me via email
+      - CUSTOM_BUTTON_NAME=SUTTERSTOCK,MAIL
+      - CUSTOM_BUTTON_ICON=fa-solid fa-camera,fa-solid fa-envelope
+      - FOOTER=Nils Lorenzen © 2024
     labels:
       - traefik.enable=true
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.rule=Host(`{{ littlelink_domain | mandatory }}`)
