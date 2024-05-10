@@ -13,6 +13,12 @@
     - Synology:
         icon: synology.svg
         href: https://192.168.10.11:5001/
+        widget:
+            type: diskstation
+            url: http://192.168.10.11:5000/
+            username: {{ synology_username }}
+            password: {{ synology_password }}
+            volume: volume_1
     - OpenSpeedTest:
         icon: openspeedtest.png
         href: http://192.168.10.10:7070/
@@ -52,10 +58,12 @@
         href: https://192.168.10.41:8443/
         widget:
             type: unifi
-            url: https://unifi.home-lorenzen.de:8443/
+            url: https://192.168.10.41:8443/
             fields: ["lan_devices", "wlan_devices", "wan", "lan"]
             username: {{ unifi_username }}
             password: {{ unifi_password }}
+            hideErrors: true
+            site: brandon-unifi
 
 - Tyrion:
     - Traefik Tyrion:
@@ -68,12 +76,16 @@
         icon: plex.svg
         href: https://plex.nlor.de
         widget:
+            type: plex
+            url: http://192.168.10.16:32400
+            key: "{{ plex_apikey }}"
+    - Tautulli for Plex:
+        icon: tautulli.svg
+        href: https://tautulli.home-lorenzen.de
+        widget:
           type: tautulli
           url: https://tautulli.home-lorenzen.de
           key: "{{ tautulli_apikey }}"
-    - Tautulli:
-        icon: tautulli.svg
-        href: https://tautulli.home-lorenzen.de
     - Minecraft NiNi Server - Tyrion:
         icon: minecraft.svg
         widget:

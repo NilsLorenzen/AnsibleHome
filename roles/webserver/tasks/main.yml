@@ -44,11 +44,22 @@
   ansible.builtin.git:
     repo: "https://github.com/NilsLorenzen/n1ls.wtf.git"
     dest: "{{ root }}/data/"
+  notify: restart webserver.service
 
 - name: remove readme.md
   ansible.builtin.file:
     path: "{{ root }}/data/README.md"
     state: absent
+
+- name: Recursively change ownership of a directory
+  ansible.builtin.file:
+    path: "{{ root }}/data/"
+    state: directory
+    recurse: yes
+    owner: root
+    group: root
+    mode: '1777'
+  notify: restart webserver.service
 
 - name: start webserver.service
   ansible.builtin.systemd:
