@@ -1,0 +1,5 @@
+- name: restart overseerr.service
+  when: overseerr_started is not changed
+  ansible.builtin.systemd:
+    name: overseerr.service
+    state: restarted

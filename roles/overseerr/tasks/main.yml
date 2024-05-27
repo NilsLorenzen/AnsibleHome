@@ -1,0 +1,30 @@
+- name: copy systemd unit
+  ansible.builtin.template:
+    src: overseerr.service.j2
+    dest: /etc/systemd/system/overseerr.service
+    owner: root
+    group: root
+    mode: "644"
+  notify: restart overseerr.service
+
+- name: create /data/overseerr dir
+  ansible.builtin.file:
+    path: "{{ root }}"
+    state: directory
+
+- name: copy docker-compose file
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ root }}/docker-compose.yml"
+    owner: root
+    group: root
+    mode: "644"
+  notify: restart overseerr.service
+
+- name: start overseerr.service
+  ansible.builtin.systemd:
+    state: started
+    daemon_reload: true
+    enabled: true
+    name: overseerr.service
+  register: overseerr_started

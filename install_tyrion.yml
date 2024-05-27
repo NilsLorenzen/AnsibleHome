@@ -27,6 +27,10 @@
       tags:
         - tautulli
         - container
+    - role: overseerr
+      tags:
+        - overseerr
+        - container
     - role: minecraft_bedrock
       tags:
         - minecraft_bedrock
