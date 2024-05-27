@@ -1,5 +1,0 @@
-- name: restart smokeping.service
-  when: smokeping_started is not changed
-  ansible.builtin.systemd:
-    name: smokeping.service
-    state: restarted
