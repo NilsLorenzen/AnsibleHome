@@ -6,6 +6,8 @@ http:
       entryPoints:
         - https
       rule: 'Host(`{{ homepage_domain }}`)'
+      middlewares:
+        - basic-auth-global@docker
       service: homepage
   ## SERVICES ##
   services:
