@@ -72,6 +72,8 @@
         widget:
           type: traefik
           url: https://traefik.nlor.de
+          username: {{ traefik_username }} # optional
+          password: {{ traefik_password }} # optional
     - Plex:
         icon: plex.svg
         href: https://plex.nlor.de
@@ -86,6 +88,14 @@
           type: tautulli
           url: https://tautulli.home-lorenzen.de
           key: "{{ tautulli_apikey }}"
+    - Overseerr for Plex:
+        icon: overseerr.svg
+        href: https://overseerr.nlor.de
+        widget:
+          type: overseerr
+          fields: ["pending", "approved", "available"]
+          url: https://overseerr.nlor.de
+          key: "{{ overseerr_apikey }}"
     - Minecraft NiNi Server - Tyrion:
         icon: minecraft.svg
         widget:
