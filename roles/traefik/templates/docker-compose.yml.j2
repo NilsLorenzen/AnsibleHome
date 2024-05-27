@@ -31,5 +31,7 @@ services:
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.tls.certresolver=letsencrypt-inwx-dns
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.tls.domains[0].main={{ traefik_acme_domain }}
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.tls.domains[0].sans=*.{{ traefik_acme_domain }}
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.middlewares=basic-auth-global
+      - traefik.http.middlewares.basic-auth-global.basicauth.users={{ traefik_username }}:{{ traefik_password_hash }}
     healthcheck:
       test: traefik healthcheck
