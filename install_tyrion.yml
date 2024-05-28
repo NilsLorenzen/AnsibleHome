@@ -3,8 +3,6 @@
 - hosts: tyrion
   become: true
   roles:
-    - role: nic_configuration_tyrion
-      tags: nic_configuration_tyrion
     - role: docker
       tags: docker
     - role: traefik
