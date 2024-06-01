@@ -9,6 +9,7 @@ services:
       - web
     hostname: uptimekuma
     volumes:
+      - /etc/localtime:/etc/localtime:ro
       - {{ root }}/data:/app/data/
     #ports:
     #  - 3001:3001
