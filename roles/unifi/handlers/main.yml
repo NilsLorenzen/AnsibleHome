@@ -1,5 +1,0 @@
-- name: restart unifi.service
-  when: unifi_started is not changed
-  ansible.builtin.systemd:
-    name: unifi.service
-    state: restarted

@@ -1,4 +1,0 @@
-unifi_domain: unifi.home-lorenzen.de
-unifi_ip: 192.168.10.41
-unifi_mongo_pw: "{{ vault_unifi_mongo_pw }}"
-unifi_mongo_user: "unifi"
