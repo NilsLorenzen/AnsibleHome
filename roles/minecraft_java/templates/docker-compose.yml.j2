@@ -10,8 +10,8 @@ services:
       - 25565:25565
     environment:
       EULA: "TRUE"
-      TYPE: SPIGOT
-      VERSION: "1.20.1"
+      TYPE: "{{ minecraft_java_type }}"
+      VERSION: "{{ minecraft_java_version }}"
       ICON: "{{ minecraft_java_icon }}"
       MOTD: "{{ minecraft_java_motd }}"
       DIFFICULTY: "{{ minecraft_java_difficulty }}"
