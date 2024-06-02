@@ -1,3 +1,0 @@
-ghost_domain: nilslorenzen.de
-ghost_mysql_pw: "{{ vault_ghost_mysql_pw }}"
-ghost_mysql_dbname: ghost_db

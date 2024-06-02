@@ -1,5 +1,0 @@
-- name: restart ghost.service
-  when: ghost_started is not changed
-  ansible.builtin.systemd:
-    name: ghost.service
-    state: restarted
