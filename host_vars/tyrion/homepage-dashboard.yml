@@ -2,3 +2,5 @@ homepage_domain: dashboard.nlor.de
 homepage_ip: "192.168.10.16"
 unifi_username: "unifi-reader"
 unifi_password: "{{ vault_unifi_password }}"
+homebridge_username: admin
+homebridge_password: "{{ vault_homebridge_password }}"
