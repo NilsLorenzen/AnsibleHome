@@ -1,4 +1,4 @@
 spotify_tracker_domain: spotify.home-lorenzen.de
-spotify_tracker_api_domain: api.spotify.home-lorenzen.de
+spotify_tracker_api_domain: api-spotify.home-lorenzen.de
 spotify_tracker_public: "{{ vault_spotify_tracker_public }}"
 spotify_tracker_private: "{{ vault_spotify_tracker_private }}"

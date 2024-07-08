@@ -1,31 +1,60 @@
 networks:
+  default:
   web:
     external: true
 
 services:
-  app:
-    image: lscr.io/linuxserver/your_spotify:latest
-    container_name: your_spotify
-    dns:
-      - 8.8.8.8
+  api:
+    #container_name: yourSpotifyserver
+    image: yooooomi/your_spotify_server
+    ports:
+     - "55555:8080"
     networks:
-      - web
+     - default
+     - web
+    links:
+      - mongo
+    depends_on:
+      - mongo
     environment:
-      - PUID=1000
-      - PGID=1000
-      - APP_URL=http://{{ spotify_tracker_domain | mandatory }}
-      - SPOTIFY_PUBLIC={{ spotify_tracker_public | mandatory }}
+      - API_ENDPOINT=https://{{ spotify_tracker_api_domain | mandatory }} # This MUST be included as a valid URL in the spotify dashboard (see below)
+      - CLIENT_ENDPOINT=https://{{ spotify_tracker_domain | mandatory }}
+      - SPOTIFY_PUBLIC={{ spotify_tracker_public | mandatory }} 
       - SPOTIFY_SECRET={{ spotify_tracker_private | mandatory }}
-      - CORS=http://localhost:80,https://localhost:443,https://{{ spotify_tracker_domain | mandatory }}:443,http://{{ spotify_tracker_domain | mandatory }}:80
+      - CORS=i-want-a-security-vulnerability-and-want-to-allow-all-origins
+      - TIMEZONE=Europe/Berlin
       - MONGO_ENDPOINT=mongodb://mongo:27017/your_spotify
-    volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - {{ root }}/db:/data/db
-    #ports:
-    #  - 80:80
-    #  - 443:443
     labels:
-      - traefik.enable=true
-      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.rule=Host(`{{ spotify_tracker_domain | mandatory }}`)
-      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.entrypoints=https
-      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.tls=true
+      - "traefik.enable=true"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-api.rule=Host(`{{ spotify_tracker_api_domain | mandatory }}`)"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-api.entrypoints=https"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-api.tls=true"
+     # - "traefik.http.routers.yourspotifyback.middlewares=chain-authelia@file"  
+
+  mongo:
+    #container_name: mongo
+    image: mongo:4.4.8
+    networks:
+     - default
+    ports:
+     - 27017:27017
+    volumes:
+      - {{ root }}/db:/data/db
+  web:
+    #container_name: YourspotifyWeb
+    image: yooooomi/your_spotify_client
+    networks:
+     - default
+     - web
+    ports:
+      - "44444:3000"
+    environment:
+      - API_ENDPOINT=https://{{ spotify_tracker_api_domain | mandatory }}
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-web.rule=Host(`{{ spotify_tracker_domain | mandatory }}`)"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-web.entrypoints=https"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-web.tls=true"
+     #- "traefik.http.routers.yourspotify.middlewares=chain-authelia@file"
+
+     
