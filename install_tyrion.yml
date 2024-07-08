@@ -37,3 +37,8 @@
       tags:
         - minecraft_java
         - container
+    - role: spotify_tracker
+      tags:
+        - spotify
+        - spotify_tracker
+        - container

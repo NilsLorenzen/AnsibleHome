@@ -1,0 +1,31 @@
+networks:
+  web:
+    external: true
+
+services:
+  app:
+    image: lscr.io/linuxserver/your_spotify:latest
+    container_name: your_spotify
+    dns:
+      - 8.8.8.8
+    networks:
+      - web
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - APP_URL=http://{{ spotify_tracker_domain | mandatory }}
+      - SPOTIFY_PUBLIC={{ spotify_tracker_public | mandatory }}
+      - SPOTIFY_SECRET={{ spotify_tracker_private | mandatory }}
+      - CORS=http://localhost:80,https://localhost:443,https://{{ spotify_tracker_domain | mandatory }}:443,http://{{ spotify_tracker_domain | mandatory }}:80
+      - MONGO_ENDPOINT=mongodb://mongo:27017/your_spotify
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - {{ root }}/db:/data/db
+    #ports:
+    #  - 80:80
+    #  - 443:443
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.rule=Host(`{{ spotify_tracker_domain | mandatory }}`)
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.entrypoints=https
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.tls=true

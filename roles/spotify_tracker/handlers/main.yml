@@ -1,0 +1,5 @@
+- name: restart spotify_tracker.service
+  when: spotify_tracker_started is not changed
+  ansible.builtin.systemd:
+    name: spotify_tracker.service
+    state: restarted
