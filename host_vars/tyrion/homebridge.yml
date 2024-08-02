@@ -1,4 +1,4 @@
 homebridge_domain: homebridge.home-lorenzen.de
 homebridge_username: admin
-homebridge_ip: "192.168.10.41"
+homebridge_ip: "192.168.10.16"
 homebridge_password: "{{ vault_homebridge_password }}"

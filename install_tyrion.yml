@@ -13,9 +13,9 @@
       tags:
         - homepage
         - container
-    - role: openspeedtest
+    - role: homebridge
       tags:
-        - openspeedtest
+        - homebridge
         - container
     - role: plex
       tags:

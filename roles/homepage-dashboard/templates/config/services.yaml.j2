@@ -51,14 +51,6 @@
           type: pihole
           url: "http://pihole.home-lorenzen.de:9090"
           key: {{ vault_pihole_apikey }} # optional
-    - Homebridge:
-        icon: homebridge.svg
-        href: https://homebridge.home-lorenzen.de
-        widget:
-          type: homebridge
-          url: https://homebridge.home-lorenzen.de
-          username: {{ homebridge_username }}
-          password: {{ homebridge_password }}
     - Unifi Controller:
         icon: unifi.svg
         href: https://192.168.10.41:8443/
@@ -105,6 +97,14 @@
           fields: ["pending", "approved", "available"]
           url: https://overseerr.nlor.de
           key: "{{ overseerr_apikey }}"
+    - Homebridge:
+        icon: homebridge.svg
+        href: https://homebridge.home-lorenzen.de
+        widget:
+          type: homebridge
+          url: https://homebridge.home-lorenzen.de
+          username: {{ homebridge_username }}
+          password: {{ homebridge_password }}
     - Minecraft NiNi Server - Tyrion:
         icon: minecraft.svg
         widget:
