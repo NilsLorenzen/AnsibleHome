@@ -18,3 +18,4 @@ services:
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.entrypoints=https
       - traefik.http.services.${COMPOSE_PROJECT_NAME}-app.loadbalancer.server.port=8181
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.tls=true
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.middlewares=lan-only

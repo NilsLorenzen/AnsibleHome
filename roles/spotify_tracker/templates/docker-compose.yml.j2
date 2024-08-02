@@ -25,11 +25,11 @@ services:
       - TIMEZONE=Europe/Berlin
       - MONGO_ENDPOINT=mongodb://mongo:27017/your_spotify
     labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-api.rule=Host(`{{ spotify_tracker_api_domain | mandatory }}`)"
-      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-api.entrypoints=https"
-      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-api.tls=true"
-     # - "traefik.http.routers.yourspotifyback.middlewares=chain-authelia@file"  
+      - traefik.enable=true
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-api.rule=Host(`{{ spotify_tracker_api_domain | mandatory }}`)
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-api.entrypoints=https
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-api.tls=true
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-api.middlewares=lan-only
 
   mongo:
     #container_name: mongo
@@ -51,10 +51,10 @@ services:
     environment:
       - API_ENDPOINT=https://{{ spotify_tracker_api_domain | mandatory }}
     labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-web.rule=Host(`{{ spotify_tracker_domain | mandatory }}`)"
-      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-web.entrypoints=https"
-      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-web.tls=true"
-     #- "traefik.http.routers.yourspotify.middlewares=chain-authelia@file"
+      - traefik.enable=true
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-web.rule=Host(`{{ spotify_tracker_domain | mandatory }}`)
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-web.entrypoints=https
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-web.tls=true
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-web.middlewares=lan-only
 
      

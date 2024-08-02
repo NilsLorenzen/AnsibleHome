@@ -6,6 +6,8 @@ http:
       entryPoints:
         - https
       rule: 'Host(`{{ homebridge_domain }}`)'
+      middlewares:
+        - lan-only@docker
       service: homebridge
   ## SERVICES ##
   services:
