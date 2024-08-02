@@ -5,10 +5,20 @@ http:
     homepage:
       entryPoints:
         - https
-      rule: 'Host(`{{ homepage_domain }}`)'
+      #rule: 'Host(`{{ homepage_domain }}`)'
+      rule: Host(`{{ homepage_domain }}`)
       middlewares:
         - basic-auth-global@docker
       service: homepage
+    
+    homepage-lan:
+      entryPoints:
+        - https
+      rule: Host(`{{ homepage_domain }}`) && HeaderRegexp(`X-Real-Ip`, `(^127\.)|(^10\.)|(^172\.1[6-9]\.)|(^172\.2[0-9]\.)|(^172\.3[0-1]\.)|(^192\.168\.)`)
+      middlewares:
+        - lan-only@docker
+      service: homepage
+
   ## SERVICES ##
   services:
     # homepage service
