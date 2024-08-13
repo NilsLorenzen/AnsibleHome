@@ -14,3 +14,13 @@
 - search:
     provider: duckduckgo
     target: _blank
+
+- openmeteo:
+    label: Remchingen # optional
+    latitude: 48.9520266
+    longitude: 8.5706039
+    timezone: Europe/Berlin # optional
+    units: metric # or imperial
+    cache: 5 # Time in minutes to cache API responses, to stay within limits
+    format: # optional, Intl.NumberFormat options
+      maximumFractionDigits: 1
