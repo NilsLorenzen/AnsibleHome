@@ -17,6 +17,7 @@ services:
       - {{ root }}/conf/traefik.yml:/etc/traefik/traefik.yml:ro #statische Konfigurationsdatei
       - {{ root }}/conf/acme/:/etc/traefik/acme/
       - {{ root }}/conf/dynamic/:/etc/traefik/dynamic/:ro #dynamische Konfigurationsdateien
+      - {{ root }}/logs:/logs
     privileged: true
     environment:
       - LEGO_DISABLE_CNAME_SUPPORT=true
@@ -31,8 +32,8 @@ services:
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.tls.certresolver=letsencrypt-inwx-dns
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.tls.domains[0].main={{ traefik_acme_domain }}
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.tls.domains[0].sans=*.{{ traefik_acme_domain }}
-      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.middlewares=basic-auth-global
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.middlewares=lan-only
       - traefik.http.middlewares.basic-auth-global.basicauth.users={{ traefik_username }}:{{ traefik_password_hash }}
-      - "traefik.http.middlewares.lan-only.ipallowlist.sourcerange=192.168.10.0/22, 10.201.0.0/16, 0.202.0.0/16, 10.200.0.0/24"
+      - traefik.http.middlewares.lan-only.ipallowlist.sourcerange=192.168.10.0/22, 10.201.0.0/16, 0.202.0.0/16, 10.200.0.0/24
     healthcheck:
       test: traefik healthcheck
