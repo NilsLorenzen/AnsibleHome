@@ -1,0 +1,8 @@
+---
+
+- hosts: brandon, tyrion
+  become: true
+  roles:
+    - role: pihole
+      tags:
+        - pihole
