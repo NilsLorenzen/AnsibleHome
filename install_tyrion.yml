@@ -54,3 +54,7 @@
       tags:
         - grafana
         - container
+    - role: prometheus
+      tags:
+        - prometheus
+        - container

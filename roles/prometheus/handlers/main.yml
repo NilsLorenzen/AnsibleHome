@@ -1,0 +1,5 @@
+- name: restart prometheus.service
+  when: prometheus_started is not changed
+  ansible.builtin.systemd:
+    name: prometheus.service
+    state: restarted

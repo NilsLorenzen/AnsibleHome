@@ -1,0 +1,32 @@
+networks:
+  web:
+    external: true
+  grafana:
+    external: true
+
+services:
+
+  app:
+    image: prom/prometheus:latest
+    volumes:
+      - {{ root }}/etc/:/etc/prometheus/
+      - {{ root }}/data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      #- '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      #- '--web.console.templates=/usr/share/prometheus/consoles'
+    ports:
+      - 6060:9090
+    networks:
+      - web
+      - grafana
+    user: 0:1000 # needed?
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.${COMPOSE_PROJECT_NAME}-service.loadbalancer.server.port=9090
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.rule=Host(`{{ prometheus_domain | mandatory }}`)
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.service=${COMPOSE_PROJECT_NAME}-service
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.entrypoints=https
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.middlewares=lan-only
+

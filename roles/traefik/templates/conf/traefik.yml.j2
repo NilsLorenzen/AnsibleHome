@@ -16,9 +16,11 @@ ping: {}
 
 log:
   level: INFO
+  #filePath: "/logs/traefik.log"
+  #format: json
 
 accessLog:
-  filePath: "/logs/traefik.log"
+  filePath: "/logs/access_traefik.log"
   format: json
   filters:
     statusCodes:
@@ -32,7 +34,14 @@ accessLog:
     headers:
       defaultMode: keep # drop all headers per default
       names:
+          StartUTC: drop
           User-Agent: keep # log user agent strings
+
+metrics:
+  prometheus:
+    addEntryPointsLabels: true
+    addRoutersLabels: true
+    addServicesLabels: true
 
 entryPoints:
   http:
