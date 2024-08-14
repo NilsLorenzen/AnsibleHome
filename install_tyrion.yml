@@ -42,3 +42,7 @@
         - spotify
         - spotify_tracker
         - container
+    - role: it-tools
+      tags:
+        - it-tools
+        - container

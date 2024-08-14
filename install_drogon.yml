@@ -30,11 +30,6 @@
       tags:
         - minecraft_java
         - container
-    - role: it-tools
-      tags:
-        - it-tools
-        - container
-        
     - role: uptimekuma
       tags:
         - uptimekuma
