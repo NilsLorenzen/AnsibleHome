@@ -100,6 +100,14 @@
           type: pihole
           url: "http://pihole.home-lorenzen.de:9090"
           key: {{ vault_pihole_apikey }} # optional
+    - Grafana:
+        icon: grafana.svg
+        href: https://grafana.home-lorenzen.de
+        widget:
+            type: grafana
+            url: https://grafana.home-lorenzen.de
+            username: username
+            password: password
     - Homebridge:
         icon: homebridge.svg
         href: https://homebridge.home-lorenzen.de

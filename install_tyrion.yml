@@ -50,3 +50,7 @@
       tags:
         - it-tools
         - container
+    - role: grafana
+      tags:
+        - grafana
+        - container

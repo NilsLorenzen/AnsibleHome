@@ -1,0 +1,5 @@
+- name: restart grafana.service
+  when: grafana_started is not changed
+  ansible.builtin.systemd:
+    name: grafana.service
+    state: restarted
