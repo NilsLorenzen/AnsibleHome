@@ -2,7 +2,7 @@
 # For configuration options and examples, please see:
 # https://gethomepage.dev/latest/configs/services
 
-- Sonstiges:
+- Network / Media:
     - FritzBox:
         icon: avmfritzbox.svg
         href: http://fritz.box/
@@ -10,6 +10,30 @@
           type: fritzbox
           fields: ["uptime", "externalIPAddress", "down", "up"]
           url: https://fritz.box/
+    - Plex:
+        icon: plex.svg
+        href: https://plex.nlor.de
+        widget:
+            type: plex
+            url: http://192.168.10.16:32400
+            key: "{{ plex_apikey }}"
+    - Tautulli for Plex:
+        icon: tautulli.svg
+        href: https://tautulli.home-lorenzen.de
+        widget:
+          type: tautulli
+          url: https://tautulli.home-lorenzen.de
+          key: "{{ tautulli_apikey }}"
+    - Overseerr for Plex:
+        icon: overseerr.svg
+        href: https://overseerr.nlor.de
+        widget:
+          type: overseerr
+          fields: ["pending", "approved", "available"]
+          url: https://overseerr.nlor.de
+          key: "{{ overseerr_apikey }}"
+
+- NAS:
     - Synology:
         icon: synology.svg
         href: https://192.168.10.11:5001/
@@ -33,25 +57,16 @@
     - Cobalt Downloader:
         icon: nextcloud-ncdownloader.svg
         href: https://cobalt.home-lorenzen.de/
-    - CasaOS Dashboard - Jon:
-        icon: casaos.svg
-        href: http://jon-1.fritz.box:81/
 
-- Brandon:
-    - Traefik Brandon:
-        icon: traefik.svg
-        href: https://traefik.home-lorenzen.de/dashboard/
-        widget:
-          type: traefik
-          url: https://traefik.home-lorenzen.de
-    - PiHole:
+- ZimaBoards:
+    - PiHole Backup Brandon:
         icon: pi-hole.svg
-        href: https://pihole.home-lorenzen.de
+        href: https://pihole2.home-lorenzen.de
         widget:
           type: pihole
-          url: "http://pihole.home-lorenzen.de:9090"
+          url: "http://pihole2.home-lorenzen.de:9090"
           key: {{ vault_pihole_apikey }} # optional
-    - Unifi Controller:
+    - Unifi Controller Brandon:
         icon: unifi.svg
         href: https://192.168.10.41:8443/
         widget:
@@ -65,6 +80,9 @@
     - CasaOS Dashboard - Brandon:
         icon: casaos.svg
         href: http://brandon-1.fritz.box:81/
+    - CasaOS Dashboard - Jon:
+        icon: casaos.svg
+        href: http://jon-1.fritz.box:81/
 
 - Tyrion:
     - Traefik Tyrion:
@@ -75,28 +93,13 @@
           url: https://traefik.nlor.de
           username: {{ traefik_username }} # optional
           password: {{ traefik_password }} # optional
-    - Plex:
-        icon: plex.svg
-        href: https://plex.nlor.de
+    - PiHole Tyrion:
+        icon: pi-hole.svg
+        href: https://pihole.home-lorenzen.de
         widget:
-            type: plex
-            url: http://192.168.10.16:32400
-            key: "{{ plex_apikey }}"
-    - Tautulli for Plex:
-        icon: tautulli.svg
-        href: https://tautulli.home-lorenzen.de
-        widget:
-          type: tautulli
-          url: https://tautulli.home-lorenzen.de
-          key: "{{ tautulli_apikey }}"
-    - Overseerr for Plex:
-        icon: overseerr.svg
-        href: https://overseerr.nlor.de
-        widget:
-          type: overseerr
-          fields: ["pending", "approved", "available"]
-          url: https://overseerr.nlor.de
-          key: "{{ overseerr_apikey }}"
+          type: pihole
+          url: "http://pihole.home-lorenzen.de:9090"
+          key: {{ vault_pihole_apikey }} # optional
     - Homebridge:
         icon: homebridge.svg
         href: https://homebridge.home-lorenzen.de
@@ -113,6 +116,9 @@
     - Your_Spotify Tracker:
         icon: spotify.svg
         href: https://spotify.home-lorenzen.de/
+    - IT-Tools:
+        icon: it-tools.svg
+        href: https://tools.nlor.de/
 
 - Drogon:
     - Traefik Drogon:
@@ -139,9 +145,6 @@
     - VaultWarden:
         icon: vaultwarden.svg
         href: https://passwords.nlor.de/
-    - IT-Tools:
-        icon: it-tools.svg
-        href: https://tools.nlor.de/
     - Wordpress MFW:
         icon: wordpress.svg
         href: https://motorradfreunde-wilferdingen.de/
