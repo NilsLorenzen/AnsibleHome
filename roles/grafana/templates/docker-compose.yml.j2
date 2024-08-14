@@ -16,6 +16,7 @@ services:
       - {{ root }}/grafana:/var/lib/grafana
     environment:
       - GF_SERVER_ROOT_URL=https://{{ grafana_domain | mandatory }}
+      - TZ=Europe/Berlin
     #ports:
     #  - 3000:3000
     labels:
@@ -25,23 +26,3 @@ services:
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.service=${COMPOSE_PROJECT_NAME}-service
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.entrypoints=https
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.middlewares=lan-only
-
-  {# loki:
-      image: grafana/loki:2.9.9
-      volumes:
-      - {{ root }}/loki:/etc/loki
-      ports:
-       - "127.0.0.1:3100:3100"
-      user: 0:1000
-      command: -config.file=/etc/loki/loki-config.yml
-
-  promtail:
-    image: grafana/promtail:latest
-    depends_on:
-      - loki
-    volumes:
-      - /var/log:/var/log
-      - {{ root }}/promtail:/etc/promtail
-      - /data/traefik/logs:/var/log/traefik
-    command: -config.file=/etc/promtail/promtail-config.yml #}
-
