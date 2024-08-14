@@ -13,6 +13,14 @@
     mode: "644"
   notify: restart traefik.service
 
+- name: copy logrotate file
+  ansible.builtin.template:
+    src: traefik-logrotate.j2
+    dest: /etc/logrotate.d/traefik-logrotate
+    owner: root
+    group: root
+    mode: "644"
+
 - name: Create docker network web
   community.general.docker_network:
     name: web
