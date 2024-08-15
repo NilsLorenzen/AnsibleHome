@@ -2,14 +2,42 @@
 # For configuration options and examples, please see:
 # https://gethomepage.dev/latest/configs/services
 
-- Network / Media:
+- Network:
     - FritzBox:
         icon: avmfritzbox.svg
         href: http://fritz.box/
+        id: fritzBoxID
         widget:
           type: fritzbox
           fields: ["uptime", "externalIPAddress", "down", "up"]
           url: https://fritz.box/
+    - PiHole Tyrion:
+        icon: pi-hole.svg
+        href: https://pihole.home-lorenzen.de
+        widget:
+          type: pihole
+          url: "http://pihole.home-lorenzen.de:9090"
+          key: {{ vault_pihole_apikey }}
+          container: pihole
+    - PiHole Backup Brandon:
+        icon: pi-hole.svg
+        href: https://pihole2.home-lorenzen.de
+        widget:
+          type: pihole
+          url: "http://192.168.10.41:9090"
+          key: {{ vault_pihole_apikey }}
+    - Unifi Controller Brandon:
+        icon: unifi.svg
+        href: https://192.168.10.41:8443/
+        widget:
+            type: unifi
+            url: https://192.168.10.41:8443
+            #fields: ["lan_devices", "wlan_devices", "uptime"]
+            username: {{ unifi_username }}
+            password: {{ unifi_password }}
+            #site: brandon-unifi
+
+- Media:
     - Plex:
         icon: plex.svg
         href: https://plex.nlor.de
@@ -35,8 +63,8 @@
 
 - NAS:
     - Synology:
-        icon: synology.svg
-        href: https://192.168.10.11:5001/
+        icon: synology-dsm.svg
+        href: 
         widget:
             type: diskstation
             url: http://192.168.10.11:5000/
@@ -51,63 +79,52 @@
           url: https://dms.home-lorenzen.de
           username: {{ paperlessngx_username }}
           password: {{ paperlessngx_password }}
+    - Lorenzen Wiki.js:
+        icon: wikijs.png
+        href: https://wiki.home-lorenzen.de/
+        description: wiki.home-lorenzen.de
+
+- Werkzeuge:
     - Cobalt Downloader:
         icon: nextcloud-ncdownloader.svg
         href: https://cobalt.home-lorenzen.de/
+    - IT-Tools:
+        icon: it-tools.svg
+        href: https://tools.nlor.de/
+    - Spotify Tracker:
+        icon: spotify.svg
+        href: https://spotify.home-lorenzen.de/
+    - Stirling PDF:
+        icon: stirling-pdf.svg
+        href: https://pdf.nlor.de/
     - OpenSpeedTest:
         icon: openspeedtest.png
         href: http://192.168.10.11:3000/?S=L
 
-- ZimaBoards:
-    - PiHole Backup Brandon:
-        icon: pi-hole.svg
-        href: https://pihole2.home-lorenzen.de
-        widget:
-          type: pihole
-          url: "http://pihole2.home-lorenzen.de:9090"
-          key: {{ vault_pihole_apikey }} # optional
-    - Unifi Controller Brandon:
-        icon: unifi.svg
-        href: https://192.168.10.41:8443/
-        widget:
-            type: unifi
-            url: https://192.168.10.41:8443/
-            fields: ["lan_devices", "wlan_devices", "wan", "lan"]
-            username: {{ unifi_username }}
-            password: {{ unifi_password }}
-            hideErrors: true
-            site: brandon-unifi
-    - CasaOS Dashboard - Brandon:
-        icon: casaos.svg
-        href: http://brandon-1.fritz.box:81/
-    - CasaOS Dashboard - Jon:
-        icon: casaos.svg
-        href: http://jon-1.fritz.box:81/
-
 - Tyrion:
     - Traefik Tyrion:
         icon: traefik.svg
-        href: https://traefik.nlor.de/dashboard/
+        href: https://traefik.home-lorenzen.de/dashboard/
         widget:
           type: traefik
-          url: https://traefik.nlor.de
-          username: {{ traefik_username }} # optional
-          password: {{ traefik_password }} # optional
-    - PiHole Tyrion:
-        icon: pi-hole.svg
-        href: https://pihole.home-lorenzen.de
-        widget:
-          type: pihole
-          url: "http://pihole.home-lorenzen.de:9090"
-          key: {{ vault_pihole_apikey }} # optional
+          url: https://traefik.home-lorenzen.de
+          username: {{ traefik_username }}
+          password: {{ traefik_password }}
+          container: traefik-app-1
     - Grafana:
         icon: grafana.svg
         href: https://grafana.home-lorenzen.de
         widget:
-            type: grafana
-            url: https://grafana.home-lorenzen.de
-            username: username
-            password: password
+          type: grafana
+          url: https://grafana.home-lorenzen.de
+          username: {{ vault_grafana_user }}
+          password: {{ vault_grafana_password }}
+    - Prometheus:
+        icon: prometheus.svg
+        href: https://prometheus.home-lorenzen.de
+        widget:
+          type: prometheus
+          url: https://prometheus.home-lorenzen.de
     - Homebridge:
         icon: homebridge.svg
         href: https://homebridge.home-lorenzen.de
@@ -121,12 +138,6 @@
         widget:
           type: minecraft
           url: udp://mc.home-lorenzen.de:25565
-    - Your_Spotify Tracker:
-        icon: spotify.svg
-        href: https://spotify.home-lorenzen.de/
-    - IT-Tools:
-        icon: it-tools.svg
-        href: https://tools.nlor.de/
 
 - Drogon:
     - Traefik Drogon:
@@ -135,8 +146,8 @@
         widget:
           type: traefik
           url: https://traefik.n1ls.wtf
-          username: {{ traefik_username }} # optional
-          password: {{ traefik_password }} # optional
+          username: {{ traefik_username }}
+          password: {{ traefik_password }}
     - UptimeKuma:
         icon: uptime-kuma.svg
         href: https://status.nlor.de
@@ -150,13 +161,15 @@
         widget:
           type: minecraft
           url: udp://mc.n1ls.wtf:25565
+
+- Drogon2:
     - VaultWarden:
         icon: vaultwarden.svg
         href: https://passwords.nlor.de/
     - Wordpress MFW:
         icon: wordpress.svg
         href: https://motorradfreunde-wilferdingen.de/
-    - N1ls Website:
+    - NGINX Webserver (n1ls.wtf):
         icon: nginx.svg
         href: https://n1ls.wtf/
     - LittleLink (me.nilslorenzen.de):
