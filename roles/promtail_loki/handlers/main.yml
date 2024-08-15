@@ -1,0 +1,5 @@
+- name: restart promtail_loki.service
+  when: promtail_loki_started is not changed
+  ansible.builtin.systemd:
+    name: promtail_loki.service
+    state: restarted

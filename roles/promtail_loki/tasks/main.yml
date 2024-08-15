@@ -1,0 +1,27 @@
+- name: copy systemd unit
+  ansible.builtin.template:
+    src: promtail_loki.service.j2
+    dest: /etc/systemd/system/promtail_loki.service
+    owner: root
+    group: root
+    mode: "644"
+  notify: restart promtail_loki.service
+
+- name: create /data/promtail_loki dir
+  ansible.builtin.file:
+    path: "{{ root }}"
+    state: directory
+
+- name: Copy templates
+  ansible.builtin.import_tasks: copy-all-templates.yml
+  vars:
+    directory: ../templates
+    notify: restart promtail_loki.service
+
+- name: start promtail_loki.service
+  ansible.builtin.systemd:
+    state: started
+    daemon_reload: true
+    enabled: true
+    name: promtail_loki.service
+  register: promtail_loki_started

@@ -1,0 +1,33 @@
+networks:
+  grafana:
+    external: true
+
+services:
+
+  promtail:
+    image: grafana/promtail:latest
+    networks:
+      - grafana
+    environment:
+      - TZ=Europe/Berlin
+    volumes:
+      - {{ root }}/log:/var/log
+      - {{ root }}/promtail:/etc/promtail
+      - /data/traefik/logs:/var/log/traefik
+    depends_on:
+      - loki
+    user: 0:1000
+    command: -config.file=/etc/promtail/promtail-config.yml
+  
+  loki:
+    image: grafana/loki:latest
+    networks:
+    - grafana
+    environment:
+    - TZ=Europe/Berlin
+    volumes:
+    - {{ root }}/loki:/etc/loki
+    ports:
+    - "127.0.0.1:3100:3100"
+    user: 0:1000
+    command: -config.file=/etc/loki/loki-config.yml
