@@ -10,12 +10,13 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.services.${COMPOSE_PROJECT_NAME}-service.loadbalancer.server.port=80
+      
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.rule=Host(`{{ ittools_domain | mandatory }}`)
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.service=${COMPOSE_PROJECT_NAME}-service
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.entrypoints=https
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.middlewares=basic-auth-global
 
-      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app-lan.rule=Host(`{{ ittools_domain | mandatory }}`) && HeaderRegexp(`X-Real-Ip`, `(^127\.)|(^10\.)|(^172\.1[6-9]\.)|(^172\.2[0-9]\.)|(^172\.3[0-1]\.)|(^192\.168\.)`)
-      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app-lan.service=${COMPOSE_PROJECT_NAME}-service
-      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app-lan.entrypoints=https
-      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app-lan.middlewares=lan-only
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-lan.rule=Host(`{{ ittools_domain | mandatory }}`) && HeaderRegexp(`X-Real-Ip`, `(^127\.)|(^10\.)|(^172\.1[6-9]\.)|(^172\.2[0-9]\.)|(^172\.3[0-1]\.)|(^192\.168\.)`)
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-lan.service=${COMPOSE_PROJECT_NAME}-service
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-lan.entrypoints=https
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-lan.middlewares=lan-only
