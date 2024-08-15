@@ -8,6 +8,7 @@ http:
       rule: 'Host(`pihole2.home-lorenzen.de`)'
       middlewares:
         - lan-only@docker
+        - pihole-admin@docker
       service: piholeBackup
   ## SERVICES ##
   services:

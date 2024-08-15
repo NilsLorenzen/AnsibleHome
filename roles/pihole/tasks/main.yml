@@ -46,6 +46,7 @@
     owner: root
     group: root
     mode: "644"
+  notify: restart pihole.service
 
 - name: copy setupVars.conf - pihole settings
   ansible.builtin.template:
@@ -63,6 +64,7 @@
     owner: root
     group: root
     mode: "644"
+  notify: restart pihole.service
 
 - name: start pihole.service
   ansible.builtin.systemd:
