@@ -1,0 +1,5 @@
+- name: restart stirling-pdf.service
+  when: stirling_pdf_started is not changed
+  ansible.builtin.systemd:
+    name: stirling-pdf.service
+    state: restarted

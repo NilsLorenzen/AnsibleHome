@@ -50,6 +50,10 @@
       tags:
         - it-tools
         - container
+    - role: stirling-pdf
+      tags:
+        - pdf
+        - container
     - role: grafana
       tags:
         - grafana

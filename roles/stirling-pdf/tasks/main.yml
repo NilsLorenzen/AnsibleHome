@@ -1,0 +1,36 @@
+- name: copy systemd unit
+  ansible.builtin.template:
+    src: stirling-pdf.service.j2
+    dest: /etc/systemd/system/stirling-pdf.service
+    owner: root
+    group: root
+    mode: "644"
+  notify: restart stirling-pdf.service
+
+- name: create /data/stirling-pdf dir
+  ansible.builtin.file:
+    path: "{{ root }}"
+    state: directory
+
+- name: Copy templates
+  ansible.builtin.import_tasks: copy-all-templates.yml
+  vars:
+    directory: ../templates
+    notify: restart stirling-pdf.service
+
+- name: copy docker-compose file
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ root }}/docker-compose.yml"
+    owner: root
+    group: root
+    mode: "644"
+  notify: restart stirling-pdf.service
+
+- name: start stirling-pdf.service
+  ansible.builtin.systemd:
+    state: started
+    daemon_reload: true
+    enabled: true
+    name: stirling-pdf.service
+  register: stirling_pdf_started
