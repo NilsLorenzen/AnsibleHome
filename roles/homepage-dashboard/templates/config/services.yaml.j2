@@ -49,17 +49,17 @@
         icon: tautulli.svg
         href: https://tautulli.home-lorenzen.de
         widget:
-          type: tautulli
-          url: https://tautulli.home-lorenzen.de
-          key: "{{ tautulli_apikey }}"
+            type: tautulli
+            url: https://tautulli.home-lorenzen.de
+            key: "{{ tautulli_apikey }}"
     - Overseerr for Plex:
         icon: overseerr.svg
         href: https://overseerr.nlor.de
         widget:
-          type: overseerr
-          fields: ["pending", "approved", "available"]
-          url: https://overseerr.nlor.de
-          key: "{{ overseerr_apikey }}"
+            type: overseerr
+            fields: ["pending", "approved", "available"]
+            url: https://overseerr.nlor.de
+            key: "{{ overseerr_apikey }}"
 
 - Samwell (NAS):
     - Synology DSM:
@@ -79,10 +79,13 @@
           url: https://dms.home-lorenzen.de
           username: {{ paperlessngx_username }}
           password: {{ paperlessngx_password }}
-    - Lorenzen Wiki.js:
-        icon: wikijs.png
-        href: https://wiki.home-lorenzen.de/
-        description: wiki.home-lorenzen.de
+    - Speedtest Tracker:
+        icon: speedtest-tracker-old.png
+        href: https://speed.home-lorenzen.de/
+        widget:
+            type: speedtest
+            url: https://speed.home-lorenzen.de
+            bitratePrecision: 3 # optional, default is 0
 
 - Werkzeuge:
     - Cobalt Downloader:
@@ -100,6 +103,9 @@
     - OpenSpeedTest:
         icon: openspeedtest.png
         href: http://192.168.10.11:3000/?S=L
+    - Lorenzen Wiki.js:
+        icon: wikijs.png
+        href: https://wiki.home-lorenzen.de/
 
 - Tyrion:
     - Traefik Tyrion:
@@ -116,6 +122,7 @@
         href: https://grafana.home-lorenzen.de
         widget:
           type: grafana
+          fields: ["dashboards", "datasources", "alertstriggered"]
           url: https://grafana.home-lorenzen.de
           username: {{ vault_grafana_user }}
           password: {{ vault_grafana_password }}
