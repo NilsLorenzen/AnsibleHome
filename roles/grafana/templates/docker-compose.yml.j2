@@ -1,8 +1,8 @@
 networks:
   web:
     external: true
-  grafana:
-    external: true
+  grafana_grafana:
+    name: grafana
 
 services:
 
@@ -11,7 +11,7 @@ services:
     user: 0:1000 # please adjust
     networks:
       - web
-      - grafana
+      - grafana_grafana
     volumes:
       - {{ root }}/grafana:/var/lib/grafana
     environment:

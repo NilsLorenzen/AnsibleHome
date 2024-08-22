@@ -1,13 +1,13 @@
 networks:
-  web:
-    external: true
+  traefik_web:
+    name: web
 
 services:
 
   app:
     image: traefik:latest
     networks:
-      - web
+      - traefik_web
     ports:
       - 80:80
       - 443:443
@@ -23,7 +23,7 @@ services:
       - LEGO_DISABLE_CNAME_SUPPORT=true
       - INWX_USERNAME={{ inwx.username }}
       - INWX_PASSWORD={{ inwx.password }}
-      - INWX_PROPAGATION_TIMEOUT=0
+      - INWX_PROPAGATION_TIMEOUT=100
     labels:
       - traefik.enable=true
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.entrypoints=https

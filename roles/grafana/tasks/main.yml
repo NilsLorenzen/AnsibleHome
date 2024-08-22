@@ -18,10 +18,6 @@
     directory: ../templates
     notify: restart grafana.service
 
-- name: Create docker network grafana
-  community.general.docker_network:
-    name: grafana
-
 - name: start grafana.service
   ansible.builtin.systemd:
     state: started
