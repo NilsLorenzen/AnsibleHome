@@ -3,8 +3,8 @@
 - hosts: tyrion
   become: true
   roles:
-    - role: docker
-      tags: docker
+    #- role: docker
+    #  tags: docker
     - role: traefik
       tags:
         - traefik
@@ -33,14 +33,14 @@
       tags:
         - overseerr
         - container
-    - role: minecraft_bedrock
-      tags:
-        - minecraft_bedrock
-        - container
-    - role: minecraft_java
-      tags:
-        - minecraft_java
-        - container
+    # - role: minecraft_bedrock
+    #   tags:
+    #     - minecraft_bedrock
+    #     - container
+    # - role: minecraft_java
+    #   tags:
+    #     - minecraft_java
+    #     - container
     - role: spotify_tracker
       tags:
         - spotify
@@ -53,6 +53,10 @@
     - role: stirling-pdf
       tags:
         - pdf
+        - container
+    - role: openspeedtest
+      tags:
+        - openspeedtest
         - container
     - role: grafana
       tags:

@@ -1,11 +1,10 @@
 networks:
-  default:
   web:
     external: true
 
 services:
   app:
-    image: openspeedtest:latest
+    image: openspeedtest/latest
     ports:
       - '7070:3000'
       - '7071:3001'
