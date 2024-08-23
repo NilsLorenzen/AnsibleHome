@@ -9,6 +9,10 @@
       tags:
         - traefik
         - container
+    - role: whats-up-docker
+      tags:
+        - whatsupdocker
+        - container
     - role: pihole
       tags:
         - pihole

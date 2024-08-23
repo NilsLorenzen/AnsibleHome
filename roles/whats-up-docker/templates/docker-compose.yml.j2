@@ -1,0 +1,22 @@
+networks:
+  web:
+    external: true
+
+services:
+
+  app:
+    image: fmartinou/whats-up-docker:latest
+    container_name: whatsupdocker
+    networks:
+      - web
+    volumes:
+      - /etc/localtime:/etc/localtime:ro 
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    #ports:
+    #  - 3000:3000
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.${COMPOSE_PROJECT_NAME}-service.loadbalancer.server.port=3000
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.rule=Host(`{{ whatsupdocker_domain | mandatory }}`)
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.entrypoints=https
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.middlewares=lan-only

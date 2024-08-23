@@ -1,0 +1,30 @@
+- name: copy systemd unit
+  ansible.builtin.template:
+    src: whats-up-docker.service.j2
+    dest: /etc/systemd/system/whats-up-docker.service
+    owner: root
+    group: root
+    mode: "644"
+  notify: restart whats-up-docker.service
+
+- name: create /data/whats-up-docker dir
+  ansible.builtin.file:
+    path: "{{ root }}"
+    state: directory
+
+- name: copy docker-compose file
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ root }}/docker-compose.yml"
+    owner: root
+    group: root
+    mode: "644"
+  notify: restart whats-up-docker.service
+
+- name: start whats-up-docker.service
+  ansible.builtin.systemd:
+    state: started
+    daemon_reload: true
+    enabled: true
+    name: whats-up-docker.service
+  register: whats_up_docker_started

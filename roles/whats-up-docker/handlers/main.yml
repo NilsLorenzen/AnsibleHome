@@ -1,0 +1,5 @@
+- name: restart whats-up-docker.service
+  when: whats_up_docker_started is not changed
+  ansible.builtin.systemd:
+    name: whats-up-docker.service
+    state: restarted
