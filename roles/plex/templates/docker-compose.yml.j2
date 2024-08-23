@@ -17,3 +17,9 @@ services:
       - {{ root }}/config:/config
       - {{ root }}/data:/data
       - {{ root }}/transcode:/transcode
+    healthcheck:
+      test: curl --connect-timeout 15 --silent --show-error --fail http://localhost:32400/identity
+      interval: 1m00s
+      timeout: 15s
+      retries: 3
+      start_period: 1m00s
