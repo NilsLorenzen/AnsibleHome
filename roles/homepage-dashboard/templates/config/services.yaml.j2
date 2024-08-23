@@ -64,54 +64,6 @@
             key: "{{ overseerr_apikey }}"
         container: overseerr
 
-- Samwell (NAS):
-    - Synology DSM:
-        icon: synology-dsm.svg
-        href: https://nas.home-lorenzen.de:5001
-        widget:
-            type: diskstation
-            url: http://192.168.10.11:5000/
-            username: {{ synology_username }}
-            password: {{ synology_password }}
-            volume: volume_1
-    - PaperlessNGX:
-        icon: paperless-ngx.svg
-        href: https://dms.home-lorenzen.de
-        widget:
-          type: paperlessngx
-          url: https://dms.home-lorenzen.de
-          username: {{ paperlessngx_username }}
-          password: {{ paperlessngx_password }}
-    - Speedtest Tracker:
-        icon: speedtest-tracker-old.png
-        href: https://speed.home-lorenzen.de/
-        widget:
-            type: speedtest
-            url: https://speed.home-lorenzen.de
-            bitratePrecision: 3 # optional, default is 0
-        container: speedtest-tracker
-
-- Werkzeuge:
-    - IT-Tools:
-        icon: it-tools.svg
-        href: https://tools.nlor.de/
-        container: it-tools
-    - Spotify Tracker:
-        icon: spotify.svg
-        href: https://spotify.home-lorenzen.de/
-        container: spotify_tracker-web-1
-    - Stirling PDF:
-        icon: stirling-pdf.svg
-        href: https://pdf.nlor.de/
-        container: stirling-pdf
-    - OpenSpeedTest:
-        icon: openspeedtest.png
-        href: http://speedtest.home-lorenzen.de:7070/?S=L
-        container: openspeedtest
-    - Lorenzen Wiki.js:
-        icon: wikijs.png
-        href: https://wiki.home-lorenzen.de/
-
 - Tyrion:
     - Traefik Tyrion:
         icon: traefik.svg
@@ -132,13 +84,14 @@
           username: {{ vault_grafana_user }}
           password: {{ vault_grafana_password }}
         container: grafana
-    - Prometheus:
-        icon: prometheus.svg
-        href: https://prometheus.home-lorenzen.de
+    - Speedtest Tracker:
+        icon: speedtest-tracker-old.png
+        href: https://speed.home-lorenzen.de/
         widget:
-          type: prometheus
-          url: https://prometheus.home-lorenzen.de
-        container: prometheus
+            type: speedtest
+            url: https://speed.home-lorenzen.de
+            bitratePrecision: 3 # optional, default is 0
+        container: speedtest-tracker
     - Homebridge:
         icon: homebridge.svg
         href: https://homebridge.home-lorenzen.de
@@ -155,6 +108,13 @@
           type: whatsupdocker
           url: https://whatsup.home-lorenzen.de
         container: whatsupdocker
+    - Prometheus:
+        icon: prometheus.svg
+        href: https://prometheus.home-lorenzen.de
+        widget:
+          type: prometheus
+          url: https://prometheus.home-lorenzen.de
+        container: prometheus
     - Minecraft NiNi Server - Tyrion:
         icon: minecraft.svg
         widget:
@@ -178,6 +138,28 @@
                 label: wind speed
                 value: "{attributes.wind_speed} {attributes.wind_speed_unit}" #}
         container: homeassistant
+
+- Samwell (NAS):
+    - Synology DSM:
+        icon: synology-dsm.svg
+        href: https://nas.home-lorenzen.de:5001
+        widget:
+            type: diskstation
+            url: http://192.168.10.11:5000/
+            username: {{ synology_username }}
+            password: {{ synology_password }}
+            volume: volume_1
+    - PaperlessNGX:
+        icon: paperless-ngx.svg
+        href: https://dms.home-lorenzen.de
+        widget:
+          type: paperlessngx
+          url: https://dms.home-lorenzen.de
+          username: {{ paperlessngx_username }}
+          password: {{ paperlessngx_password }}
+    - Lorenzen Wiki.js:
+        icon: wikijs.png
+        href: https://wiki.home-lorenzen.de/
 
 - Drogon:
     - Traefik Drogon:
@@ -215,3 +197,21 @@
     - LittleLink (me.nilslorenzen.de):
         icon: littlelink-custom.svg
         href: https://me.nilslorenzen.de/
+
+- Werkzeuge:
+    - IT-Tools:
+        icon: it-tools.svg
+        href: https://tools.nlor.de/
+        container: it-tools
+    - Spotify Tracker:
+        icon: spotify.svg
+        href: https://spotify.home-lorenzen.de/
+        container: spotify_tracker-web-1
+    - Stirling PDF:
+        icon: stirling-pdf.svg
+        href: https://pdf.nlor.de/
+        container: stirling-pdf
+    - OpenSpeedTest:
+        icon: openspeedtest.png
+        href: http://speedtest.home-lorenzen.de:7070/?S=L
+        container: openspeedtest
