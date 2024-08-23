@@ -1,0 +1,15 @@
+services:
+
+  app:
+    image: lscr.io/linuxserver/homeassistant:latest
+    container_name: homeassistant
+    network_mode: host
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - {{ root }}/config:/config
+    #ports:
+    #  - 8123:8123
+    #devices:
+    #  - /path/to/device:/path/to/device #optional
+    healthcheck:
+      test: "curl --fail http://localhost:8123/ || exit 1"

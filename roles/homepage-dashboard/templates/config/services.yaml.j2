@@ -161,6 +161,23 @@
           type: minecraft
           url: udp://mc.home-lorenzen.de:25565
         container: minecraft_java
+    - Home Assistant:
+        icon: home-assistant.svg
+        href: https://homeassistant.home-lorenzen.de
+        widget:
+            type: homeassistant
+            url: http://192.168.10.16:8123
+            key: "{{ homeassistant_token }}"
+            {# custom:
+                - state: sensor.total_power
+                - state: sensor.total_energy_today
+                label: energy today
+                - template: "{{ states.switch|selectattr('state','equalto','on')|list|length }}"
+                label: switches on
+                - state: weather.forecast_home
+                label: wind speed
+                value: "{attributes.wind_speed} {attributes.wind_speed_unit}" #}
+        container: homeassistant
 
 - Drogon:
     - Traefik Drogon:
