@@ -1,0 +1,5 @@
+- name: restart speedtest-tracker.service
+  when: speedtest_tracker_started is not changed
+  ansible.builtin.systemd:
+    name: speedtest-tracker.service
+    state: restarted

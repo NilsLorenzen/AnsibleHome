@@ -58,6 +58,10 @@
       tags:
         - openspeedtest
         - container
+    - role: speedtest-tracker
+      tags:
+        - speedtest-tracker
+        - container
     - role: grafana
       tags:
         - grafana
