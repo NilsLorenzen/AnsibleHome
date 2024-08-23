@@ -1,6 +1,7 @@
 services:
   server:
     image: itzg/minecraft-server:latest
+    container_name: minecraft_java
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - {{ root }}/data:/data
