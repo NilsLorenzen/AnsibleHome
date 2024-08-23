@@ -19,6 +19,7 @@ services:
       - {{ root }}/conf/dynamic/:/etc/traefik/dynamic/:ro #dynamische Konfigurationsdateien
       - {{ root }}/logs:/logs
     privileged: true
+    container_name: traefik
     environment:
       - LEGO_DISABLE_CNAME_SUPPORT=true
       - INWX_USERNAME={{ inwx.username }}

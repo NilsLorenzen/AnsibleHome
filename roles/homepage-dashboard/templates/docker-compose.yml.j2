@@ -2,13 +2,14 @@ services:
   app:
     image: ghcr.io/gethomepage/homepage:latest
     hostname: homepage-dashboard
+    container_name: homepage-dashboard
     network_mode: host
     #ports:
     #  - 3000:3000
     environment:
       - LOG_LEVEL=debug
-    privileged: true #for docker socket
+    #privileged: true #for docker socket
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - {{ root }}/config:/app/config
-      - /var/run/docker.sock:/var/run/docker.sock # (optional) For docker integrations
+      - /var/run/docker.sock:/var/run/docker.sock:ro # (optional) For docker integrations

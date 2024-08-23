@@ -2,6 +2,7 @@ services:
   app:
     image: homebridge/homebridge:latest
     network_mode: host
+    container_name: homebridge
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - {{ root }}/homebridge-data:/homebridge

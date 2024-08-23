@@ -5,6 +5,7 @@ networks:
 services:
   app:
     image: sctx/overseerr:latest
+    container_name: overseerr
     environment:
       - LOG_LEVEL=debug
       - PORT=5055 #optional
