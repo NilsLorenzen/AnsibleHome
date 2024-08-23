@@ -20,3 +20,9 @@ services:
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.rule=Host(`{{ whatsupdocker_domain | mandatory }}`)
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.entrypoints=https
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.middlewares=lan-only
+    healthcheck:
+      test: wget --no-verbose --tries=1 --no-check-certificate --spider http://localhost:3000
+      interval: 10s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
