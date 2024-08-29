@@ -33,13 +33,16 @@ services:
 
   mongo:
     #container_name: mongo
-    image: mongo:4.4.8
+    image: mongo:4.4.8 #recommended version
     networks:
      - default
     ports:
      - 27017:27017
     volumes:
       - {{ root }}/db:/data/db
+    labels:
+      - wud.watch=false # ignore updates in wud
+
   web:
     #container_name: YourspotifyWeb
     image: yooooomi/your_spotify_client
@@ -56,5 +59,4 @@ services:
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-web.entrypoints=https
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-web.tls=true
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-web.middlewares=lan-only
-
-     
+ 
