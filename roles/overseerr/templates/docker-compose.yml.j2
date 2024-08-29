@@ -21,4 +21,7 @@ services:
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.rule=Host(`{{ overseerr_domain | mandatory }}`)
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.entrypoints=https
       - traefik.http.services.${COMPOSE_PROJECT_NAME}-app.loadbalancer.server.port=5055
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.tls.certresolver=letsencrypt-inwx-dns
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.tls=true
+    healthcheck:
+      test: wget http://localhost:5055/api/v1/status -qO /dev/null || exit 1
