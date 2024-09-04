@@ -5,12 +5,12 @@
 - Network:
     - FritzBox:
         icon: avmfritzbox.svg
-        href: http://fritz.box/
+        href: http://192.168.5.1/
         id: fritzBoxID
         widget:
           type: fritzbox
           fields: ["uptime", "externalIPAddress", "down", "up"]
-          url: https://fritz.box/
+          url: http://192.168.5.1/
     - PiHole Tyrion:
         icon: pi-hole.svg
         href: https://pihole.home-lorenzen.de
@@ -19,19 +19,19 @@
           url: "http://pihole.home-lorenzen.de:9090"
           key: {{ vault_pihole_apikey }}
         container: pihole
-    - PiHole Backup Brandon:
+    {# - PiHole Backup Brandon:
         icon: pi-hole.svg
         href: https://pihole2.home-lorenzen.de
         widget:
           type: pihole
           url: "http://192.168.10.41:9090"
-          key: {{ vault_pihole_apikey }}
-    - Unifi Controller Brandon:
+          key: {{ vault_pihole_apikey }} #}
+    - UCG Max Gateway:
         icon: unifi.svg
-        href: https://192.168.10.41:8443/
+        href: https://192.168.10.1/
         widget:
             type: unifi
-            url: https://192.168.10.41:8443
+            url: https://192.168.10.1
             #fields: ["lan_devices", "wlan_devices", "uptime"]
             username: {{ unifi_username }}
             password: {{ unifi_password }}
