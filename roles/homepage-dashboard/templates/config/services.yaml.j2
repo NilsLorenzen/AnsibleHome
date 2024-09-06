@@ -19,13 +19,13 @@
           url: "http://pihole.home-lorenzen.de:9090"
           key: {{ vault_pihole_apikey }}
         container: pihole
-    {# - PiHole Backup Brandon:
+    - PiHole Backup Nas:
         icon: pi-hole.svg
-        href: https://pihole2.home-lorenzen.de
+        href: https://pihole2.home-lorenzen.de/admin/
         widget:
           type: pihole
-          url: "http://192.168.10.41:9090"
-          key: {{ vault_pihole_apikey }} #}
+          url: "http://192.168.10.12:8080"
+          key: {{ vault_pihole_apikey }}
     - UCG Max Gateway:
         icon: unifi.svg
         href: https://192.168.10.1/
