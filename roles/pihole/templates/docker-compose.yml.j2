@@ -18,6 +18,8 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - {{ root }}/data:/etc/pihole
       - {{ root }}/dnsmasq.d:/etc/dnsmasq.d
+    #cap_add:
+    #  - NET_ADMIN
     labels:
       - traefik.enable=true
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.entrypoints=https
