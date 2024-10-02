@@ -1,0 +1,5 @@
+- name: restart ntp_server.service
+  when: ntp_server_started is not changed
+  ansible.builtin.systemd:
+    name: ntp_server.service
+    state: restarted

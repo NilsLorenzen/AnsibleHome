@@ -1,0 +1,11 @@
+services:
+
+  server:
+    image: cturra/ntp:latest
+    container_name: ntp_server
+    ports:
+      - 123:123/udp
+    environment:
+      - TZ=Europe/Berlin
+      - NTP_SERVER=time.cloudflare.com
+      - ENABLE_NTS=true
