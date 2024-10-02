@@ -11,6 +11,15 @@
           type: fritzbox
           fields: ["uptime", "externalIPAddress", "down", "up"]
           url: http://192.168.5.1/
+    - UCG Max Gateway:
+        icon: unifi.svg
+        href: https://192.168.10.1/
+        widget:
+            type: unifi
+            url: https://192.168.10.1
+            #fields: ["lan_devices", "wlan_devices", "uptime"]
+            username: {{ unifi_username }}
+            password: {{ unifi_password }}
     - PiHole Tyrion:
         icon: pi-hole.svg
         href: https://pihole.home-lorenzen.de
@@ -21,21 +30,11 @@
         container: pihole
     - PiHole Backup Nas:
         icon: pi-hole.svg
-        href: https://pihole2.home-lorenzen.de/admin/
+        href: http://192.168.10.12:8080/admin/
         widget:
           type: pihole
           url: "http://192.168.10.12:8080"
           key: {{ vault_pihole_apikey }}
-    - UCG Max Gateway:
-        icon: unifi.svg
-        href: https://192.168.10.1/
-        widget:
-            type: unifi
-            url: https://192.168.10.1
-            #fields: ["lan_devices", "wlan_devices", "uptime"]
-            username: {{ unifi_username }}
-            password: {{ unifi_password }}
-            #site: brandon-unifi
 
 - Media:
     - Plex:
@@ -138,6 +137,23 @@
                 label: wind speed
                 value: "{attributes.wind_speed} {attributes.wind_speed_unit}" #}
         container: homeassistant
+- Tyrion2:
+    - IT-Tools:
+        icon: it-tools.svg
+        href: https://tools.nlor.de/
+        container: it-tools
+    - Spotify Tracker:
+        icon: spotify.svg
+        href: https://spotify.home-lorenzen.de/
+        container: spotify_tracker-web-1
+    - Stirling PDF:
+        icon: stirling-pdf.svg
+        href: https://pdf.nlor.de/
+        container: stirling-pdf
+    - OpenSpeedTest:
+        icon: openspeedtest.png
+        href: http://speedtest.home-lorenzen.de:7070/?S=L
+        container: openspeedtest
 
 - Samwell (NAS):
     - Synology DSM:
@@ -197,21 +213,3 @@
     - LittleLink (me.nilslorenzen.de):
         icon: littlelink-custom.svg
         href: https://me.nilslorenzen.de/
-
-- Werkzeuge:
-    - IT-Tools:
-        icon: it-tools.svg
-        href: https://tools.nlor.de/
-        container: it-tools
-    - Spotify Tracker:
-        icon: spotify.svg
-        href: https://spotify.home-lorenzen.de/
-        container: spotify_tracker-web-1
-    - Stirling PDF:
-        icon: stirling-pdf.svg
-        href: https://pdf.nlor.de/
-        container: stirling-pdf
-    - OpenSpeedTest:
-        icon: openspeedtest.png
-        href: http://speedtest.home-lorenzen.de:7070/?S=L
-        container: openspeedtest
