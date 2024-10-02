@@ -9,10 +9,6 @@
       tags:
         - traefik
         - container
-    - role: vaultwarden
-      tags:
-        - vaultwarden
-        - container
     - role: wordpress_mfw
       tags:
         - wordpress_mfw

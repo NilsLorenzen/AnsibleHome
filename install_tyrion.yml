@@ -21,6 +21,10 @@
       tags:
         - homepage
         - container
+    - role: vaultwarden
+      tags:
+        - vaultwarden
+        - container
     - role: homebridge
       tags:
         - homebridge
