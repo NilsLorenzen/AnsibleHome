@@ -14,6 +14,9 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     #ports:
     #  - 3000:3000
+    environment:
+      - WUD_WATCHER_tyrion_SOCKET=/var/run/docker.sock
+      - WUD_WATCHER_synology_HOST=192.168.10.12
     labels:
       - traefik.enable=true
       - traefik.http.services.${COMPOSE_PROJECT_NAME}-service.loadbalancer.server.port=3000
