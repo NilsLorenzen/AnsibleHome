@@ -47,4 +47,5 @@ services:
       - traefik.enable=true
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.rule=Host(`{{ vaultwarden_domain | mandatory }}`)
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.entrypoints=https
+      - wud.tag.include=^\d+\.\d+\.\d+$$ # only watch X.X.X Versions
       
