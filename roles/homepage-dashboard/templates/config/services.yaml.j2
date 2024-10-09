@@ -138,6 +138,10 @@
                 value: "{attributes.wind_speed} {attributes.wind_speed_unit}" #}
         container: homeassistant
 - Tyrion2:
+    - VaultWarden:
+        container: vaultwarden
+        icon: vaultwarden.svg
+        href: https://passwords.nlor.de/
     - IT-Tools:
         icon: it-tools.svg
         href: https://tools.nlor.de/
@@ -201,9 +205,6 @@
           url: udp://mc.n1ls.wtf:25565
 
 - Drogon2:
-    - VaultWarden:
-        icon: vaultwarden.svg
-        href: https://passwords.nlor.de/
     - Wordpress MFW:
         icon: wordpress.svg
         href: https://motorradfreunde-wilferdingen.de/
