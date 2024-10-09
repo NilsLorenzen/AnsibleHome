@@ -4,10 +4,10 @@ scrape_configs:
  - job_name: prometheus
    static_configs:
     - targets:
-       - prometheus-app-1:9090
+       - prometheus:9090
  - job_name: 'traefik-tyrion'
    scrape_interval: 5s
    static_configs:
-    - targets: ['traefik-app-1:8080']
+    - targets: ['traefik:8080']
    tls_config:
       insecure_skip_verify: true
