@@ -23,14 +23,17 @@
     - PiHole Tyrion:
         icon: pi-hole.svg
         href: https://pihole.home-lorenzen.de
+        server: tyrion
+        container: pihole
         widget:
           type: pihole
           url: "http://pihole.home-lorenzen.de:9090"
           key: {{ vault_pihole_apikey }}
-        container: pihole
     - PiHole Backup Nas:
         icon: pi-hole.svg
         href: http://192.168.10.12:8080/admin/
+        server: nas
+        container: pihole_backup
         widget:
           type: pihole
           url: "http://192.168.10.12:8080"
@@ -40,89 +43,101 @@
     - Plex:
         icon: plex.svg
         href: https://plex.nlor.de
+        server: tyrion
+        container: plex
         widget:
             type: plex
             url: http://192.168.10.16:32400
             key: "{{ plex_apikey }}"
-        container: plex
     - Tautulli for Plex:
         icon: tautulli.svg
         href: https://tautulli.home-lorenzen.de
+        server: tyrion
+        container: tautulli
         widget:
             type: tautulli
             url: https://tautulli.home-lorenzen.de
             key: "{{ tautulli_apikey }}"
-        container: tautulli
     - Overseerr for Plex:
         icon: overseerr.svg
         href: https://overseerr.nlor.de
+        server: tyrion
+        container: overseerr
         widget:
             type: overseerr
             fields: ["pending", "approved", "available"]
             url: https://overseerr.nlor.de
             key: "{{ overseerr_apikey }}"
-        container: overseerr
 
 - Tyrion:
     - Traefik Tyrion:
         icon: traefik.svg
         href: https://traefik.home-lorenzen.de/dashboard/
+        server: tyrion
+        container: traefik
         widget:
           type: traefik
           url: https://traefik.home-lorenzen.de
           username: {{ traefik_username }}
           password: {{ traefik_password }}
-        container: traefik
     - Grafana:
         icon: grafana.svg
         href: https://grafana.home-lorenzen.de
+        server: tyrion
+        container: grafana
         widget:
           type: grafana
           fields: ["dashboards", "datasources", "alertstriggered"]
           url: https://grafana.home-lorenzen.de
           username: {{ vault_grafana_user }}
           password: {{ vault_grafana_password }}
-        container: grafana
     - Speedtest Tracker:
         icon: speedtest-tracker-old.png
         href: https://speed.home-lorenzen.de/
+        server: tyrion
+        container: speedtest-tracker
         widget:
             type: speedtest
             url: https://speed.home-lorenzen.de
             bitratePrecision: 3 # optional, default is 0
-        container: speedtest-tracker
     - Homebridge:
         icon: homebridge.svg
         href: https://homebridge.home-lorenzen.de
+        server: tyrion
+        container: homebridge
         widget:
           type: homebridge
           url: https://homebridge.home-lorenzen.de
           username: {{ homebridge_username }}
           password: {{ homebridge_password }}
-        container: homebridge
     - Whats up Docker:
         icon: prometheus.svg
         href: https://whatsup.home-lorenzen.de
+        server: tyrion
+        container: whatsupdocker
         widget:
           type: whatsupdocker
           url: https://whatsup.home-lorenzen.de
-        container: whatsupdocker
     - Prometheus:
         icon: prometheus.svg
         href: https://prometheus.home-lorenzen.de
+        server: tyrion
+        container: prometheus
         widget:
           type: prometheus
           url: https://prometheus.home-lorenzen.de
-        container: prometheus
     - Minecraft NiNi Server - Tyrion:
         icon: minecraft.svg
+        server: tyrion
+        container: minecraft_java
         widget:
           type: minecraft
           url: udp://mc.home-lorenzen.de:25565
-        container: minecraft_java
     - Home Assistant:
         icon: home-assistant.svg
         href: https://homeassistant.home-lorenzen.de
+        server: tyrion
+        container: homeassistant
         widget:
             type: homeassistant
             url: http://192.168.10.16:8123
@@ -136,27 +151,31 @@
                 - state: weather.forecast_home
                 label: wind speed
                 value: "{attributes.wind_speed} {attributes.wind_speed_unit}" #}
-        container: homeassistant
 - Tyrion2:
     - VaultWarden:
-        container: vaultwarden
         icon: vaultwarden.svg
         href: https://passwords.nlor.de/
+        server: tyrion
+        container: vaultwarden
     - IT-Tools:
         icon: it-tools.svg
         href: https://tools.nlor.de/
+        server: tyrion
         container: it-tools
     - Spotify Tracker:
         icon: spotify.svg
         href: https://spotify.home-lorenzen.de/
+        server: tyrion
         container: spotify_tracker-web-1
     - Stirling PDF:
         icon: stirling-pdf.svg
         href: https://pdf.nlor.de/
+        server: tyrion
         container: stirling-pdf
     - OpenSpeedTest:
         icon: openspeedtest.png
         href: http://speedtest.home-lorenzen.de:7070/?S=L
+        server: tyrion
         container: openspeedtest
 
 - Samwell (NAS):
@@ -172,6 +191,8 @@
     - PaperlessNGX:
         icon: paperless-ngx.svg
         href: https://dms.home-lorenzen.de
+        server: nas
+        container: paperlessngx-webserver-1
         widget:
           type: paperlessngx
           url: https://dms.home-lorenzen.de
@@ -180,6 +201,8 @@
     - Lorenzen Wiki.js:
         icon: wikijs.png
         href: https://wiki.home-lorenzen.de/
+        server: nas
+        container: wikijs-wiki-1
 
 - Drogon:
     - Traefik Drogon:
