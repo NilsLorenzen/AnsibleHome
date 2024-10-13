@@ -15,14 +15,13 @@ services:
     #ports:
     #  - 3000:3000
     environment:
-      - WUD_WATCHER_tyrion_SOCKET=/var/run/docker.sock
-      - WUD_WATCHER_synology_HOST=192.168.10.12
+      - WUD_WATCHER_{{ whatsupdocker_watcher_name }}_SOCKET=/var/run/docker.sock
     labels:
       - traefik.enable=true
       - traefik.http.services.${COMPOSE_PROJECT_NAME}-service.loadbalancer.server.port=3000
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.rule=Host(`{{ whatsupdocker_domain | mandatory }}`)
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.entrypoints=https
-      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.middlewares=lan-only
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.middlewares={{ whatsupdocker_traefik_middleware }}
     healthcheck:
       test: wget --no-verbose --tries=1 --no-check-certificate --spider http://localhost:3000
       interval: 10s
