@@ -48,5 +48,8 @@ services:
       - traefik.enable=true
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.rule=Host(`{{ vaultwarden_domain | mandatory }}`)
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.entrypoints=https
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.tls.certresolver=letsencrypt-inwx-dns
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.tls.domains[0].main=nlor.de
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.tls.domains[0].sans=*.nlor.de
       - wud.tag.include=^\d+\.\d+\.\d+$$ # only watch X.X.X Versions
       
