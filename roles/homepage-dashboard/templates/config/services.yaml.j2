@@ -14,6 +14,7 @@
     - UCG Max Gateway:
         icon: unifi.svg
         href: https://192.168.10.1/
+        id: unifiID
         widget:
             type: unifi
             url: https://192.168.10.1
@@ -80,17 +81,14 @@
           url: https://traefik.home-lorenzen.de
           username: {{ traefik_username }}
           password: {{ traefik_password }}
-    - Grafana:
-        icon: grafana.svg
-        href: https://grafana.home-lorenzen.de
+    - Whats up Docker:
+        icon: whats-up-docker.svg
+        href: https://whatsup.home-lorenzen.de
         server: tyrion
-        container: grafana
+        container: whatsupdocker
         widget:
-          type: grafana
-          fields: ["dashboards", "datasources", "alertstriggered"]
-          url: https://grafana.home-lorenzen.de
-          username: {{ vault_grafana_user }}
-          password: {{ vault_grafana_password }}
+          type: whatsupdocker
+          url: https://whatsup.home-lorenzen.de
     - Speedtest Tracker:
         icon: speedtest-tracker-old.png
         href: https://speed.home-lorenzen.de/
@@ -99,7 +97,7 @@
         widget:
             type: speedtest
             url: https://speed.home-lorenzen.de
-            bitratePrecision: 3 # optional, default is 0
+            bitratePrecision: 2 # optional, default is 0
     - Homebridge:
         icon: homebridge.svg
         href: https://homebridge.home-lorenzen.de
@@ -110,14 +108,18 @@
           url: https://homebridge.home-lorenzen.de
           username: {{ homebridge_username }}
           password: {{ homebridge_password }}
-    - Whats up Docker:
-        icon: prometheus.svg
-        href: https://whatsup.home-lorenzen.de
+    - Grafana:
+        icon: grafana.svg
+        href: https://grafana.home-lorenzen.de
+        id: grafanaID
         server: tyrion
-        container: whatsupdocker
+        container: grafana
         widget:
-          type: whatsupdocker
-          url: https://whatsup.home-lorenzen.de
+          type: grafana
+          fields: ["dashboards", "datasources", "alertstriggered"]
+          url: https://grafana.home-lorenzen.de
+          username: {{ vault_grafana_user }}
+          password: {{ vault_grafana_password }}
     - Prometheus:
         icon: prometheus.svg
         href: https://prometheus.home-lorenzen.de
@@ -157,6 +159,11 @@
         href: https://passwords.nlor.de/
         server: tyrion
         container: vaultwarden
+    - Spotify Tracker:
+        icon: spotify.svg
+        href: https://spotify.home-lorenzen.de/
+        server: tyrion
+        container: spotify_tracker-web-1
     - IT-Tools:
         icon: it-tools.svg
         href: https://tools.nlor.de/
@@ -203,13 +210,17 @@
         href: https://wiki.home-lorenzen.de/
         server: nas
         container: wikijs-wiki-1
+        showStats: true
 
 - Drogon:
     - Traefik Drogon:
         icon: traefik.svg
-        href: https://traefik.n1ls.wtf/dashboard/
+        href: https://traefik.nlor.de/dashboard/
         widget:
           type: traefik
+          url: https://traefik.nlor.de
+          username: {{ traefik_username }}
+          password: {{ traefik_password }}
     - Whats up Docker:
         icon: whats-up-docker.svg
         href: https://whatsup.nlor.de
