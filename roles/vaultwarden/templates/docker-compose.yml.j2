@@ -4,7 +4,7 @@ networks:
 
 services:
   app:
-    image: vaultwarden/server:1.32.1
+    image: vaultwarden/server:1.32.2
     container_name: vaultwarden
     networks:
       - web
@@ -51,5 +51,10 @@ services:
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.tls.certresolver=letsencrypt-inwx-dns
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.tls.domains[0].main=nlor.de
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.tls.domains[0].sans=*.nlor.de
-      - wud.tag.include=^\d+\.\d+\.\d+$$ # only watch X.X.X Versions
+      # disable access to the admin dashboard at /admin
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-admin.rule=Host(`{{ vaultwarden_domain | mandatory }}`) && Path(`/admin`)
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-admin.entrypoints=https
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-admin.middlewares=lan-only
+      # only watch X.X.X Versions
+      - wud.tag.include=^\d+\.\d+\.\d+$$
       
