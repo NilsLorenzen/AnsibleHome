@@ -66,6 +66,10 @@
       tags:
         - it-tools
         - container
+    - role: cyberchef
+      tags:
+        - cyberchef
+        - container
     - role: stirling-pdf
       tags:
         - pdf

@@ -1,0 +1,5 @@
+- name: restart cyberchef.service
+  when: cyberchef_started is not changed
+  ansible.builtin.systemd:
+    name: cyberchef.service
+    state: restarted
