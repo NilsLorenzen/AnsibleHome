@@ -17,6 +17,10 @@
       tags:
         - whatsupdocker
         - container
+    - role: dozzle
+      tags:
+        - dozzle
+        - container
     - role: pihole
       tags:
         - pihole

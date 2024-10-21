@@ -1,0 +1,5 @@
+- name: restart dozzle.service
+  when: dozzle_started is not changed
+  ansible.builtin.systemd:
+    name: dozzle.service
+    state: restarted
