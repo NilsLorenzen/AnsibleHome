@@ -48,8 +48,11 @@ services:
       - FOOTER=Nils Lorenzen © 2024
     labels:
       - traefik.enable=true
-      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.rule=Host(`{{ littlelink_domain | mandatory }}`)
+      #- traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.rule=Host(`{{ littlelink_domain | mandatory }}`)
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.rule=Host(`{{ littlelink_domain | mandatory }}`) && !(PathPrefix(`/sl/`))
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app2.rule=Host(`nilslorenzen.de`) && !(PathPrefix(`/sl/`))
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.entrypoints=https
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app2.entrypoints=https
 
 
 # Vorlage https://github.com/techno-tim/littlelink-server/blob/master/docker-compose.yml
