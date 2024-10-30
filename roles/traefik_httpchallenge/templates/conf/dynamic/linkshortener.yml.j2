@@ -1,0 +1,79 @@
+http:
+  routers:
+    redirect-github:
+      rule: "PathPrefix(`/sl/github`)"
+      middlewares:
+        - redirect-github
+      entryPoints:
+        - https
+      service: noop@internal
+      priority: 1
+
+    redirect-instagram:
+      rule: "PathPrefix(`/sl/instagram`)"
+      middlewares:
+        - redirect-instagram
+      entryPoints:
+        - https
+      service: noop@internal
+      priority: 1
+
+    redirect-linkedin:
+      rule: "PathPrefix(`/sl/linkedin`)"
+      middlewares:
+        - redirect-linkedin
+      entryPoints:
+        - https
+      service: noop@internal
+      priority: 1
+
+    redirect-xing:
+      rule: "PathPrefix(`/sl/xing`)"
+      middlewares:
+        - redirect-xing
+      entryPoints:
+        - https
+      service: noop@internal
+      priority: 1
+
+    redirect-shutterstock:
+      rule: "PathPrefix(`/sl/shutterstock`)"
+      middlewares:
+        - redirect-shutterstock
+      entryPoints:
+        - https
+      service: noop@internal
+      priority: 1
+
+# --------------------------
+
+  middlewares:
+    redirect-github:
+      redirectRegex:
+        regex: "^(.*)sl/github(.*)$"
+        replacement: "https://github.com/NilsLorenzen/"
+        permanent: false
+
+    redirect-instagram:
+      redirectRegex:
+        regex: "^(.*)sl/instagram(.*)$"
+        replacement: "https://www.instagram.com/n1ls.lo/"
+        permanent: false
+
+    redirect-linkedin:
+      redirectRegex:
+        regex: "^(.*)sl/linkedin(.*)$"
+        replacement: "https://www.linkedin.com/in/nils-lorenzen-a9b35a29a/"
+        permanent: false
+
+    redirect-xing:
+      redirectRegex:
+        regex: "^(.*)sl/xing(.*)$"
+        replacement: "https://www.xing.com/profile/Nils_Lorenzen9"
+        permanent: false
+
+    redirect-shutterstock:
+      redirectRegex:
+        regex: "^(.*)sl/shutterstock(.*)$"
+        replacement: "https://www.shutterstock.com/de/g/Nils+Lorenzen/"
+        permanent: false
