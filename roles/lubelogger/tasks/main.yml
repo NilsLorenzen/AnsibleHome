@@ -1,0 +1,40 @@
+- name: copy systemd unit
+  ansible.builtin.template:
+    src: lubelogger.service.j2
+    dest: /etc/systemd/system/lubelogger.service
+    owner: root
+    group: root
+    mode: "644"
+  notify: restart lubelogger.service
+
+- name: create /data/lubelogger dir
+  ansible.builtin.file:
+    path: "{{ root }}"
+    state: directory
+
+- name: copy docker-compose file
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ root }}/docker-compose.yml"
+    owner: root
+    group: root
+    mode: "644"
+  notify: restart lubelogger.service
+
+- name: copy .env file
+  ansible.builtin.template:
+    src: .env.j2
+    dest: "{{ root }}/.env"
+    owner: root
+    group: root
+    mode: "644"
+  notify: restart lubelogger.service
+
+- name: start lubelogger.service
+  ansible.builtin.systemd:
+    state: started
+    daemon_reload: true
+    enabled: true
+    name: lubelogger.service
+  register: lubelogger_started
+

@@ -94,3 +94,7 @@
       tags:
         - prometheus
         - container
+    - role: lubelogger
+      tags:
+        - lubelogger
+        - container

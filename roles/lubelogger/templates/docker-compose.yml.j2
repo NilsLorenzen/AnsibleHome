@@ -1,0 +1,31 @@
+networks:
+  web:
+    external: true
+
+services:
+  app:
+    image: ghcr.io/hargata/lubelogger:latest
+    container_name: lubelogger
+    networks:
+      - web
+    build: .
+    # volumes used to keep data persistent
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - {{ root }}/config:/App/config
+      - {{ root }}/data:/App/data
+      - {{ root }}/translations:/App/wwwroot/translations
+      - {{ root }}/documents:/App/wwwroot/documents
+      - {{ root }}/images:/App/wwwroot/images
+      - {{ root }}/temp:/App/wwwroot/temp
+      - {{ root }}/log:/App/log
+      - {{ root }}/keys:/root/.aspnet/DataProtection-Keys
+    #ports:
+    #  - 8080:8080
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.rule=Host(`{{ lubelogger_domain | mandatory }}`)
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.entrypoints=https
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.tls.certresolver=letsencrypt-inwx-dns
+    env_file:
+      - .env

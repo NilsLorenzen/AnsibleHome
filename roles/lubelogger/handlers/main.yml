@@ -1,0 +1,5 @@
+- name: restart lubelogger.service
+  when: lubelogger_started is not changed
+  ansible.builtin.systemd:
+    name: lubelogger.service
+    state: restarted
