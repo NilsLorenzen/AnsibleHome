@@ -3,7 +3,6 @@ networks:
     external: true
 
 services:
-
   app:
     image: fmartinou/whats-up-docker:latest
     container_name: whatsupdocker
@@ -12,12 +11,14 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro 
       - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /data/shishacounter-beta/docker-compose.yml:/sc/docker-compose.yml
     #ports:
     #  - 3000:3000
     environment:
       - WUD_WATCHER_{{ whatsupdocker_watcher_name }}_SOCKET=/var/run/docker.sock
       - WUD_REGISTRY_GHCR_USERNAME={{ ghcr.username | mandatory }}
       - WUD_REGISTRY_GHCR_TOKEN={{ ghcr.password | mandatory }}
+      {{ whatsupdocker_extra_envs }}
     labels:
       - traefik.enable=true
       - traefik.http.services.${COMPOSE_PROJECT_NAME}-service.loadbalancer.server.port=3000
