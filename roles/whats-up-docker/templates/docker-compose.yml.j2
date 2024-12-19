@@ -16,9 +16,12 @@ services:
     #  - 3000:3000
     environment:
       - WUD_WATCHER_{{ whatsupdocker_watcher_name }}_SOCKET=/var/run/docker.sock
-      - WUD_REGISTRY_GHCR_USERNAME={{ ghcr.username | mandatory }}
-      - WUD_REGISTRY_GHCR_TOKEN={{ ghcr.password | mandatory }}
-      {{ whatsupdocker_extra_envs }}
+      - WUD_REGISTRY_HUB_LOGIN={{ dockerhub.username }}
+      - WUD_REGISTRY_HUB_PASSWORD={{ dockerhub.password }}
+      - WUD_REGISTRY_GHCR_USERNAME={{ ghcr.username }}
+      - WUD_REGISTRY_GHCR_TOKEN={{ ghcr.password }}
+      - WUD_TRIGGER_DISCORD_1_URL={{ discord.wud }}
+      - WUD_TRIGGER_DISCORD_1_BOTUSERNAME=WUD-{{ inventory_hostname }}
     labels:
       - traefik.enable=true
       - traefik.http.services.${COMPOSE_PROJECT_NAME}-service.loadbalancer.server.port=3000

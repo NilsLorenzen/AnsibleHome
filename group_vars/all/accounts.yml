@@ -1,0 +1,7 @@
+ghcr:
+  username: "{{ vault_ghcr_username }}"
+  password: "{{ vault_ghcr_password }}"
+
+dockerhub:
+  username: "{{ vault_dockerhub_username }}"
+  password: "{{ vault_dockerhub_password }}"

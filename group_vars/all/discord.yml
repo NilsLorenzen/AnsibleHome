@@ -1,0 +1,2 @@
+discord:
+  wud: "{{ vault_discord_wud }}"
