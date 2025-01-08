@@ -1,0 +1,7 @@
+dozzle:
+  user1: 
+    mail: "{{ vault_dozzle_user1_mail }}"
+    name: "{{ vault_dozzle_user1_name }}"
+  user2: 
+    mail: "{{ vault_dozzle_user2_mail }}"
+    name: "{{ vault_dozzle_user2_name }}"

@@ -3,7 +3,6 @@ networks:
     external: true
 
 services:
-
   app:
     image: amir20/dozzle:latest
     container_name: dozzle
@@ -12,6 +11,10 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro 
       - /var/run/docker.sock:/var/run/docker.sock:ro
+      - {{ root }}/users.yml:/data/users.yml:ro
+    environment:
+      DOZZLE_AUTH_PROVIDER: simple
+      #DOZZLE_LEVEL: debug
     #ports:
     #  - 8080:8080
     labels:
@@ -19,7 +22,6 @@ services:
       - traefik.http.services.${COMPOSE_PROJECT_NAME}-service.loadbalancer.server.port=8080
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.rule=Host(`{{ dozzle_domain | mandatory }}`)
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.entrypoints=https
-      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.middlewares=lan-only
     healthcheck:
       test: ["CMD", "/dozzle", "healthcheck"]
       interval: 3s
