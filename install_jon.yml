@@ -1,7 +1,0 @@
----
-
-- hosts: jon
-  become: true
-  roles:
-    - role: docker
-      tags: docker
