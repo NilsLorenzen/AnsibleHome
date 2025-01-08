@@ -13,6 +13,10 @@
       tags:
         - whatsupdocker
         - container
+    - role: dozzle
+      tags:
+        - dozzle
+        - container
     - role: wordpress_mfw
       tags:
         - wordpress_mfw
