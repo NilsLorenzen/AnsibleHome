@@ -24,7 +24,7 @@ services:
       - LEGO_DISABLE_CNAME_SUPPORT=true
       - INWX_USERNAME={{ inwx.username }}
       - INWX_PASSWORD={{ inwx.password }}
-      - INWX_PROPAGATION_TIMEOUT=0
+      - INWX_PROPAGATION_TIMEOUT=100
     labels:
       - traefik.enable=true
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.entrypoints=https
