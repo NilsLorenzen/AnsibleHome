@@ -1,0 +1,5 @@
+- name: restart convertx.service
+  when: convertx_started is not changed
+  ansible.builtin.systemd:
+    name: convertx.service
+    state: restarted

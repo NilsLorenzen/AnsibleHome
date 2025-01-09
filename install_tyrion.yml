@@ -74,6 +74,10 @@
       tags:
         - cyberchef
         - container
+    - role: convertx
+      tags:
+        - convertx
+        - container
     - role: stirling-pdf
       tags:
         - pdf
