@@ -30,15 +30,15 @@
           type: pihole
           url: "http://pihole.home-lorenzen.de:9090"
           key: {{ vault_pihole_apikey }}
-    - PiHole Backup Nas:
-        icon: pi-hole.svg
-        href: http://192.168.10.12:8080/admin/
-        server: nas
-        container: pihole_backup
+    - Synology DSM:
+        icon: synology-dsm.svg
+        href: https://nas.home-lorenzen.de:5001
         widget:
-          type: pihole
-          url: "http://192.168.10.12:8080"
-          key: {{ vault_pihole_apikey }}
+            type: diskstation
+            url: http://192.168.10.11:5000/
+            username: {{ synology_username }}
+            password: {{ synology_password }}
+            volume: volume_1
 
 - Media:
     - Plex:
@@ -70,7 +70,7 @@
             url: https://overseerr.nlor.de
             key: "{{ overseerr_apikey }}"
 
-- Tyrion:
+- HomeLab:
     - Traefik Tyrion:
         icon: traefik.svg
         href: https://traefik.home-lorenzen.de/dashboard/
@@ -153,7 +153,18 @@
                 - state: weather.forecast_home
                 label: wind speed
                 value: "{attributes.wind_speed} {attributes.wind_speed_unit}" #}
-- Tyrion2:
+    - PaperlessNGX:
+        icon: paperless-ngx.svg
+        href: https://dms.home-lorenzen.de
+        server: nas
+        container: paperlessngx-webserver-1
+        widget:
+          type: paperlessngx
+          url: https://dms.home-lorenzen.de
+          username: {{ paperlessngx_username }}
+          password: {{ paperlessngx_password }}
+
+- HomeLab2:
     - VaultWarden:
         icon: vaultwarden.svg
         href: https://passwords.nlor.de/
@@ -189,33 +200,6 @@
         href: http://speedtest.home-lorenzen.de:7070/?S=L
         server: tyrion
         container: openspeedtest
-
-- Samwell (NAS):
-    - Synology DSM:
-        icon: synology-dsm.svg
-        href: https://nas.home-lorenzen.de:5001
-        widget:
-            type: diskstation
-            url: http://192.168.10.11:5000/
-            username: {{ synology_username }}
-            password: {{ synology_password }}
-            volume: volume_1
-    - PaperlessNGX:
-        icon: paperless-ngx.svg
-        href: https://dms.home-lorenzen.de
-        server: nas
-        container: paperlessngx-webserver-1
-        widget:
-          type: paperlessngx
-          url: https://dms.home-lorenzen.de
-          username: {{ paperlessngx_username }}
-          password: {{ paperlessngx_password }}
-    - Lorenzen Wiki.js:
-        icon: wikijs.png
-        href: https://wiki.home-lorenzen.de/
-        server: nas
-        container: wikijs-wiki-1
-        showStats: true
 
 - Drogon:
     - Traefik Drogon:
