@@ -1,5 +1,0 @@
-- name: restart portainer_agent.service
-  when: portainer_agent_started is not changed
-  ansible.builtin.systemd:
-    name: portainer_agent.service
-    state: restarted

@@ -1,5 +1,0 @@
-- name: restart mailserver.service
-  when: mailserver_started is not changed
-  ansible.builtin.systemd:
-    name: mailserver.service
-    state: restarted

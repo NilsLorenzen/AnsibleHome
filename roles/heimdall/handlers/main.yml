@@ -1,5 +1,0 @@
-- name: restart heimdall.service
-  when: heimdall_started is not changed
-  ansible.builtin.systemd:
-    name: heimdall.service
-    state: restarted

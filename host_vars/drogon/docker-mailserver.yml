@@ -1,5 +1,0 @@
-mx_domain: mail.nilslorenzen.de
-mx_mailbox_size_limit: 512000000 # ca. 500 MB
-mx_message_size_limit: 10240000  # 10240000 ca. 10 MB
-mx_admin_mail: admin@home-lorenzen.de
-mx_use_webmail: "yes" # yes or no
