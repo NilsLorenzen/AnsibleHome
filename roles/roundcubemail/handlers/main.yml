@@ -1,5 +1,0 @@
-- name: restart roundcubemail.service
-  when: roundcubemail_started is not changed
-  ansible.builtin.systemd:
-    name: roundcubemail.service
-    state: restarted
