@@ -27,5 +27,6 @@ services:
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.rule=Host(`{{ lubelogger_domain | mandatory }}`)
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.entrypoints=https
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.tls.certresolver=letsencrypt-inwx-dns
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.middlewares=lan-only
     env_file:
       - .env

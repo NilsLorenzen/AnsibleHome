@@ -1,0 +1,9 @@
+traefik:
+  nils:
+    hash: "$$2a$$10$$rYP9FFF6aiEMykwY.qA5H.zW9nr.TIyLXNZElqkA0JaFqyvIggPMW"
+    username: "{{ vault_traefik_nils_username }}"
+    password: "{{ vault_traefik_nils_password }}"
+  other:
+    hash: "$$2a$$10$$XsoNxa6t/0CSrsUtmEnyrO44dVD4wNkAoORLEAPWWesZs9ksxQUCS"
+    username: "{{ vault_traefik_other_username }}"
+    password: "{{ vault_traefik_other_password }}"

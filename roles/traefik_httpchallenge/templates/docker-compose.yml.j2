@@ -28,7 +28,8 @@ services:
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.service=api@internal
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.tls.certresolver=letsencrypt_http
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.tls.domains[0].main={{ traefik_domain }}
-      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.middlewares=basic-auth-global
-      - traefik.http.middlewares.basic-auth-global.basicauth.users={{ traefik_username }}:{{ traefik_password_hash }}
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.middlewares=basic-auth-all
+      - traefik.http.middlewares.basic-auth-nils-only.basicauth.users={{ traefik.nils.username }}:{{ traefik.nils.hash }}
+      - traefik.http.middlewares.basic-auth-all.basicauth.users={{ traefik.nils.username }}:{{ traefik.nils.hash }},{{ traefik.other.username }}:{{ traefik.other.hash }}
     healthcheck:
       test: traefik healthcheck

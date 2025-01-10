@@ -79,8 +79,8 @@
         widget:
           type: traefik
           url: https://traefik.home-lorenzen.de
-          username: {{ traefik_username }}
-          password: {{ traefik_password }}
+          username: {{ traefik.nils.username }}
+          password: {{ traefik.nils.password }}
     - Whats up Docker:
         icon: whats-up-docker.svg
         href: https://whatsup.home-lorenzen.de
@@ -205,6 +205,11 @@
         href: https://converter.nlor.de/
         server: tyrion
         container: convertx
+    - PairDrop:
+        icon: pairdrop.webp
+        href: https://drop.nlor.de/
+        server: tyrion
+        container: pairdrop
 
 - Drogon:
     - Traefik Drogon:
@@ -213,16 +218,16 @@
         widget:
           type: traefik
           url: https://traefik.nlor.de
-          username: {{ traefik_username }}
-          password: {{ traefik_password }}
+          username: {{ traefik.nils.username }}
+          password: {{ traefik.nils.password }}
     - Whats up Docker:
         icon: whats-up-docker.svg
         href: https://whatsup.nlor.de
         widget:
           type: whatsupdocker
           url: https://whatsup.nlor.de
-          username: {{ traefik_username }}
-          password: {{ traefik_password }}
+          username: {{ traefik.nils.username }}
+          password: {{ traefik.nils.password }}
     - UptimeKuma:
         icon: uptime-kuma.svg
         href: https://status.nlor.de

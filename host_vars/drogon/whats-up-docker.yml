@@ -1,3 +1,3 @@
 whatsupdocker_domain: whatsup.nlor.de
 whatsupdocker_watcher_name: drogon
-whatsupdocker_traefik_middleware: basic-auth-global
+whatsupdocker_traefik_middleware: basic-auth-nils-only

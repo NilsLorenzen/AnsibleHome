@@ -8,7 +8,7 @@ http:
       #rule: 'Host(`{{ homepage_domain }}`)'
       rule: Host(`{{ homepage_domain }}`)
       middlewares:
-        - basic-auth-global@docker
+        - basic-auth-nils-only@docker
       service: homepage
     
     homepage-lan:
