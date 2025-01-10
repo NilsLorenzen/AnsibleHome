@@ -106,3 +106,7 @@
       tags:
         - lubelogger
         - container
+    - role: wallos
+      tags:
+        - wallos
+        - container

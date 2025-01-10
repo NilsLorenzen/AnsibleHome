@@ -1,0 +1,24 @@
+networks:
+  web:
+    external: true
+
+services:
+  wallos:
+    image: bellamy/wallos:latest
+    container_name: {{ role_name }}
+    networks:
+      - web
+    #ports:
+      #- "8282:80/tcp"
+    environment:
+      TZ: "Europe/Berlin"
+    volumes:
+      - {{ root }}/db:/var/www/html/db
+      - {{ root }}/logos:/var/www/html/images/uploads/logos
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.${COMPOSE_PROJECT_NAME}-service.loadbalancer.server.port=80
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-lan.rule=Host(`{{ wallos_domain | mandatory }}`) && HeaderRegexp(`X-Real-Ip`, `(^127\.)|(^10\.)|(^172\.1[6-9]\.)|(^172\.2[0-9]\.)|(^172\.3[0-1]\.)|(^192\.168\.)`)
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-lan.service=${COMPOSE_PROJECT_NAME}-service
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-lan.entrypoints=https
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-lan.middlewares=lan-only

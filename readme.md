@@ -62,6 +62,7 @@ Im folgenden findest du eine Liste mit kurzer Beschreibung.‚
 - [traefik](https://github.com/traefik/traefik): Dockerbasierter Reverse Proxy mit LetsEncrypt und Docker Socket Integration
 - [uptimekuma](https://github.com/louislam/uptime-kuma): Monitoring-Tool / Status-Website
 - [vaultwarden](https://github.com/dani-garcia/vaultwarden): Kostenlose Rust Implementierung des Bitwarden Passwort Managers
+- [wallos](https://github.com/ellite/wallos): Simpler Abo Tracker mit Web-Interface
 - [webserver](https://github.com/nginx/nginx): Simpler nginx Webserver als Docker-Container
 - [whats-up-docker](https://github.com/getwud/wud): Docker Image Überwachungstool das z.B. Discord Benachrichtigung sendet wenn neue Images verfügbar sind oder diese auf Wunsch automatisch installiert.
 - wordpress: Wordpress Installation als Docker Container
