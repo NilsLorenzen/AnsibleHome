@@ -78,6 +78,10 @@
       tags:
         - convertx
         - container
+    - role: pairdrop
+      tags:
+        - pairdrop
+        - container
     - role: stirling-pdf
       tags:
         - pdf
