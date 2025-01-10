@@ -3,9 +3,8 @@
 In diesem Repo ist die Konfiguration meines HomeLab/Netzwerk abgelegt.
 Als Host dienen aktuell folgende Geräte:
 - ein Cloud Server bei Hetzner (ARM basiert)
-- ein BeeLink MiniPC
-- zwei ZimaBoards als Proxmox Cluster
-- ein RasperryPi 4 ( aktuell nur als Testumgebung )
+- ein h100 MiniPC mit dual 2.5 Gbe NICs
+- drei ZimaBoards als Proxmox Cluster (Aktuell nur Spielwiese und nicht mit Ansible verwaltet)
 - Ein Synology Nas als Netzwerkspeicher z.B. für Plex (nicht mit Ansible verwaltet)
 
 ## Ansible Installation
@@ -29,43 +28,43 @@ Mit folgendem Befehl können alle auf einmal installiert werden:
 
 ` sh bootstrap `
 
-## To-Dos:
+## Meine Ansbile Rollen in diesem Repo
 
-- [ ] rebuild Traefik als einzelne Rolle
-- [ ] Ghost Container
-- [ ] SpeedtestTracker
-- [ ] Teslamate
-- [ ] Teamspeak Server -> neues Hosting benötigt da kein ARM Build existiert
-- [ ] automatisierte Backups
-- [ ] rebuild nic_configuration
+Die meisten meiner Ansible Rollen sind Docker Dienste.
+Im folgenden findest du eine Liste mit kurzer Beschreibung.‚
 
-## Rollen in diesem Repo
-
-Durchgestrichene Rollen werden aktuell nicht verwendet.
-
-- docker: installiert immer die richtige Docker Version auf dem Host
-- ~~heimdall: docker-container für ein simples Home Dashboard, wurde ersetzt durch homepage~~
-- homepage-dashboard: docker-container für mein Home Dashboard
-- it-tools: docker-container mit vielen nützlichen Webtools (Schweizer Taschenmesser)
-- littleliink: docker-container der eine Alternative zu LinkTree darstellt
-- mailserver: dockermailserver - genau das nach dem es klingt :D
-- minecraft_bedrock: ein minecraft bedrock server als docker container
-- minecraft_java: ein minecraft java server als docker container
-- ~~nginx proxy manager~~
-- openspeedtest: selbstgehosteter Netzwerkgeschwindigkeitstest
+- convertx: Mächtiger Datei Converter mit Web-Oberfläche.
+- cyberchef: Web-Tool mit fokus auf Text Formatierung und Umwandlung.
+- docker: Installiert automatisch die richtige Docker Version auf dem Host.
+- dozzle: Super simpler Browser basierter Docker Container Log-Viewer.
+- grafana: Web-Dashboard für alle erdenkklichen Grafiken und Diagramme.
+- homeassistant: Smart Home
+- homebridge: Tool um nicht unterstützte Smart Home Geräte in Apple Homekit zu integrieren.
+- homepage-dashboard: Mein Lieblings Homelab Dashboard. Die gesamte Konfiguration passiert in Config-Files.
+- it-tools: Web-Tool mit vielen nützlichen kleinen Werkzeugen für den IT-Alltag.
+- littlelink: Simple, selbstbetriebene Alternative zu LinkTree
+- lubelogger: Web-Tool zum erfassen von Wartungsarbeiten und anderen Fahrzeug-Daten
+- minecraft_bedrock: Ein Minecraft Bedrock Edition Server
+- minecraft_java: Ein Minecraft Java Edition Server
+- ntp_server: NTP-Server ohne overhead
+- openspeedtest: Selbstgehosteter Netzwerkgeschwindigkeitstest (leider nicht wirklich Reverse Proxy kompatibel)
+- overseerr: Ermöglicht Nutzern das Anfragen neu gewünschter Filme und Serien für Plex oder Jellyfin
+- pairdrop: AirDrop artiger Datei-Sharing Dienst für alle Betriebssysteme
 - pihole: DNS Blocker, Cache und Server als Docker Container
-- plex: Medien Streaming Dienst ähnzlich zu Netflix
-- ~~portainer~~
-- ~~portainer_agent~~
-- roundcubemail: dockerbasierter Webmail Client
-- ~~smokeping~~
-- tautulli: Auswertungs- und Statistikcontainer für Plex
-- ~~teamspeak~~
-- traefik: dockerbasierter reverse proxy mit LetsEncrypt und Docker Integration
-- uptimekuma: dockerbasiertes Monitoring-Tool / Status-Website
-- vaultwarden: kostenlose Implementierung von BitWarden
-- webserver: simpler nginx Webserver als Docker-Container
-- wordpress: wordpress Installation als Docker Container
+- plex: Genialer Medien Streaming Dienst ähnlich zu Netflix.
+- prometheus: Metric-Collector der in meinem Fall für Traefik Metriken verwendet wird.
+- ~~promtail_loki: Log-Collector den ich für Traefik nutzen möchte. Aktuell funktioniert das noch nicht wie ich es möchte.~~
+- speedtest-tracker: Web-Tool das automatisch regelmäsig Internet-Speedtest durchführt und diese in einer Historie dokumentiert.
+- spotify_tracker: Geniales Statistik Tool für sämtliche Informationen über den eigenen Spotify Musik Konsum.
+- stirling-pdf: Webanwendung mit einer menge nützlicher Werkzeuge zur arbeit mit PDF Dateien.
+- ~~teamspeak: Sprach und Chat Serveranwendung.~~
+- tautulli: Auswertungs- und Statistik Dashboard für Plex.
+- traefik: Dockerbasierter Reverse Proxy mit LetsEncrypt und Docker Socket Integration
+- uptimekuma: Monitoring-Tool / Status-Website
+- vaultwarden: Kostenlose Rust Implementierung des Bitwarden Passwort Managers
+- webserver: Simpler nginx Webserver als Docker-Container
+- whats-up-docker: Docker Image Überwachungstool das z.B. Discord Benachrichtigung sendet wenn neue Images verfügbar sind oder diese auf Wunsch automatisch installiert.
+- wordpress: Wordpress Installation als Docker Container
 
 ## SSL Zertifikate
 
