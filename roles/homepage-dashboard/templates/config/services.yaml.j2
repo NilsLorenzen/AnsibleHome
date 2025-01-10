@@ -7,6 +7,7 @@
         icon: avmfritzbox.svg
         href: http://192.168.5.1/
         id: fritzBoxID
+        ping: 192.168.5.1
         widget:
           type: fritzbox
           fields: ["uptime", "externalIPAddress", "down", "up"]
@@ -15,6 +16,7 @@
         icon: unifi.svg
         href: https://192.168.10.1/
         id: unifiID
+        ping: 192.168.10.1
         widget:
             type: unifi
             url: https://192.168.10.1
@@ -33,6 +35,7 @@
     - Synology DSM:
         icon: synology-dsm.svg
         href: https://nas.home-lorenzen.de:5001
+        ping: 192.168.10.11
         widget:
             type: diskstation
             url: http://192.168.10.11:5000/
@@ -69,6 +72,38 @@
             fields: ["pending", "approved", "available"]
             url: https://overseerr.nlor.de
             key: "{{ overseerr_apikey }}"
+
+- Tools:
+    - PairDrop:
+        icon: pairdrop.webp
+        href: https://drop.nlor.de/
+        server: tyrion
+        container: pairdrop
+    - IT-Tools:
+        icon: it-tools.svg
+        href: https://tools.nlor.de/
+        server: tyrion
+        container: it-tools
+    - CyberChef:
+        icon: cyberchef.svg
+        href: https://cyberchef.nlor.de/
+        server: tyrion
+        container: cyberchef
+    - Stirling PDF:
+        icon: stirling-pdf.svg
+        href: https://pdf.nlor.de/
+        server: tyrion
+        container: stirling-pdf
+    - ConvertX:
+        icon: sh-convertx.webp
+        href: https://converter.nlor.de/
+        server: tyrion
+        container: convertx
+    - OpenSpeedTest:
+        icon: openspeedtest.png
+        href: http://speedtest.home-lorenzen.de:7070/?S=L
+        server: tyrion
+        container: openspeedtest
 
 - HomeLab:
     - Traefik Tyrion:
@@ -163,6 +198,27 @@
           url: https://dms.home-lorenzen.de
           username: {{ paperlessngx_username }}
           password: {{ paperlessngx_password }}
+    - LubeLogger:
+        icon: lubelogger.webp
+        href: https://lubelogger.home-lorenzen.de/
+        server: tyrion
+        container: lubelogger
+        widget:
+            type: lubelogger
+            url: https://lubelogger.home-lorenzen.de
+            username: {{ lubelogger_username }}
+            password: {{ lubelogger_password }}
+            #vehicleID: 1 # optional, changes to single-vehicle version
+    - Mealie:
+        icon: mealie.svg
+        href: https://mealie.home-lorenzen.de/
+        server: tyrion
+        container: mealie
+        widget:
+            type: mealie
+            url: https://mealie.home-lorenzen.de
+            key: mealieapitoken
+            version: 2 # only required if version > 1, defaults to 1
 
 - HomeLab2:
     - VaultWarden:
@@ -180,36 +236,6 @@
         href: https://spotify.home-lorenzen.de/
         server: tyrion
         container: spotify_tracker-web-1
-    - IT-Tools:
-        icon: it-tools.svg
-        href: https://tools.nlor.de/
-        server: tyrion
-        container: it-tools
-    - CyberChef:
-        icon: cyberchef.svg
-        href: https://cyberchef.nlor.de/
-        server: tyrion
-        container: cyberchef
-    - Stirling PDF:
-        icon: stirling-pdf.svg
-        href: https://pdf.nlor.de/
-        server: tyrion
-        container: stirling-pdf
-    - OpenSpeedTest:
-        icon: openspeedtest.png
-        href: http://speedtest.home-lorenzen.de:7070/?S=L
-        server: tyrion
-        container: openspeedtest
-    - ConvertX:
-        icon: mdi-file-compare
-        href: https://converter.nlor.de/
-        server: tyrion
-        container: convertx
-    - PairDrop:
-        icon: pairdrop.webp
-        href: https://drop.nlor.de/
-        server: tyrion
-        container: pairdrop
     - WallOS:
         icon: wallos.webp
         href: https://abos.home-lorenzen.de/
@@ -220,6 +246,7 @@
     - Traefik Drogon:
         icon: traefik.svg
         href: https://traefik.nlor.de/dashboard/
+        siteMonitor: https://traefik.nlor.de/dashboard/
         widget:
           type: traefik
           url: https://traefik.nlor.de
@@ -236,6 +263,7 @@
     - UptimeKuma:
         icon: uptime-kuma.svg
         href: https://status.nlor.de
+        siteMonitor: https://status.nlor.de/status/n1ls/
         widget:
             type: uptimekuma
             url: https://status.nlor.de
@@ -250,12 +278,16 @@
     - Dozzle:
         icon: dozzle.svg
         href: https://dozzle.nlor.de/
+        siteMonitor: https://dozzle.nlor.de/
     - Wordpress MFW:
         icon: wordpress.svg
         href: https://motorradfreunde-wilferdingen.de/
+        siteMonitor: https://motorradfreunde-wilferdingen.de/
     - NGINX Webserver (n1ls.wtf):
         icon: nginx.svg
         href: https://n1ls.wtf/
+        siteMonitor: https://n1ls.wtf/
     - LittleLink (me.nilslorenzen.de):
         icon: littlelink-custom.svg
         href: https://me.nilslorenzen.de/
+        siteMonitor: https://me.nilslorenzen.de/
