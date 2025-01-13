@@ -1,11 +1,19 @@
+networks:
+  web:
+    external: true
+
 services:
   app:
     image: ghcr.io/gethomepage/homepage:latest
     hostname: homepage-dashboard
     container_name: homepage-dashboard
-    network_mode: host
+    networks:
+      - web
+    #network_mode: host
     #ports:
     #  - 3000:3000
+    dns:
+      - 192.168.10.1
     environment:
       - LOG_LEVEL=debug
     #privileged: true #for docker socket
@@ -13,3 +21,16 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - {{ root }}/config:/app/config
       - /var/run/docker.sock:/var/run/docker.sock:ro # (optional) For docker integrations
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.${COMPOSE_PROJECT_NAME}-service.loadbalancer.server.port=3000
+
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-lan.rule=Host(`{{ homepage_domain | mandatory }}`) && HeaderRegexp(`X-Real-Ip`, `(^127\.)|(^10\.)|(^172\.1[6-9]\.)|(^172\.2[0-9]\.)|(^172\.3[0-1]\.)|(^192\.168\.)`)
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-lan.service=${COMPOSE_PROJECT_NAME}-service
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-lan.entrypoints=https
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-lan.middlewares=lan-only
+
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.rule=Host(`{{ homepage_domain | mandatory }}`)
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.service=${COMPOSE_PROJECT_NAME}-service
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.entrypoints=https
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.middlewares=basic-auth-nils-only
