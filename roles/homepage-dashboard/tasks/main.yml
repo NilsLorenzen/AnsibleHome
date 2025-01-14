@@ -1,3 +1,20 @@
+- name: install dig on plex container
+  ansible.builtin.command: "docker exec plex apt update"
+  when: local_plex == "true"
+
+- name: install dig on plex container
+  ansible.builtin.command: "docker exec plex apt install dnsutils"
+  when: local_plex == "true"
+
+- name: Return internal plex ip to var
+  ansible.builtin.command: "docker exec plex dig +short plex"
+  register: raw_plex_ip
+  when: local_plex == "true"
+
+- set_fact:
+    local_plex_ip: "{{ raw_plex_ip.stdout }}"
+  when: local_plex == "true"
+
 - name: Copy templates
   ansible.builtin.import_tasks: copy-all-templates.yml
   vars:

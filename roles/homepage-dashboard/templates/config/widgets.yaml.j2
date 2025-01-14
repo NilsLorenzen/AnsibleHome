@@ -8,8 +8,8 @@
     disk: /
     cputemp: true
     uptime: true
-    units: celsius # only used by cpu temp
-    refresh: 5000 # optional, in ms
+    units: celsius
+    refresh: 10000 # optional, in ms
 
 - search:
     provider: duckduckgo
@@ -21,6 +21,6 @@
     longitude: {{ vault_homepage_longitude }}
     timezone: Europe/Berlin # optional
     units: metric # or imperial
-    cache: 5 # Time in minutes to cache API responses, to stay within limits
+    cache: 15 # Time in minutes to cache API responses, to stay within limits
     format: # optional, Intl.NumberFormat options
       maximumFractionDigits: 1

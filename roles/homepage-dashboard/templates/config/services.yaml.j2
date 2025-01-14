@@ -51,7 +51,7 @@
         container: plex
         widget:
             type: plex
-            url: http://192.168.10.16:32400
+            url: http://{{ local_plex_ip }}:32400
             key: "{{ plex_apikey }}"
     - Tautulli for Plex:
         icon: tautulli.svg
@@ -219,6 +219,7 @@
             url: https://mealie.home-lorenzen.de
             key: mealieapitoken
             version: 2 # only required if version > 1, defaults to 1
+            hideErrors: true
 
 - HomeLab2:
     - VaultWarden:

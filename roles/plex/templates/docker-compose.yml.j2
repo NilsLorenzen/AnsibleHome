@@ -1,22 +1,40 @@
+networks:
+  web:
+    external: true
+
 services:
   app:
     image: linuxserver/plex:latest
     container_name: plex
-    network_mode: host
+    networks:
+      - web
     environment:
       - PUID=0
       - PGID=0
-      - PLEX_UID=0
-      - PLEX_GID=0
       - VERSION=docker
     devices:
       - /dev/dri:/dev/dri
+    ports:
+      # Web Interface
+      - 32400:32400
+      # GDM network discovery
+      - 32410:32410/udp
+      - 32412:32412/udp
+      - 32413:32413/udp
+      - 32414:32414/udp
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - {{ root }}/media:/media
       - {{ root }}/config:/config
       - {{ root }}/data:/data
       - {{ root }}/transcode:/transcode
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.rule=Host(`{{ plex_domain | mandatory }}`)
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.entrypoints=https
+      - traefik.http.services.${COMPOSE_PROJECT_NAME}-app.loadbalancer.server.port=32400
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.tls.certresolver=letsencrypt-inwx-dns
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.tls=true
     healthcheck:
       test: curl --connect-timeout 15 --silent --show-error --fail http://localhost:32400/identity
       interval: 1m00s
