@@ -21,7 +21,7 @@ services:
       - traefik.enable=true
       - traefik.http.services.${COMPOSE_PROJECT_NAME}-service.loadbalancer.server.port=3000
 
-      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.rule=Host(`{{ ittools_domain | mandatory }}`)
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.rule=Host(`{{ convertx_domain | mandatory }}`)
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.service=${COMPOSE_PROJECT_NAME}-service
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.entrypoints=https
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.middlewares=basic-auth-all
