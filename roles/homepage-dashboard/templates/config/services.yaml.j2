@@ -106,7 +106,7 @@
         container: openspeedtest
 
 - HomeLab:
-    - Traefik Tyrion:
+    - Traefik - Tyrion:
         icon: traefik.svg
         href: https://traefik.home-lorenzen.de/dashboard/
         server: tyrion
@@ -116,7 +116,7 @@
           url: https://traefik.home-lorenzen.de
           username: {{ traefik.nils.username }}
           password: {{ traefik.nils.password }}
-    - Whats up Docker:
+    - Whats up Docker - Tyrion:
         icon: whats-up-docker.svg
         href: https://whatsup.home-lorenzen.de
         server: tyrion
@@ -211,6 +211,7 @@
             #vehicleID: 1 # optional, changes to single-vehicle version
     - Mealie:
         icon: mealie.svg
+        description: Placeholder for Mealie
         href: https://mealie.home-lorenzen.de/
         server: tyrion
         container: mealie
@@ -220,6 +221,14 @@
             key: mealieapitoken
             version: 2 # only required if version > 1, defaults to 1
             hideErrors: true
+    - UptimeKuma - Tyrion:
+        icon: uptime-kuma.svg
+        description: Placeholder for UptimeKuma
+        href: https://status.home-lorenzen.de/
+        widget:
+            type: uptimekuma
+            url: https://status.home-lorenzen.de
+            slug: n1ls
 
 - HomeLab2:
     - VaultWarden:
@@ -244,7 +253,7 @@
         container: wallos
 
 - Drogon:
-    - Traefik Drogon:
+    - Traefik - Drogon:
         icon: traefik.svg
         href: https://traefik.nlor.de/dashboard/
         siteMonitor: https://traefik.nlor.de/dashboard/
@@ -253,7 +262,7 @@
           url: https://traefik.nlor.de
           username: {{ traefik.nils.username }}
           password: {{ traefik.nils.password }}
-    - Whats up Docker:
+    - Whats up Docker - Drogon:
         icon: whats-up-docker.svg
         href: https://whatsup.nlor.de/
         siteMonitor: https://whatsup.nlor.de/
@@ -262,7 +271,7 @@
           url: https://whatsup.nlor.de
           username: {{ traefik.nils.username }}
           password: {{ traefik.nils.password }}
-    - UptimeKuma:
+    - UptimeKuma - Drogon:
         icon: uptime-kuma.svg
         href: https://status.nlor.de
         siteMonitor: https://status.nlor.de/status/n1ls/
