@@ -1,3 +1,2 @@
 whatsupdocker_domain: whatsup.home-lorenzen.de
-whatsupdocker_watcher_name: tyrion
 whatsupdocker_traefik_middleware: lan-only

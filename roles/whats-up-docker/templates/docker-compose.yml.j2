@@ -10,12 +10,12 @@ services:
       - web
     volumes:
       - /etc/localtime:/etc/localtime:ro 
-      - /var/run/docker.sock:/var/run/docker.sock:ro
+      # - /var/run/docker.sock:/var/run/docker.sock:ro
       - /data/shishacounter-beta/docker-compose.yml:/sc/docker-compose.yml
     #ports:
     #  - 3000:3000
     environment:
-      - WUD_WATCHER_{{ whatsupdocker_watcher_name }}_SOCKET=/var/run/docker.sock
+      - WUD_WATCHER_{{ inventory_hostname }}_HOST=docker_socket_proxy
       - WUD_REGISTRY_HUB_LOGIN={{ dockerhub.username }}
       - WUD_REGISTRY_HUB_PASSWORD={{ dockerhub.password }}
       - WUD_REGISTRY_GHCR_USERNAME={{ ghcr.username }}
