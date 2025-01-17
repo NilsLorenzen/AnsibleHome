@@ -3,8 +3,8 @@
 - hosts: tyrion
   become: true
   roles:
-    #- role: docker
-    #  tags: docker
+    - role: docker
+      tags: docker
     - role: ntp_server
       tags:
         - ntp_server
