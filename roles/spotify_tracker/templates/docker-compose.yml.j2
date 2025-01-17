@@ -7,8 +7,8 @@ services:
   api:
     #container_name: yourSpotifyserver
     image: yooooomi/your_spotify_server
-    ports:
-     - "55555:8080"
+    #ports:
+     #- "55555:8080"
     networks:
      - default
      - web
@@ -26,6 +26,8 @@ services:
       - MONGO_ENDPOINT=mongodb://mongo:27017/your_spotify
     labels:
       - traefik.enable=true
+      - traefik.http.services.${COMPOSE_PROJECT_NAME}-api-service.loadbalancer.server.port=8080
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-api.service=${COMPOSE_PROJECT_NAME}-api-service
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-api.rule=Host(`{{ spotify_tracker_api_domain | mandatory }}`)
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-api.entrypoints=https
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-api.tls=true
@@ -36,8 +38,8 @@ services:
     image: mongo:4.4.8 #recommended version
     networks:
      - default
-    ports:
-     - 27017:27017
+    #ports:
+     #- 27017:27017
     volumes:
       - {{ root }}/db:/data/db
     labels:
@@ -49,12 +51,14 @@ services:
     networks:
      - default
      - web
-    ports:
-      - "44444:3000"
+    #ports:
+      #- "44444:3000"
     environment:
       - API_ENDPOINT=https://{{ spotify_tracker_api_domain | mandatory }}
     labels:
       - traefik.enable=true
+      - traefik.http.services.${COMPOSE_PROJECT_NAME}-web-service.loadbalancer.server.port=3000
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-web.service=${COMPOSE_PROJECT_NAME}-web-service
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-web.rule=Host(`{{ spotify_tracker_domain | mandatory }}`)
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-web.entrypoints=https
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-web.tls=true
