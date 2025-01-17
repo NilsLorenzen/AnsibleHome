@@ -4,22 +4,22 @@ networks:
 
 services:
   app:
-    image: fmartinou/whats-up-docker:latest
+    image: getwud/wud:latest
     container_name: whatsupdocker
     networks:
       - web
     volumes:
       - /etc/localtime:/etc/localtime:ro 
       # - /var/run/docker.sock:/var/run/docker.sock:ro
-      - /data/shishacounter-beta/docker-compose.yml:/sc/docker-compose.yml
     #ports:
     #  - 3000:3000
     environment:
       - WUD_WATCHER_{{ inventory_hostname }}_HOST=docker_socket_proxy
-      - WUD_REGISTRY_HUB_LOGIN={{ dockerhub.username }}
-      - WUD_REGISTRY_HUB_PASSWORD={{ dockerhub.password }}
-      - WUD_REGISTRY_GHCR_USERNAME={{ ghcr.username }}
-      - WUD_REGISTRY_GHCR_TOKEN={{ ghcr.password }}
+      - WUD_WATCHER_{{ inventory_hostname }}_WATCHATSTART=false
+      - WUD_REGISTRY_HUB_PUBLIC_LOGIN={{ dockerhub.username }}
+      - WUD_REGISTRY_HUB_PUBLIC_PASSWORD={{ dockerhub.password }}
+      - WUD_REGISTRY_GHCR_github_USERNAME={{ ghcr.username }}
+      - WUD_REGISTRY_GHCR_github_TOKEN={{ ghcr.password }}
       - WUD_TRIGGER_DISCORD_1_URL={{ discord.wud }}
       - WUD_TRIGGER_DISCORD_1_BOTUSERNAME=WUD-{{ inventory_hostname }}
     labels:
@@ -28,9 +28,3 @@ services:
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.rule=Host(`{{ whatsupdocker_domain | mandatory }}`)
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.entrypoints=https
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.middlewares={{ whatsupdocker_traefik_middleware }}
-    healthcheck:
-      test: wget --no-verbose --tries=1 --no-check-certificate --spider http://localhost:3000
-      interval: 10s
-      timeout: 10s
-      retries: 3
-      start_period: 10s
