@@ -28,7 +28,7 @@ accessLog:
     retryAttempts: true
     #minDuration: "10ms"
   # collect logs as in-memory buffer before writing into log file
-  bufferingSize: 0
+  bufferingSize: 100
   fields:
     headers:
       defaultMode: keep # drop all headers per default

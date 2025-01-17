@@ -9,6 +9,10 @@
       tags:
         - traefik
         - container
+    - role: docker_socket_proxy
+      tags:
+        - dockersocketproxy
+        - container
     - role: whats-up-docker
       tags:
         - whatsupdocker

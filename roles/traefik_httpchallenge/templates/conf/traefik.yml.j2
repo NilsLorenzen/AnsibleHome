@@ -1,9 +1,8 @@
 providers:
   docker:
-    # Need to configure label traefik.enable=true.
-    exposedByDefault: false
-    # All traefik-enabled containers must be on this network.
-    network: web
+    endpoint: "http://docker_socket_proxy:2375" # Docker socket proxy needed
+    exposedByDefault: false # Need to configure label traefik.enable=true.
+    network: web # All traefik-enabled containers must be on this network.
   file:
     directory: /etc/traefik/dynamic
     watch: true
