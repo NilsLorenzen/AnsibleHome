@@ -3,7 +3,6 @@ networks:
     name: web
 
 services:
-
   app:
     image: traefik:latest
     networks:
@@ -13,12 +12,12 @@ services:
       - 443:443
     volumes:
       - /etc/localtime:/etc/localtime:ro #zeitzone
-      - /var/run/docker.sock:/var/run/docker.sock #Docker zugriff
+      #- /var/run/docker.sock:/var/run/docker.sock # Docker Zugriff -> wird in socket-proxy bereitgestellt
       - {{ root }}/conf/traefik.yml:/etc/traefik/traefik.yml:ro #statische Konfigurationsdatei
       - {{ root }}/conf/acme/:/etc/traefik/acme/
       - {{ root }}/conf/dynamic/:/etc/traefik/dynamic/:ro #dynamische Konfigurationsdateien
       - {{ root }}/logs:/logs
-    privileged: true
+    #privileged: true # for docker socket
     container_name: traefik
     environment:
       - LEGO_DISABLE_CNAME_SUPPORT=true

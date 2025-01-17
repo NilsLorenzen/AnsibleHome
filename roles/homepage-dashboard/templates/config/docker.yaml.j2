@@ -5,9 +5,12 @@
 # my-docker:
 #   host: 127.0.0.1
 #   port: 2375
+#tyrion:
+#  socket: /var/run/docker.sock
 
 tyrion:
-  socket: /var/run/docker.sock
+  host: docker_socket_proxy
+  port: 2375
 nas:
-  host: 192.168.10.12
+  host: 192.168.10.11
   port: 2375
