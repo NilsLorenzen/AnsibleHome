@@ -105,142 +105,7 @@
         server: tyrion
         container: openspeedtest
 
-- HomeLab:
-    - Traefik - Tyrion:
-        icon: traefik.svg
-        href: https://traefik.home-lorenzen.de/dashboard/
-        server: tyrion
-        container: traefik
-        widget:
-          type: traefik
-          url: https://traefik.home-lorenzen.de
-          username: {{ traefik.nils.username }}
-          password: {{ traefik.nils.password }}
-    - Whats up Docker - Tyrion:
-        icon: whats-up-docker.svg
-        href: https://whatsup.home-lorenzen.de
-        server: tyrion
-        container: whatsupdocker
-        widget:
-          type: whatsupdocker
-          url: https://whatsup.home-lorenzen.de
-    - Speedtest Tracker:
-        icon: speedtest-tracker-old.png
-        href: https://speed.home-lorenzen.de/
-        server: tyrion
-        container: speedtest-tracker
-        widget:
-            type: speedtest
-            url: https://speed.home-lorenzen.de
-            bitratePrecision: 2 # optional, default is 0
-    - Homebridge:
-        icon: homebridge.svg
-        href: https://homebridge.home-lorenzen.de
-        server: tyrion
-        container: homebridge
-        widget:
-          type: homebridge
-          url: https://homebridge.home-lorenzen.de
-          username: {{ homebridge_username }}
-          password: {{ homebridge_password }}
-    - Grafana:
-        icon: grafana.svg
-        href: https://grafana.home-lorenzen.de
-        id: grafanaID
-        server: tyrion
-        container: grafana
-        widget:
-          type: grafana
-          fields: ["dashboards", "datasources", "alertstriggered"]
-          url: https://grafana.home-lorenzen.de
-          username: {{ vault_grafana_user }}
-          password: {{ vault_grafana_password }}
-    - Prometheus:
-        icon: prometheus.svg
-        href: https://prometheus.home-lorenzen.de
-        server: tyrion
-        container: prometheus
-        widget:
-          type: prometheus
-          url: https://prometheus.home-lorenzen.de
-    - Minecraft NiNi Server:
-        icon: minecraft.svg
-        server: tyrion
-        container: crafty
-        widget:
-          type: minecraft
-          url: udp://nini.home-lorenzen.de:25566
-    - Home Assistant:
-        icon: home-assistant.svg
-        href: https://homeassistant.home-lorenzen.de
-        server: tyrion
-        container: homeassistant
-        widget:
-            type: homeassistant
-            url: http://192.168.10.16:8123
-            key: "{{ homeassistant_token }}"
-            {# custom:
-                - state: sensor.total_power
-                - state: sensor.total_energy_today
-                label: energy today
-                - template: "{{ states.switch|selectattr('state','equalto','on')|list|length }}"
-                label: switches on
-                - state: weather.forecast_home
-                label: wind speed
-                value: "{attributes.wind_speed} {attributes.wind_speed_unit}" #}
-    - PaperlessNGX:
-        icon: paperless-ngx.svg
-        href: https://dms.home-lorenzen.de
-        server: nas
-        container: paperlessngx-webserver-1
-        widget:
-          type: paperlessngx
-          url: https://dms.home-lorenzen.de
-          username: {{ paperlessngx_username }}
-          password: {{ paperlessngx_password }}
-    - LubeLogger:
-        icon: lubelogger.webp
-        href: https://lubelogger.home-lorenzen.de/
-        server: tyrion
-        container: lubelogger
-        widget:
-            type: lubelogger
-            url: https://lubelogger.home-lorenzen.de
-            username: {{ lubelogger_username }}
-            password: {{ lubelogger_password }}
-            #vehicleID: 1 # optional, changes to single-vehicle version
-    - Minecraft Bauserver:
-        icon: minecraft.svg
-        server: tyrion
-        container: crafty
-        widget:
-          type: minecraft
-          url: udp://bauserver.nlor.de:25565
-    - Mealie:
-        icon: mealie.svg
-        description: Placeholder for Mealie
-        href: https://mealie.home-lorenzen.de/
-        server: tyrion
-        container: mealie
-        widget:
-            type: mealie
-            url: https://mealie.home-lorenzen.de
-            key: mealieapitoken
-            version: 2 # only required if version > 1, defaults to 1
-            hideErrors: true
-    - UptimeKuma - Tyrion:
-        icon: uptime-kuma.svg
-        description: Placeholder for UptimeKuma
-        href: https://status.home-lorenzen.de/
-        server: tyrion
-        container: uptimekuma
-        widget:
-            type: uptimekuma
-            url: https://status.home-lorenzen.de
-            slug: n1ls
-            hideErrors: true
-
-- HomeLab2:
+- Tools2:
     - VaultWarden:
         icon: vaultwarden.svg
         description: Passwort Manager
@@ -271,6 +136,128 @@
         href: https://abos.home-lorenzen.de/
         server: tyrion
         container: wallos
+
+- HomeLab:
+    - Traefik - Tyrion:
+        icon: traefik.svg
+        href: https://traefik.home-lorenzen.de/dashboard/
+        server: tyrion
+        container: traefik
+        widget:
+          type: traefik
+          url: https://traefik.home-lorenzen.de
+          username: {{ traefik.nils.username }}
+          password: {{ traefik.nils.password }}
+    - Speedtest Tracker:
+        icon: speedtest-tracker-old.png
+        href: https://speed.home-lorenzen.de/
+        server: tyrion
+        container: speedtest-tracker
+        widget:
+            type: speedtest
+            url: https://speed.home-lorenzen.de
+            bitratePrecision: 2 # optional, default is 0
+    - Grafana:
+        icon: grafana.svg
+        href: https://grafana.home-lorenzen.de
+        id: grafanaID
+        server: tyrion
+        container: grafana
+        widget:
+          type: grafana
+          fields: ["dashboards", "datasources", "alertstriggered"]
+          url: https://grafana.home-lorenzen.de
+          username: {{ vault_grafana_user }}
+          password: {{ vault_grafana_password }}
+    - Prometheus:
+        icon: prometheus.svg
+        href: https://prometheus.home-lorenzen.de
+        server: tyrion
+        container: prometheus
+        widget:
+          type: prometheus
+          url: https://prometheus.home-lorenzen.de
+    - Whats up Docker - Tyrion:
+        icon: whats-up-docker.svg
+        href: https://whatsup.home-lorenzen.de
+        server: tyrion
+        container: whatsupdocker
+        widget:
+          type: whatsupdocker
+          url: https://whatsup.home-lorenzen.de
+    - Homebridge:
+        icon: homebridge.svg
+        href: https://homebridge.home-lorenzen.de
+        server: tyrion
+        container: homebridge
+        widget:
+          type: homebridge
+          url: https://homebridge.home-lorenzen.de
+          username: {{ homebridge_username }}
+          password: {{ homebridge_password }}
+    - Home Assistant:
+        icon: home-assistant.svg
+        href: https://homeassistant.home-lorenzen.de
+        server: tyrion
+        container: homeassistant
+        widget:
+            type: homeassistant
+            url: http://192.168.10.16:8123
+            key: "{{ homeassistant_token }}"
+            {# custom:
+                - state: sensor.total_power
+                - state: sensor.total_energy_today
+                label: energy today
+                - template: "{{ states.switch|selectattr('state','equalto','on')|list|length }}"
+                label: switches on
+                - state: weather.forecast_home
+                label: wind speed
+                value: "{attributes.wind_speed} {attributes.wind_speed_unit}" #}
+    - PaperlessNGX:
+        icon: paperless-ngx.svg
+        href: https://dms.home-lorenzen.de
+        server: nas
+        container: paperlessngx-webserver-1
+        widget:
+          type: paperlessngx
+          url: https://dms.home-lorenzen.de
+          username: {{ paperlessngx_username }}
+          password: {{ paperlessngx_password }}
+    - UptimeKuma - Tyrion:
+        icon: uptime-kuma.svg
+        href: https://status.home-lorenzen.de/
+        server: tyrion
+        container: uptimekuma
+        widget:
+            type: uptimekuma
+            url: https://status.home-lorenzen.de
+            slug: n1ls
+    - Minecraft Bauserver:
+        icon: minecraft.svg
+        server: tyrion
+        container: crafty
+        widget:
+          type: minecraft
+          url: udp://bauserver.nlor.de:25565
+    - Minecraft NiNi Server:
+        icon: minecraft.svg
+        server: tyrion
+        container: crafty
+        widget:
+          type: minecraft
+          url: udp://nini.home-lorenzen.de:25566
+    - Mealie:
+        icon: mealie.svg
+        description: Placeholder for Mealie
+        href: https://mealie.home-lorenzen.de/
+        server: tyrion
+        container: mealie
+        widget:
+            type: mealie
+            url: https://mealie.home-lorenzen.de
+            key: mealieapitoken
+            version: 2 # only required if version > 1, defaults to 1
+            hideErrors: true
 
 - Drogon:
     - Traefik - Drogon:

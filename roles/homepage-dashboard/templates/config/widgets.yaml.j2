@@ -3,6 +3,7 @@
 # https://gethomepage.dev/latest/configs/service-widgets
 
 - resources:
+    label: {{ inventory_hostname }}
     cpu: true
     memory: true
     disk: /
@@ -10,6 +11,10 @@
     uptime: true
     units: celsius
     refresh: 10000 # optional, in ms
+
+- resources:
+    label: NAS
+    disk: /data/plex/media
 
 - search:
     provider: duckduckgo

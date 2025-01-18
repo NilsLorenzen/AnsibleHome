@@ -19,7 +19,8 @@ services:
     #privileged: true #for docker socket
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - {{ root }}/config:/app/config
+      - {{ root }}/config:/app/config:ro
+      - /data/plex/media:/data/plex/media:ro
       #- /var/run/docker.sock:/var/run/docker.sock:ro # (optional) For docker integrations
     labels:
       - traefik.enable=true
