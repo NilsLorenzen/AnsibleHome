@@ -163,13 +163,13 @@
         widget:
           type: prometheus
           url: https://prometheus.home-lorenzen.de
-    - Minecraft NiNi Server - Tyrion:
+    - Minecraft NiNi Server:
         icon: minecraft.svg
         server: tyrion
-        container: minecraft_java
+        container: crafty
         widget:
           type: minecraft
-          url: udp://mc.home-lorenzen.de:25565
+          url: udp://nini.home-lorenzen.de:25566
     - Home Assistant:
         icon: home-assistant.svg
         href: https://homeassistant.home-lorenzen.de
@@ -209,6 +209,13 @@
             username: {{ lubelogger_username }}
             password: {{ lubelogger_password }}
             #vehicleID: 1 # optional, changes to single-vehicle version
+    - Minecraft Bauserver:
+        icon: minecraft.svg
+        server: tyrion
+        container: crafty
+        widget:
+          type: minecraft
+          url: udp://bauserver.nlor.de:25565
     - Mealie:
         icon: mealie.svg
         description: Placeholder for Mealie
@@ -236,21 +243,31 @@
 - HomeLab2:
     - VaultWarden:
         icon: vaultwarden.svg
+        description: Passwort Manager
         href: https://passwords.nlor.de/
         server: tyrion
         container: vaultwarden
     - Dozzle - Tyrion:
         icon: dozzle.svg
+        description: Docker Log Viewer
         href: https://dozzle.home-lorenzen.de/
         server: tyrion
         container: dozzle
-    - Spotify Tracker:
+    - Crafty - Tyrion:
+        icon: crafty-controller.svg
+        description: Minecraft Server Manager
+        href: https://crafty.home-lorenzen.de/
+        server: tyrion
+        container: crafty
+    - Your Spotify:
         icon: spotify.svg
+        description: Statistik Dienst für Spotify
         href: https://spotify.home-lorenzen.de/
         server: tyrion
         container: spotify_tracker-web-1
     - WallOS:
         icon: wallos.webp
+        description: Subscription Tracker
         href: https://abos.home-lorenzen.de/
         server: tyrion
         container: wallos
@@ -282,12 +299,6 @@
             type: uptimekuma
             url: https://status.nlor.de
             slug: n1ls
-    - Minecraft Bauserver - Drogon:
-        icon: minecraft.svg
-        ping: mc.n1ls.wtf
-        widget:
-          type: minecraft
-          url: udp://mc.n1ls.wtf:25565
 
 - Drogon2:
     - Dozzle - Drogon:

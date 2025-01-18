@@ -34,10 +34,6 @@
       tags:
         - littlelink
         - container
-    - role: minecraft_java
-      tags:
-        - minecraft_java
-        - container
     - role: uptimekuma
       tags:
         - uptimekuma

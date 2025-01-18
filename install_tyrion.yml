@@ -57,14 +57,6 @@
       tags:
         - overseerr
         - container
-    # - role: minecraft_bedrock
-    #   tags:
-    #     - minecraft_bedrock
-    #     - container
-    # - role: minecraft_java
-    #   tags:
-    #     - minecraft_java
-    #     - container
     - role: spotify_tracker
       tags:
         - spotify
@@ -113,4 +105,8 @@
     - role: wallos
       tags:
         - wallos
+        - container
+    - role: crafty
+      tags:
+        - crafty
         - container

@@ -1,0 +1,34 @@
+networks:
+  web:
+    external: true
+
+services:
+  crafty:
+    container_name: {{ role_name }}
+    image: registry.gitlab.com/crafty-controller/crafty-4:latest
+    ports:
+      #- "8443:8443" # HTTPS
+      #- "8223:8123" # DYNMAP
+      - "19132:19132/udp" # BEDROCK
+      - "25500-25600:25500-25600" # MC SERV PORT RANGE
+    networks:
+      - web
+    environment:
+      - TZ=Europe/Berlin
+    volumes:
+      - {{ root }}/backups:/crafty/backups
+      - {{ root }}/logs:/crafty/logs
+      - {{ root }}/servers:/crafty/servers
+      - {{ root }}/config:/crafty/app/config
+      - {{ root }}/import:/crafty/import
+    labels:
+      - traefik.enable=true
+
+      - traefik.http.services.${COMPOSE_PROJECT_NAME}-web-service.loadbalancer.server.port=8443
+      - traefik.http.services.${COMPOSE_PROJECT_NAME}-web-service.loadbalancer.server.scheme=https
+      - traefik.http.services.${COMPOSE_PROJECT_NAME}-web-service.loadbalancer.serverstransport=insecure-transport@file
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-web.rule=Host(`{{ crafty_domain | mandatory }}`) && HeaderRegexp(`X-Real-Ip`, `(^127\.)|(^10\.)|(^172\.1[6-9]\.)|(^172\.2[0-9]\.)|(^172\.3[0-1]\.)|(^192\.168\.)`)
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-web.service=${COMPOSE_PROJECT_NAME}-web-service
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-web.entrypoints=https
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-web.tls=true
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-web.middlewares=lan-only
