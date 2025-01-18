@@ -1,5 +1,5 @@
-- name: restart uptimekuma.service
+- name: restart {{ role_name }}.service
   when: uptimekuma_started is not changed
   ansible.builtin.systemd:
-    name: uptimekuma.service
+    name: "{{ role_name }}.service"
     state: restarted

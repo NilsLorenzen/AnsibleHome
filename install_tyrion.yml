@@ -110,3 +110,7 @@
       tags:
         - crafty
         - container
+    - role: uptimekuma
+      tags:
+        - uptimekuma
+        - container

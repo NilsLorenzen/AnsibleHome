@@ -7,7 +7,8 @@ services:
     image: louislam/uptime-kuma:latest
     networks:
       - web
-    hostname: uptimekuma
+    hostname: "{{ role_name }}_{{ inventory_hostname }}"
+    container_name: {{ role_name }}
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - {{ root }}/data:/app/data/
