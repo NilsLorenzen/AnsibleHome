@@ -98,10 +98,6 @@
       tags:
         - prometheus
         - container
-    - role: lubelogger
-      tags:
-        - lubelogger
-        - container
     - role: wallos
       tags:
         - wallos
