@@ -1,0 +1,2 @@
+ganymede_fileserver: "192.168.10.12:/volume1/ganymede"
+ganymede_domain: ganymede.home-lorenzen.de

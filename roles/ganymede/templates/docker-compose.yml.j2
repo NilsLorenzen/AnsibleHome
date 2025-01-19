@@ -1,0 +1,88 @@
+networks:
+  default:
+  web:
+    external: true
+
+services:
+  app:
+    container_name: {{ role_name }}
+    image: ghcr.io/zibbp/ganymede:latest
+    depends_on:
+      - db
+    networks:
+      - default
+      - web
+    environment:
+      - DEBUG=true
+      - TZ=Europe/Berlin
+      # Data paths in container; update the mounted volume paths as well
+      - VIDEOS_DIR=/data/videos
+      - TEMP_DIR=/data/temp
+      - LOGS_DIR=/data/logs
+      - CONFIG_DIR=/data/config
+      # Database settings
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USER=ganymede
+      - DB_PASS=PASSWORD
+      - DB_NAME=ganymede-prd
+      - DB_SSL=disable
+      # - DB_SSL_ROOT_CERT= # path to cert in the container if DB_SSL is not disabled
+      - TWITCH_CLIENT_ID=z0tveqrxh7o30xu97yddg4zh2k5a6k # from your twitch application
+      - TWITCH_CLIENT_SECRET=5npm551pooyt7vhbr6jspl5vd8xvgb # from your twitch application
+      # Worker settings. Max number of tasks to run in parallel per type.
+      - MAX_CHAT_DOWNLOAD_EXECUTIONS=2
+      - MAX_CHAT_RENDER_EXECUTIONS=2
+      - MAX_VIDEO_DOWNLOAD_EXECUTIONS=2
+      - MAX_VIDEO_CONVERT_EXECUTIONS=2
+      - MAX_VIDEO_SPRITE_THUMBNAIL_EXECUTIONS=2
+      # Optional OAuth settings
+      # - OAUTH_ENABLED=false
+      # - OAUTH_PROVIDER_URL=
+      # - OAUTH_CLIENT_ID=
+      # - OAUTH_CLIENT_SECRET=
+      # - OAUTH_REDIRECT_URL=http://IP:PORT/api/v1/auth/oauth/callback # Points to the API service
+      # Optional Frontend settings
+      - SHOW_SSO_LOGIN_BUTTON=false
+      - FORCE_SSO_AUTH=false
+      - REQUIRE_LOGIN=false
+      # - CDN_URL= # Set this if you are hosting static files through another service (nginx, S3, etc). By default this does not need to be configured as Ganymede serves the static files.
+    volumes:
+      - {{ root }}/media:/data/videos # update VIDEOS_DIR env var
+      - {{ root }}/temp:/data/temp # update TEMP_DIR env var
+      - {{ root }}/logs:/data/logs # queue logs
+      - {{ root }}/config:/data/config # config and other miscellaneous files
+    #ports:
+      #- 4800:4000
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.rule=Host(`{{ ganymede_domain | mandatory }}`)
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.entrypoints=https
+      - traefik.http.services.${COMPOSE_PROJECT_NAME}-app.loadbalancer.server.port=4000
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.middlewares=lan-only
+    healthcheck:
+      test: curl --fail http://localhost:4000/health || exit 1
+      interval: 60s
+      retries: 5
+      start_period: 60s
+      timeout: 10s
+
+  db:
+    container_name: {{ role_name }}_db
+    image: postgres:14
+    volumes:
+      - {{ root }}/db:/var/lib/postgresql/data
+    networks:
+      - default
+    environment:
+      - POSTGRES_PASSWORD=PASSWORD
+      - POSTGRES_USER=ganymede
+      - POSTGRES_DB=ganymede-prd
+    #ports:
+      #- 4801:5432
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready", "-d", "ganymede-prd"]
+      interval: 30s
+      timeout: 60s
+      retries: 5
+      start_period: 60s

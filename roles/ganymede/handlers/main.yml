@@ -1,0 +1,12 @@
+- name: restart {{ role_name }}.service
+  when: ganymede_started is not changed
+  ansible.builtin.systemd:
+    name: "{{ role_name }}.service"
+    state: restarted
+
+
+- name: restart data-{{ role_name }}-media.mount
+  when: ganymede_media_started is not changed
+  ansible.builtin.systemd:
+    name: "data-{{ role_name }}-media.mount"
+    state: restarted

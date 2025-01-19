@@ -1,0 +1,2 @@
+root: "/data/{{ role_name }}"
+mountpoint: "{{ root }}/media"

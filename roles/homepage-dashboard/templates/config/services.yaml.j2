@@ -104,8 +104,6 @@
         href: http://speedtest.home-lorenzen.de:7070/?S=L
         server: tyrion
         container: openspeedtest
-
-- Tools2:
     - VaultWarden:
         icon: vaultwarden.svg
         description: Passwort Manager
@@ -124,6 +122,12 @@
         href: https://crafty.home-lorenzen.de/
         server: tyrion
         container: crafty
+    - Ganymede - Tyrion:
+        icon: sh-ganymede
+        description: Twitch Livestream Archiver
+        href: https://ganymede.home-lorenzen.de/
+        server: tyrion
+        container: ganymede
     - Your Spotify:
         icon: spotify.svg
         description: Statistik Dienst für Spotify
@@ -149,7 +153,7 @@
           username: {{ traefik.nils.username }}
           password: {{ traefik.nils.password }}
     - Speedtest Tracker:
-        icon: speedtest-tracker-old.png
+        icon: myspeed.svg
         href: https://speed.home-lorenzen.de/
         server: tyrion
         container: speedtest-tracker
@@ -178,7 +182,7 @@
           type: prometheus
           url: https://prometheus.home-lorenzen.de
     - Whats up Docker - Tyrion:
-        icon: whats-up-docker.svg
+        icon: sh-whats-up-docker.svg
         href: https://whatsup.home-lorenzen.de
         server: tyrion
         container: whatsupdocker
@@ -270,7 +274,7 @@
           username: {{ traefik.nils.username }}
           password: {{ traefik.nils.password }}
     - Whats up Docker - Drogon:
-        icon: whats-up-docker.svg
+        icon: sh-whats-up-docker.svg
         href: https://whatsup.nlor.de/
         siteMonitor: https://whatsup.nlor.de/
         widget:

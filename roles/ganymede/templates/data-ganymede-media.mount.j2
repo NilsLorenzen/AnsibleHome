@@ -1,0 +1,11 @@
+[Unit]
+Description=Medien-Speicher für {{ role_name }} Installation
+Requires=network-online.target
+After=network-online.target systemd-resolved.service
+Wants=network-online.target systemd-resolved.service
+
+[Mount]
+What={{ ganymede_fileserver | mandatory }}
+Where={{ mountpoint | mandatory }}
+Type=nfs
+Options=nofail,noexec,defaults
