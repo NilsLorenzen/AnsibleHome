@@ -1,11 +1,11 @@
-# My HomeLab Ansible Configuration
+# Meine HomeLab Ansible Konfiguration
 
 In diesem Repo ist die Konfiguration meines HomeLab/Netzwerk abgelegt.
 Als Host dienen aktuell folgende Geräte:
-- ein Cloud Server bei Hetzner (ARM basiert)
+- ein Cloud Server bei Hetzner (ARM)
 - ein h100 MiniPC mit dual 2.5 Gbe NICs
 - drei ZimaBoards als Proxmox Cluster (Aktuell nur Spielwiese und nicht mit Ansible verwaltet)
-- Ein Synology Nas als Netzwerkspeicher z.B. für Plex (nicht mit Ansible verwaltet)
+- Ein Synology NAS als Netzwerkspeicher z.B. für Plex (nicht mit Ansible verwaltet)
 
 ## Ansible Installation
 
@@ -34,9 +34,12 @@ Die meisten meiner Ansible Rollen sind Docker Dienste.
 Im folgenden findest du eine Liste mit kurzer Beschreibung.‚
 
 - [convertx](https://github.com/C4illin/ConvertX): Mächtiger Datei Converter mit Web-Oberfläche.
+- [crafty](https://gitlab.com/crafty-controller/crafty-4): Minecraft Server Manager -> ersetzt einzelne Minecraft Server Rollen aus diesem Repo
 - [cyberchef](https://github.com/gchq/CyberChef): Web-Tool mit fokus auf Text Formatierung und Umwandlung.
 - docker: Installiert automatisch die richtige Docker Version auf dem Host.
+- [docker_socket_proxy](https://github.com/amir20/dozzle): Proxy um einen sicheren Zugriff auf den Docker Socket für andere Container zu ermöglichen.
 - [dozzle](https://github.com/amir20/dozzle): Super simpler Browser basierter Docker Container Log-Viewer.
+- [ganymede](https://github.com/Zibbp/ganymede): Twitch Livestream Downloader und Archiv
 - [grafana](https://github.com/grafana/grafana): Web-Dashboard für alle erdenkklichen Grafiken und Diagramme.
 - [homeassistant](https://github.com/home-assistant): Smart Home
 - [homebridge](https://github.com/homebridge/homebridge): Tool um nicht unterstützte Smart Home Geräte in Apple Homekit zu integrieren.
@@ -44,8 +47,8 @@ Im folgenden findest du eine Liste mit kurzer Beschreibung.‚
 - [it-tools](https://github.com/CorentinTh/it-tools): Web-Tool mit vielen nützlichen kleinen Werkzeugen für den IT-Alltag.
 - [littlelink](https://github.com/techno-tim/littlelink-server): Simple, selbstbetriebene Alternative zu LinkTree
 - [lubelogger](https://github.com/hargata/lubelog): Web-Tool zum erfassen von Wartungsarbeiten und anderen Fahrzeug-Daten
-- minecraft_bedrock: Ein Minecraft Bedrock Edition Server
-- minecraft_java: Ein Minecraft Java Edition Server
+- ~~minecraft_bedrock: Ein Minecraft Bedrock Edition Server~~
+- ~~minecraft_java: Ein Minecraft Java Edition Server~~
 - [ntp_server](https://github.com/cturra/docker-ntp): NTP-Server ohne overhead
 - [openspeedtest](https://github.com/openspeedtest/Docker-Image): Selbstgehosteter Netzwerkgeschwindigkeitstest (leider nicht wirklich Reverse Proxy kompatibel)
 - [overseerr](https://github.com/sct/overseerr): Ermöglicht Nutzern das Anfragen neu gewünschter Filme und Serien für Plex oder Jellyfin
