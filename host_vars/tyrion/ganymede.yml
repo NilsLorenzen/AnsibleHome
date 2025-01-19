@@ -1,2 +1,4 @@
 ganymede_fileserver: "192.168.10.12:/volume1/ganymede"
 ganymede_domain: ganymede.home-lorenzen.de
+ganymede_twitch_client_id: {{ vault_ganymede_twitch_client_id }}
+ganymede_twitch_client_secret: {{ vault_ganymede_twitch_client_secret }}

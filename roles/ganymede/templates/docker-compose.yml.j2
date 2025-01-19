@@ -28,8 +28,8 @@ services:
       - DB_NAME=ganymede-prd
       - DB_SSL=disable
       # - DB_SSL_ROOT_CERT= # path to cert in the container if DB_SSL is not disabled
-      - TWITCH_CLIENT_ID=z0tveqrxh7o30xu97yddg4zh2k5a6k # from your twitch application
-      - TWITCH_CLIENT_SECRET=5npm551pooyt7vhbr6jspl5vd8xvgb # from your twitch application
+      - TWITCH_CLIENT_ID={{ ganymede_twitch_client_id }} # from your twitch application
+      - TWITCH_CLIENT_SECRET={{ ganymede_twitch_client_secret }}b # from your twitch application
       # Worker settings. Max number of tasks to run in parallel per type.
       - MAX_CHAT_DOWNLOAD_EXECUTIONS=2
       - MAX_CHAT_RENDER_EXECUTIONS=2
