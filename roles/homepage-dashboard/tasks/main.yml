@@ -3,7 +3,7 @@
   when: local_plex == "true"
 
 - name: install dig on plex container
-  ansible.builtin.command: "docker exec plex apt install dnsutils"
+  ansible.builtin.command: "docker exec plex apt install dnsutils -y"
   when: local_plex == "true"
 
 - name: Return internal plex ip to var
