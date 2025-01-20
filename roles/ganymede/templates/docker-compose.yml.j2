@@ -31,11 +31,11 @@ services:
       - TWITCH_CLIENT_ID={{ ganymede_twitch_client_id }} # from your twitch application
       - TWITCH_CLIENT_SECRET={{ ganymede_twitch_client_secret }} # from your twitch application
       # Worker settings. Max number of tasks to run in parallel per type.
-      - MAX_CHAT_DOWNLOAD_EXECUTIONS=2
-      - MAX_CHAT_RENDER_EXECUTIONS=2
-      - MAX_VIDEO_DOWNLOAD_EXECUTIONS=2
-      - MAX_VIDEO_CONVERT_EXECUTIONS=2
-      - MAX_VIDEO_SPRITE_THUMBNAIL_EXECUTIONS=2
+      - MAX_CHAT_DOWNLOAD_EXECUTIONS=3
+      - MAX_CHAT_RENDER_EXECUTIONS=3
+      - MAX_VIDEO_DOWNLOAD_EXECUTIONS=3
+      - MAX_VIDEO_CONVERT_EXECUTIONS=3
+      - MAX_VIDEO_SPRITE_THUMBNAIL_EXECUTIONS=3
       # Optional OAuth settings
       # - OAUTH_ENABLED=false
       # - OAUTH_PROVIDER_URL=
