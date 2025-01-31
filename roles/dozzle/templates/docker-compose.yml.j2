@@ -22,6 +22,7 @@ services:
       - traefik.http.services.${COMPOSE_PROJECT_NAME}-service.loadbalancer.server.port=8080
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.rule=Host(`{{ dozzle_domain | mandatory }}`)
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.entrypoints=https
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.middlewares={{ dozzle_traefik_middleware }}
     healthcheck:
       test: ["CMD", "/dozzle", "healthcheck"]
       interval: 3s

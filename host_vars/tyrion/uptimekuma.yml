@@ -1,1 +1,2 @@
 uptimekuma_domain: status.home-lorenzen.de
+uptimekuma_traefik_middleware: lan-only

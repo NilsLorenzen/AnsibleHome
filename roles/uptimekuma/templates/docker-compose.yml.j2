@@ -18,3 +18,5 @@ services:
       - traefik.enable=true
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.rule=Host(`{{ uptimekuma_domain | mandatory }}`)
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.entrypoints=https
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.middlewares=crowdsec
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.middlewares={{ uptimekuma_traefik_middleware }}

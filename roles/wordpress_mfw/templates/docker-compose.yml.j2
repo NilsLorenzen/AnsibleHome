@@ -22,7 +22,7 @@ services:
       - traefik.enable=true
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.rule=Host(`{{ wordpress_mfw_domain | mandatory }}`)
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.entrypoints=https
-      #- traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.tls=true
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.middlewares=crowdsec
 
   db:
     image: mariadb:latest

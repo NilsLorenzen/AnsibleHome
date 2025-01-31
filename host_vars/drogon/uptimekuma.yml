@@ -1,1 +1,2 @@
 uptimekuma_domain: status.nlor.de
+uptimekuma_traefik_middleware: crowdsec

@@ -1,2 +1,2 @@
 whatsupdocker_domain: whatsup.nlor.de
-whatsupdocker_traefik_middleware: basic-auth-nils-only
+whatsupdocker_traefik_middleware: crowdsec,basic-auth-nils-only

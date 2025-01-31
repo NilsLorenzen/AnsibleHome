@@ -1,1 +1,2 @@
 dozzle_domain: dozzle.home-lorenzen.de
+dozzle_traefik_middleware: lan-only
