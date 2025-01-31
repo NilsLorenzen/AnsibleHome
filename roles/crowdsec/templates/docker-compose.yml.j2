@@ -1,0 +1,27 @@
+networks:
+  web:
+    external: true
+
+services:
+  crowdsec:
+    image: crowdsecurity/crowdsec:latest
+    container_name: {{ role_name }}
+    networks:
+      - web
+    environment:
+      TZ: "Europe/Berlin"
+      PGID: "1000"
+      COLLECTIONS: "crowdsecurity/traefik crowdsecurity/http-cve"
+    expose:
+      - 8080 # http api for bouncers
+      - 6060 # metrics endpoint for prometheus
+      - 7422 # appsec waf endpoint
+    volumes:
+      - {{ root }}/logs:/var/log/crowdsec:ro
+      - {{ root }}/db:/var/lib/crowdsec/data
+      - {{ root }}/config:/etc/crowdsec
+      - /var/log/auth.log:/var/log/auth.log:ro
+      - /var/log/syslog:/var/log/syslog:ro
+      - /data/traefik/logs:/var/log/traefik:ro
+    labels:
+      - traefik.enable=false

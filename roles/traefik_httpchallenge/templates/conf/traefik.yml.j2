@@ -13,10 +13,32 @@ api:
 # docker exec traefik traefik healthcheck
 ping: {}
 
-log:
-  level: DEBUG
+experimental:
+  plugins:
+    crowdsec-bouncer-traefik-plugin:
+      moduleName: "github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin"
+      version: "v1.4.0"
 
-#accessLog: {}
+log:
+  level: INFO
+
+accessLog:
+  filePath: "/logs/access_traefik.log"
+  format: json
+  filters:
+    statusCodes:
+      - "200" # log successful http requests
+      - "400-599" # log failed http requests
+    retryAttempts: true
+    #minDuration: "10ms"
+  # collect logs as in-memory buffer before writing into log file
+  bufferingSize: 100
+  fields:
+    headers:
+      defaultMode: keep # drop all headers per default
+      names:
+          StartUTC: drop
+          User-Agent: keep # log user agent strings
 
 entryPoints:
   http:
