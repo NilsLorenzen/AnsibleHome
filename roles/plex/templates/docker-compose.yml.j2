@@ -35,6 +35,7 @@ services:
       - traefik.http.services.${COMPOSE_PROJECT_NAME}-app.loadbalancer.server.port=32400
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.tls.certresolver=letsencrypt-inwx-dns
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.tls=true
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.middlewares=crowdsec
     healthcheck:
       test: curl --connect-timeout 15 --silent --show-error --fail http://localhost:32400/identity
       interval: 1m00s

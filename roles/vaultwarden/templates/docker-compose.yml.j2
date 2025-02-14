@@ -51,6 +51,7 @@ services:
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.tls.certresolver=letsencrypt-inwx-dns
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.tls.domains[0].main=nlor.de
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.tls.domains[0].sans=*.nlor.de
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.middlewares=crowdsec
       # disable access to the admin dashboard at /admin
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-admin.rule=Host(`{{ vaultwarden_domain | mandatory }}`) && Path(`/admin`)
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-admin.entrypoints=https

@@ -17,6 +17,10 @@
       tags:
         - dockersocketproxy
         - container
+    - role: crowdsec
+      tags:
+        - crowdsec
+        - container
     - role: whats-up-docker
       tags:
         - whatsupdocker

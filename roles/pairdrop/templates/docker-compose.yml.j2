@@ -36,7 +36,7 @@ services:
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.rule=Host(`{{ pairdrop_domain | mandatory }}`)
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.service=${COMPOSE_PROJECT_NAME}-service
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.entrypoints=https
-      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.middlewares=basic-auth-all
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.middlewares=crowdsec,basic-auth-all
     healthcheck:
       test: wget --quiet --tries=1 --spider http://localhost:3000 || exit 1
       interval: 30s

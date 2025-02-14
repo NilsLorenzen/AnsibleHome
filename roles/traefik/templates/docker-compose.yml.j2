@@ -33,8 +33,14 @@ services:
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.tls.domains[0].main={{ traefik_acme_domain }}
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.tls.domains[0].sans=*.{{ traefik_acme_domain }}
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.middlewares=lan-only
+
       - traefik.http.middlewares.basic-auth-nils-only.basicauth.users={{ traefik.nils.username }}:{{ traefik.nils.hash }}
       - traefik.http.middlewares.basic-auth-all.basicauth.users={{ traefik.nils.username }}:{{ traefik.nils.hash }},{{ traefik.other.username }}:{{ traefik.other.hash }}
       - traefik.http.middlewares.lan-only.ipallowlist.sourcerange=192.168.10.0/22, 192.168.2.0/24, 172.16.0.0/12
+
+      - "traefik.http.middlewares.crowdsec.plugin.crowdsec-bouncer-traefik-plugin.crowdseclapikey={{ vault_crowdsec_traefik_key }}"
+      - "traefik.http.middlewares.crowdsec.plugin.crowdsec-bouncer-traefik-plugin.crowdseclapischeme=http"
+      - "traefik.http.middlewares.crowdsec.plugin.crowdsec-bouncer-traefik-plugin.enabled=true"
+      - "traefik.http.middlewares.crowdsec.plugin.crowdsec-bouncer-traefik-plugin.crowdseclapihost=crowdsec:8080"
     healthcheck:
       test: traefik healthcheck

@@ -13,8 +13,14 @@ api:
 # docker exec traefik traefik healthcheck
 ping: {}
 
+experimental:
+  plugins:
+    crowdsec-bouncer-traefik-plugin:
+      moduleName: "github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin"
+      version: "v1.4.0"
+
 log:
-  level: INFO
+  level: DEBUG
   #filePath: "/logs/traefik.log"
   #format: json
 
