@@ -1,0 +1,13 @@
+type: http
+name: discord
+log_level: info
+format: |
+  {
+    "content": "```\n{{range . -}}{{$alert := . -}}{{range .Decisions -}} {{.Value}} got a {{.Type}} for the next '{{.Duration}}' with reason: '{{.Scenario}}'\n{{end -}}{{end -}}\n```"
+  }
+
+url: webhookURL
+
+method: POST
+headers:
+  Content-Type: application/json

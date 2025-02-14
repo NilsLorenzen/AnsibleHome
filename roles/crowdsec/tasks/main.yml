@@ -1,3 +1,12 @@
+- name: copy systemd unit
+  ansible.builtin.template:
+    src: "{{ role_name }}.service.j2"
+    dest: "/etc/systemd/system/{{ role_name }}.service"
+    owner: root
+    group: root
+    mode: "644"
+  notify: restart {{ role_name }}.service
+
 - name: create /data/{{ role_name }} dir
   ansible.builtin.file:
     path: "{{ root }}"
@@ -8,6 +17,12 @@
   vars:
     directory: ../templates
     notify: restart {{ role_name }}.service
+
+- name: Replace placeholder with var
+  ansible.builtin.replace:
+    path: "{{ root }}/config/notifications/discord.yaml"
+    regexp: 'webhookURL'
+    replace: "{{ vault_crowdsec_discord_webhook }}"
 
 - name: start {{ role_name }}.service
   ansible.builtin.systemd:
