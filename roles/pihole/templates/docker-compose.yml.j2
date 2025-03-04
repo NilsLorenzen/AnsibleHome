@@ -5,7 +5,7 @@ networks:
 services:
   app:
     image: pihole/pihole:latest
-    hostname: pihole__{{ inventory_hostname }}
+    hostname: pihole_{{ inventory_hostname }}
     container_name: pihole
     networks:
       - web

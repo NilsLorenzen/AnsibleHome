@@ -1,0 +1,28 @@
+---
+
+- hosts: arya
+  become: true
+
+  vars:
+    pip_install_packages:
+      - name: docker
+    docker_users:
+    - "{{ ansible_env.SUDO_USER | default(ansible_user_id) }}"
+
+  roles:
+    - geerlingguy.pip
+    - geerlingguy.docker
+
+    - role: docker_socket_proxy
+      tags:
+        - dockersocketproxy
+        - container
+    - role: pihole
+      tags:
+        - pihole
+        - container
+
+  post_tasks:
+    - name: Create docker network web
+      docker_network:
+        name: web
