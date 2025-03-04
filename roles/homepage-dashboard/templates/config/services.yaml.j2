@@ -25,12 +25,12 @@
             password: {{ unifi_password }}
     - PiHole Tyrion:
         icon: pi-hole.svg
-        href: https://pihole.home-lorenzen.de
+        href: https://pihole.home-lorenzen.de/admin
         server: tyrion
         container: pihole
         widget:
           type: pihole
-          url: "http://pihole.home-lorenzen.de:9090"
+          url: "https://pihole.home-lorenzen.de"
           key: {{ vault_pihole_apikey }}
     - Synology DSM:
         icon: synology-dsm.svg
