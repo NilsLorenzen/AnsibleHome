@@ -34,13 +34,15 @@ accessLog:
     retryAttempts: true
     #minDuration: "10ms"
   # collect logs as in-memory buffer before writing into log file
-  bufferingSize: 100
+  bufferingSize: 25
   fields:
+    defaultMode: keep
     headers:
-      defaultMode: keep # drop all headers per default
+      defaultMode: keep
       names:
-          StartUTC: drop
-          User-Agent: keep # log user agent strings
+        StartLocal: keep
+        User-Agent: keep
+        Authorization: keep
 
 metrics:
   prometheus:
