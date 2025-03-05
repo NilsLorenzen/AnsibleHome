@@ -1,12 +1,12 @@
 networks:
-  traefik_web:
-    name: web
+  web:
+    external: true
 
 services:
   app:
     image: traefik:latest
     networks:
-      - traefik_web
+      - web
     ports:
       - 80:80
       - 443:443

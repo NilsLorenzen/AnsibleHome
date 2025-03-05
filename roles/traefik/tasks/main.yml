@@ -21,6 +21,10 @@
     group: root
     mode: "644"
 
+- name: Create docker network web
+  docker_network:
+    name: web
+
 - name: start traefik.service
   ansible.builtin.systemd:
     state: started
