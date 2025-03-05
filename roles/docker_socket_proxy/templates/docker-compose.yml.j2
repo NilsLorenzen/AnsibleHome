@@ -8,8 +8,8 @@ services:
     container_name: {{ role_name }}
     networks:
       - web
-    #ports:
-      #- 2375:2375
+    ports:
+      - {{ docker_socket_ip }}:2375:2375
     environment:
       - ALLOW_START=0 #optional
       - ALLOW_STOP=0 #optional

@@ -250,18 +250,15 @@
         widget:
           type: minecraft
           url: udp://nini.home-lorenzen.de:25566
-    - Mealie:
-        icon: mealie.svg
-        description: Placeholder for Mealie
-        href: https://mealie.home-lorenzen.de/
-        server: tyrion
-        container: mealie
+    - PiHole Arya:
+        icon: pi-hole.svg
+        href: http://192.168.10.40:9090/admin/
+        server: arya
+        container: pihole
         widget:
-            type: mealie
-            url: https://mealie.home-lorenzen.de
-            key: mealieapitoken
-            version: 2 # only required if version > 1, defaults to 1
-            hideErrors: true
+          type: pihole
+          url: "http://192.168.10.40:9090"
+          key: "{{ vault_pihole_password }}"
 
 - Drogon:
     - Traefik - Drogon:
