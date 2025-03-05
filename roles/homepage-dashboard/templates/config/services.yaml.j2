@@ -30,7 +30,8 @@
         container: pihole
         widget:
           type: pihole
-          url: "http://192.168.10.16:9090" #"https://pihole.home-lorenzen.de"
+          url: "https://pihole.home-lorenzen.de"
+          version: 6
           key: "{{ vault_pihole_password }}"
     - Synology DSM:
         icon: synology-dsm.svg
@@ -258,6 +259,7 @@
         widget:
           type: pihole
           url: "http://192.168.10.40:9090"
+          version: 6
           key: "{{ vault_pihole_password }}"
 
 - Drogon:
