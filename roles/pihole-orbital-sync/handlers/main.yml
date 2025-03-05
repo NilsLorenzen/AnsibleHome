@@ -1,0 +1,5 @@
+- name: restart pihole-orbital-sync.service
+  when: pihole_orbital_sync_started is not changed
+  ansible.builtin.systemd:
+    name: pihole-orbital-sync.service
+    state: restarted

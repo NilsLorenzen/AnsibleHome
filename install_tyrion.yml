@@ -33,6 +33,10 @@
       tags:
         - pihole
         - container
+    - role: pihole-orbital-sync
+      tags:
+        - pihole
+        - container
     - role: homepage-dashboard
       tags:
         - homepage

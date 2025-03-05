@@ -6,6 +6,14 @@
     group: root
     mode: "644"
 
+- name: copy resolv.conf
+  ansible.builtin.template:
+    src: resolv.conf.j2
+    dest: /etc/resolv.conf
+    owner: root
+    group: root
+    mode: "644"
+
 - name: copy systemd unit
   ansible.builtin.template:
     src: pihole.service.j2

@@ -30,8 +30,8 @@
         container: pihole
         widget:
           type: pihole
-          url: "https://pihole.home-lorenzen.de"
-          key: {{ vault_pihole_apikey }}
+          url: "http://192.168.10.16:9090" #"https://pihole.home-lorenzen.de"
+          key: "{{ vault_pihole_password }}"
     - Synology DSM:
         icon: synology-dsm.svg
         href: https://nas.home-lorenzen.de:5001

@@ -1,0 +1,21 @@
+networks:
+  web:
+    external: true
+
+services:
+  orbital-sync:
+    image: ghcr.io/mattwebbio/orbital-sync:sha-438bee1-distroless
+    container_name: pihole-orbital-sync
+    networks:
+      - web
+    environment:
+      TZ: 'Europe/Berlin'
+      PI_HOLE_VERSION: 6
+      INTERVAL_MINUTES: 60
+      VERBOSE: 'true'
+      PRIMARY_HOST_BASE_URL: 'http://pihole_tyrion'
+      PRIMARY_HOST_PASSWORD: '{{ vault_pihole_password }}'
+      #PRIMARY_HOST_PATH: '/api'
+      SECONDARY_HOSTS_1_BASE_URL: 'http://192.168.10.40:9090'
+      SECONDARY_HOSTS_1_PASSWORD: '{{ vault_pihole_password }}'
+      #SECONDARY_HOSTS_1_PATH: '/api'
