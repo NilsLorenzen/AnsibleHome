@@ -1,3 +1,0 @@
-lubelogger_domain: lubelogger.home-lorenzen.de
-lubelogger_smtp_password: "{{ vault_lubelogger_smtp_password }}"
-lubelogger_smtp_user: "{{ vault_lubelogger_smtp_user }}"
