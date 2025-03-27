@@ -1,0 +1,5 @@
+- name: restart {{ role_name }}.service
+  when: docmost_started is not changed
+  ansible.builtin.systemd:
+    name: "{{ role_name }}.service"
+    state: restarted

@@ -1,0 +1,3 @@
+docmost_domain: wiki.home-lorenzen.de
+docmost_app_secret: "{{ vault_app_secret }}"
+docmost_db_password: "{{ vault_db_password }}"

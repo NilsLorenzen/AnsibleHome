@@ -127,3 +127,7 @@
       tags:
         - excalidraw
         - container
+    - role: docmost
+      tags:
+        - docmost
+        - container

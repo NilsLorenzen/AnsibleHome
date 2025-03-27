@@ -1,0 +1,69 @@
+networks:
+  default:
+  web:
+    external: true
+
+services:
+  docmost:
+    image: docmost/docmost:latest
+    container_name: {{ role_name }}
+    networks:
+     - default
+     - web
+    depends_on:
+      - db
+      - redis
+    environment:
+      APP_URL: "https://{{ docmost_domain | mandatory }}"
+      APP_SECRET: "{{ docmost_app_secret | mandatory }}"
+      DATABASE_URL: "postgresql://docmost:{{ docmost_db_password | mandatory }}@db:5432/docmost?schema=public"
+      REDIS_URL: "redis://redis:6379"
+      TZ: "Europe/Berlin"
+      STORAGE_DRIVER: local
+      FILE_UPLOAD_SIZE_LIMIT: 20mb
+
+      # E-Mail Einstellungen
+      MAIL_DRIVER: smtp
+      SMTP_HOST: smtp.strato.de
+      SMTP_PORT: 587
+      SMTP_USERNAME: {{ vaultwarden_smtp_user | mandatory }}
+      SMTP_PASSWORD: {{ vaultwarden_smtp_password | mandatory }}
+      SMTP_SECURE: false
+      MAIL_FROM_ADDRESS: {{ vaultwarden_smtp_user | mandatory }}
+      MAIL_FROM_NAME: "DocMost von Nils"
+    #ports:
+      #- "3000:3000"
+    volumes:
+      - {{ root }}/docmost-data:/app/data/storage
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.${COMPOSE_PROJECT_NAME}-service.loadbalancer.server.port=3000
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-lan.rule=Host(`{{ docmost_domain | mandatory }}`) && HeaderRegexp(`X-Real-Ip`, `(^127\.)|(^10\.)|(^172\.1[6-9]\.)|(^172\.2[0-9]\.)|(^172\.3[0-1]\.)|(^192\.168\.)`)
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-lan.service=${COMPOSE_PROJECT_NAME}-service
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-lan.entrypoints=https
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-lan.middlewares=lan-only
+
+  db:
+    image: postgres:16-alpine
+    networks:
+     - default
+    environment:
+      POSTGRES_DB: docmost
+      POSTGRES_USER: docmost
+      POSTGRES_PASSWORD: {{ docmost_db_password | mandatory }}
+      TZ: "Europe/Berlin"
+    volumes:
+      - {{ root }}/db:/var/lib/postgresql/data
+    labels:
+      - wud.watch=false # ignore updates in wud
+
+  redis:
+    image: redis:7.2-alpine
+    networks:
+     - default
+    environment:
+      TZ: "Europe/Berlin"
+    volumes:
+      - {{ root }}/redis:/data
+    labels:
+      - wud.watch=false # ignore updates in wud
