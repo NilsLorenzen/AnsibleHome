@@ -1,0 +1,23 @@
+networks:
+  default:
+  web:
+    external: true
+
+services:
+  scribble.rs:
+    container_name: {{ role_name }}
+    image: 'biosmarcel/scribble.rs:latest'
+    networks:
+     - web
+    #ports:
+        #- '80:8080'
+    environment:
+        - PORT=8080
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.${COMPOSE_PROJECT_NAME}-service.loadbalancer.server.port=8080
+
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-lan.rule=Host(`{{ scribblers_domain | mandatory }}`) && HeaderRegexp(`X-Real-Ip`, `(^127\.)|(^10\.)|(^172\.1[6-9]\.)|(^172\.2[0-9]\.)|(^172\.3[0-1]\.)|(^192\.168\.)`)
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-lan.service=${COMPOSE_PROJECT_NAME}-service
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-lan.entrypoints=https
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-lan.middlewares=lan-only

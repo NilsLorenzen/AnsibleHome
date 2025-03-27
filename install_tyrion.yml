@@ -131,3 +131,7 @@
       tags:
         - docmost
         - container
+    - role: scribblers
+      tags:
+        - scribblers
+        - container
