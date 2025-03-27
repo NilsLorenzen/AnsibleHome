@@ -1,1 +1,2 @@
 speedtest_tracker_domain: speed.home-lorenzen.de
+speedtest_tracker_appkey: "{{ vault_speedtest_tracker_appkey }}"

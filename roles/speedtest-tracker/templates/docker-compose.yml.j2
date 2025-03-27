@@ -13,14 +13,16 @@ services:
       #- 80:80
       #- 443:443
     environment:
-      - APP_KEY="base64:jxVmc2wZ+5w7B5KMcA2BsWrqalPXKLtr6MXWkND7e0E="
-      - APP_URL=https://speed.home-lorenzen.de
+      - APP_KEY="{{ speedtest_tracker_appkey | mandatory }}"
+      - APP_URL=https://{{ speedtest_tracker_domain | mandatory }}
+      - ASSET_URL=https://{{ speedtest_tracker_domain | mandatory }}
       - DB_CONNECTION=sqlite
       - APP_TIMEZONE=Europe/Berlin
       - DISPLAY_TIMEZONE=Europe/Berlin
       - TZ=Europe/Berlin
       - PRUNE_RESULTS_OLDER_THAN=14
-      - SPEEDTEST_SCHEDULE="0 */8 * * *"
+      - SPEEDTEST_SCHEDULE="0 */6 * * *"
+      - SPEEDTEST_SERVERS="14156,28818,64247"
       - DATETIME_FORMAT="d.m.Y H:i:s"
     volumes:
       - {{ root }}/config:/config
