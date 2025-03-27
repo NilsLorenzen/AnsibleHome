@@ -8,34 +8,45 @@ color: slate
 favicon: https://n1ls.wtf/images/favicon.png
 background: https://images.unsplash.com/photo-1461301214746-1e109215d6d3?q=80&w=3270&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D #https://n1ls.wtf/images/bg.webp
 cardBlur: sm # sm, "", md, etc... see https://tailwindcss.com/docs/backdrop-blur
-headerStyle: boxed
+headerStyle: underlined
 language: en
 disableCollapse: true
 layout:
   Network:
+    tab: HomeLab
     style: row
     columns: 4
     useEqualHeights: true
     icon: netbox.svg
   Media:
-    style: row
-    columns: 3
-    useEqualHeights: true
-    icon: synology-video-station.png
-  Tools:
-    style: row
-    columns: 6
-    icon: mdi-hammer-wrench
-  HomeLab:
+    tab: HomeLab
     style: row
     columns: 4
     useEqualHeights: true
+    icon: synology-video-station.png
+  HomeLab:
+    tab: HomeLab
+    style: row
+    columns: 3
+    useEqualHeights: true
     icon: ubuntu-linux.svg
   Drogon:
+    tab: Cloud
     style: row
     columns: 3
     icon: hetzner.svg
   Drogon2:
+    tab: Cloud
     style: row
     columns: 4
     header: false
+  GameServer:
+    tab: Cloud
+    style: row
+    columns: 3
+    icon: sh-free-games-claimer.webp
+  Tools:
+    tab: Tools
+    style: row
+    columns: 5
+    icon: mdi-hammer-wrench

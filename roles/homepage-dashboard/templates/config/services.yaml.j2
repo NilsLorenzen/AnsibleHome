@@ -23,7 +23,7 @@
             #fields: ["lan_devices", "wlan_devices", "uptime"]
             username: {{ unifi_username }}
             password: {{ unifi_password }}
-    - PiHole Tyrion:
+    - PiHole - Tyrion:
         icon: pi-hole.svg
         href: https://pihole.home-lorenzen.de/admin
         server: tyrion
@@ -33,16 +33,17 @@
           url: "https://pihole.home-lorenzen.de"
           version: 6
           key: "{{ vault_pihole_password }}"
-    - Synology DSM:
-        icon: synology-dsm.svg
-        href: https://nas.home-lorenzen.de:5001
-        ping: 192.168.10.11
+    - PiHole - Arya:
+        icon: pi-hole.svg
+        href: http://192.168.10.40:9090/admin/
+        server: arya
+        container: pihole
+        ping: arya
         widget:
-            type: diskstation
-            url: http://192.168.10.11:5000/
-            username: {{ synology_username }}
-            password: {{ synology_password }}
-            volume: volume_1
+          type: pihole
+          url: "http://192.168.10.40:9090"
+          version: 6
+          key: "{{ vault_pihole_password }}"
 
 - Media:
     - Plex:
@@ -50,6 +51,7 @@
         href: https://plex.nlor.de
         server: tyrion
         container: plex
+        id: plexID
         widget:
             type: plex
             url: http://{{ local_plex_ip }}:32400
@@ -73,74 +75,119 @@
             fields: ["pending", "approved", "available"]
             url: https://overseerr.nlor.de
             key: "{{ overseerr_apikey }}"
+    - Synology DSM - Samwell:
+        icon: synology-dsm.svg
+        href: https://nas.home-lorenzen.de:5001
+        ping: 192.168.10.11
+        widget:
+            type: diskstation
+            url: http://192.168.10.11:5000/
+            username: {{ synology_username }}
+            password: {{ synology_password }}
+            volume: volume_1
 
 - Tools:
     - PairDrop:
         icon: pairdrop.webp
+        description: "Sharing files made easy"
         href: https://drop.nlor.de/
         server: tyrion
         container: pairdrop
     - IT-Tools:
         icon: it-tools.svg
+        description: "Collection of useful IT-Tools"
         href: https://tools.nlor.de/
         server: tyrion
         container: it-tools
     - CyberChef:
         icon: cyberchef.svg
+        description: "The Swiss Army Knife of Encryption"
         href: https://cyberchef.nlor.de/
         server: tyrion
         container: cyberchef
     - Stirling PDF:
         icon: stirling-pdf.svg
+        description: "PDF-Tools"
         href: https://pdf.nlor.de/
         server: tyrion
         container: stirling-pdf
     - ConvertX:
         icon: sh-convertx.webp
+        description: "Convert files to different formats"
         href: https://converter.nlor.de/
         server: tyrion
         container: convertx
     - OpenSpeedTest:
         icon: openspeedtest.png
+        description: "Speedtest for your local network"
         href: http://speedtest.home-lorenzen.de:7070/?S=L
         server: tyrion
         container: openspeedtest
+    - Excalidraw:
+        icon: sh-excalidraw.webp
+        description: "Collaborative whiteboard tool"
+        href: https://draw.home-lorenzen.de/
+        server: tyrion
+        container: excalidraw
+    - Scribblers:
+        icon: sh-free-games-claimer.webp
+        description: "Scribble.io but self hosted"
+        href: https://scribble.home-lorenzen.de/
+        server: tyrion
+        container: scribblers
+    - PiholeOrbitalSync:
+        icon: pi-hole.svg
+        description: "Sync between multiple PiHoles"
+        server: tyrion
+        container: pihole-orbital-sync
     - VaultWarden:
         icon: vaultwarden.svg
-        description: Passwort Manager
+        description: "Self-hosted password manager"
         href: https://passwords.nlor.de/
         server: tyrion
         container: vaultwarden
     - Dozzle - Tyrion:
         icon: dozzle.svg
-        description: Docker Log Viewer
+        description: "Log viewer for Docker"
         href: https://dozzle.home-lorenzen.de/
         server: tyrion
         container: dozzle
     - Crafty - Tyrion:
         icon: crafty-controller.svg
-        description: Minecraft Server Manager
+        description: "Minecraft Server Management Tool"
         href: https://crafty.home-lorenzen.de/
         server: tyrion
         container: crafty
     - Ganymede - Tyrion:
         icon: sh-ganymede
-        description: Twitch Livestream Archiver
+        description: "Twitch Livestream Archiver"
         href: https://ganymede.home-lorenzen.de/
         server: tyrion
         container: ganymede
     - Your Spotify:
         icon: sh-your-spotify.svg
-        description: Statistik Dienst für Spotify
+        description: "Statistic Collector for Spotify"
         href: https://spotify.home-lorenzen.de/
         server: tyrion
         container: spotify_tracker-web-1
+    - Spotizerr:
+        icon: sh-spotify.webp
+        description: "Spotify Downloader"
+        href: https://spotizerr.home-lorenzen.de/
+        server: tyrion
+        container: spotizerr-app
     - WallOS:
         icon: wallos.webp
-        description: Subscription Tracker
+        description: "Subscribtion Tracker"
         href: https://abos.home-lorenzen.de/
         server: tyrion
         container: wallos
+    - DocMost:
+        icon: sh-docmost.webp
+        description: "wiki.home-lorenzen.de"
+        href: https://wiki.home-lorenzen.de/
+        server: tyrion
+        container: docmost
 
 - HomeLab:
     - Traefik - Tyrion:
@@ -153,6 +200,23 @@
           url: https://traefik.home-lorenzen.de
           username: {{ traefik.nils.username }}
           password: {{ traefik.nils.password }}
+    - UptimeKuma - Tyrion:
+        icon: uptime-kuma.svg
+        href: https://status.home-lorenzen.de/
+        server: tyrion
+        container: uptimekuma
+        widget:
+            type: uptimekuma
+            url: https://status.home-lorenzen.de
+            slug: n1ls
+    - Whats up Docker - Tyrion:
+        icon: sh-wud.svg
+        href: https://whatsup.home-lorenzen.de
+        server: tyrion
+        container: whatsupdocker
+        widget:
+          type: whatsupdocker
+          url: https://whatsup.home-lorenzen.de
     - Speedtest Tracker:
         icon: myspeed.svg
         href: https://speed.home-lorenzen.de/
@@ -182,14 +246,16 @@
         widget:
           type: prometheus
           url: https://prometheus.home-lorenzen.de
-    - Whats up Docker - Tyrion:
-        icon: sh-wud.svg
-        href: https://whatsup.home-lorenzen.de
-        server: tyrion
-        container: whatsupdocker
+    - PaperlessNGX:
+        icon: paperless-ngx.svg
+        href: https://dms.home-lorenzen.de
+        server: nas
+        container: paperlessngx-webserver-1
         widget:
-          type: whatsupdocker
-          url: https://whatsup.home-lorenzen.de
+          type: paperlessngx
+          url: https://dms.home-lorenzen.de
+          username: {{ paperlessngx_username }}
+          password: {{ paperlessngx_password }}
     - Homebridge:
         icon: homebridge.svg
         href: https://homebridge.home-lorenzen.de
@@ -218,49 +284,6 @@
                 - state: weather.forecast_home
                 label: wind speed
                 value: "{attributes.wind_speed} {attributes.wind_speed_unit}" #}
-    - PaperlessNGX:
-        icon: paperless-ngx.svg
-        href: https://dms.home-lorenzen.de
-        server: nas
-        container: paperlessngx-webserver-1
-        widget:
-          type: paperlessngx
-          url: https://dms.home-lorenzen.de
-          username: {{ paperlessngx_username }}
-          password: {{ paperlessngx_password }}
-    - UptimeKuma - Tyrion:
-        icon: uptime-kuma.svg
-        href: https://status.home-lorenzen.de/
-        server: tyrion
-        container: uptimekuma
-        widget:
-            type: uptimekuma
-            url: https://status.home-lorenzen.de
-            slug: n1ls
-    - Minecraft Bauserver:
-        icon: minecraft.svg
-        server: tyrion
-        container: crafty
-        widget:
-          type: minecraft
-          url: udp://bauserver.nlor.de:25565
-    - Minecraft NiNi Server:
-        icon: minecraft.svg
-        server: tyrion
-        container: crafty
-        widget:
-          type: minecraft
-          url: udp://nini.home-lorenzen.de:25566
-    - PiHole Arya:
-        icon: pi-hole.svg
-        href: http://192.168.10.40:9090/admin/
-        server: arya
-        container: pihole
-        widget:
-          type: pihole
-          url: "http://192.168.10.40:9090"
-          version: 6
-          key: "{{ vault_pihole_password }}"
 
 - Drogon:
     - Traefik - Drogon:
@@ -307,3 +330,19 @@
         icon: littlelink-custom.svg
         href: https://me.nilslorenzen.de/
         siteMonitor: https://me.nilslorenzen.de/
+
+- GameServer:
+    - Minecraft Bauserver:
+        icon: minecraft.svg
+        href: https://crafty.home-lorenzen.de/
+        description: "On Tyrion via Crafty"
+        widget:
+          type: minecraft
+          url: udp://192.168.10.16:25565
+    - Minecraft NiNi Server:
+        icon: minecraft.svg
+        href: https://crafty.home-lorenzen.de/
+        description: "On Tyrion via Crafty"
+        widget:
+          type: minecraft
+          url: udp://192.168.10.16:25566
