@@ -11,6 +11,7 @@ cardBlur: sm # sm, "", md, etc... see https://tailwindcss.com/docs/backdrop-blur
 headerStyle: underlined
 language: en
 disableCollapse: true
+fullWidth: true
 layout:
   Network:
     tab: HomeLab
@@ -45,8 +46,19 @@ layout:
     style: row
     columns: 3
     icon: sh-free-games-claimer.webp
+  Proxmox:
+    tab: Proxmox
+    style: row
+    columns: 3
+    icon: proxmox.svg
+    useEqualHeights: true
   Tools:
     tab: Tools
     style: row
     columns: 5
     icon: mdi-hammer-wrench
+  Tools without UI:
+    tab: Tools
+    style: row
+    columns: 5
+    icon: si-framework
