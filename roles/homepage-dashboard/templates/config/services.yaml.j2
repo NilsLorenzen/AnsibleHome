@@ -339,7 +339,27 @@
     - {{ vault_homepage_secret_service2_name }}:
         icon: si-dotnet
         href: {{ vault_homepage_secret_service2_url }}
-        siteMonitor: {{ vault_homepage_secret_service2_url }}
+        siteMonitor: {{ vault_homepage_secret_service2_url }}api/v1/healthz
+        widget:
+            type: customapi
+            url: {{ vault_homepage_secret_service2_url }}api/v1/dashboard/statistic
+            refreshInterval: 10000 # optional - in milliseconds, defaults to 10s
+            method: GET # optional, e.g. POST
+            #display: # optional, default to block, see below
+            mappings:
+              - field: totalNumberOfSmokes
+                label: anzSmokes
+                format: number # optional - defaults to text
+              - field: totalNumberOfHeads
+                label: anzKöpfe
+                format: number # optional - defaults to text
+              - field: totalNumberOfShishas
+                label: anzShishas
+                format: number # optional - defaults to text
+              - field: daysSinceLastSmoke
+                label: seit Kopf
+                format: number # optional - defaults to text
+                suffix: "Tage"
     - {{ vault_homepage_secret_service3_name }}:
         icon: {{ vault_homepage_secret_service1_url }}assets/favicon/favicon.png
         href: {{ vault_homepage_secret_service3_url }}
@@ -347,7 +367,27 @@
     - {{ vault_homepage_secret_service4_name }}:
         icon: si-dotnet
         href: {{ vault_homepage_secret_service4_url }}
-        siteMonitor: {{ vault_homepage_secret_service4_url }}
+        siteMonitor: {{ vault_homepage_secret_service4_url }}api/v1/healthz
+        widget:
+            type: customapi
+            url: {{ vault_homepage_secret_service4_url }}api/v1/dashboard/statistic
+            refreshInterval: 10000 # optional - in milliseconds, defaults to 10s
+            method: GET # optional, e.g. POST
+            #display: # optional, default to block, see below
+            mappings:
+              - field: totalNumberOfSmokes
+                label: anzSmokes
+                format: number # optional - defaults to text
+              - field: totalNumberOfHeads
+                label: anzKöpfe
+                format: number # optional - defaults to text
+              - field: totalNumberOfShishas
+                label: anzShishas
+                format: number # optional - defaults to text
+              - field: daysSinceLastSmoke
+                label: seit Kopf
+                format: number # optional - defaults to text
+                suffix: "Tage"
 
 - GameServer:
     - Minecraft Bauserver:
