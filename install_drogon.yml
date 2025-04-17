@@ -2,6 +2,12 @@
 
 - hosts: drogon
   become: true
+
+  tasks:
+    - name: Set timezone to Europe/Berlin
+      community.general.timezone:
+        name: Europe/Berlin
+
   roles:
     - role: docker
       tags: docker

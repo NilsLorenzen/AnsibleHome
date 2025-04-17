@@ -9,6 +9,11 @@
     docker_users:
     - "{{ ansible_env.SUDO_USER | default(ansible_user_id) }}"
 
+  tasks:
+    - name: Set timezone to Europe/Berlin
+      community.general.timezone:
+        name: Europe/Berlin
+
   roles:
     - geerlingguy.pip
     - geerlingguy.docker
