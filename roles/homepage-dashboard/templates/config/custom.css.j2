@@ -1,5 +1,5 @@
 * {
-  scrollbar-color: unset;
+    scrollbar-color: unset;
 }
 
 #page_container {
@@ -7,6 +7,32 @@
          radial-gradient(circle at top left, rgba(0, 255, 255, .3) 0%, transparent 60%),
          radial-gradient(circle at bottom right, rgba(255, 0, 255, .2) 0%, transparent 60%),
          radial-gradient(circle, #888, #111);
+}
+
+/* Increase the radius of the corners */
+.rounded-md, .rounded {
+    border-radius: 15px !important;
+}
+
+/* Make the widget service blocks all one unit */
+.service-block {
+    background-color: transparent !important;
+    box-shadow: none !important;
+}
+.service div .service-container {
+    background:rgba(15, 15, 15, 0.2);
+}
+.service div > :nth-child(2).service-container {
+    border-top-left-radius: 15px !important;
+    border-top-right-radius: 15px !important;
+    border-bottom-left-radius: 15px !important;
+    border-bottom-right-radius: 15px !important;
+}
+.service div > :last-child.service-container {
+    border-bottom-left-radius: 15px !important;
+    border-bottom-right-radius: 15px !important;
+    border-top-left-radius: 15px !important;
+    border-top-right-radius: 15px !important;
 }
 
 #information-widgets {
