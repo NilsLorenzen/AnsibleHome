@@ -1,0 +1,86 @@
+http:
+  middlewares:
+    geoblock:
+      plugin:
+        geoblock:
+          #-------------------------------
+          # Core Settings
+          #-------------------------------
+          enabled: true                   # Enable/disable the plugin entirely
+          defaultAllow: true             # Default behavior when no rules match (false = block)
+          
+          #-------------------------------
+          # Database Configuration
+          #-------------------------------
+          #databaseFilePath: "/plugins-persistent-data/traefik-geoblock/IP2LOCATION-LITE-DB1.IPV6.BIN"
+          # Can be:
+          # - Full path: /path/to/IP2LOCATION-LITE-DB1.IPV6.BIN
+          # - Directory: /path/to/ (will search for IP2LOCATION-LITE-DB1.IPV6.BIN recursively). Use /plugins-storage/sources/ if you are installing from plugin repository.
+          # - Empty: uses embedded database assuming it is installed in /plugins-local/src/github.com/david-garcia-garcia/traefik-geoblock/
+          
+          #-------------------------------
+          # Country-based Rules (ISO 3166-1 alpha-2 format)
+          #-------------------------------
+          allowedCountries:               # Whitelist of countries to allow
+            - "DE"                        # Germany
+            - "AT"                        # Austria
+            - "CH"                        # Switzerland
+          blockedCountries:               # Blacklist of countries to block
+            - "RU"                        # Russia
+            - "CN"                        # China
+            - "BG"                        # Bulgaria
+            - "UA"                        # Ukraine
+            - "SC"                        # Seychelles
+            - "HK"                        # Hong Kong
+            - "SG"                        # Singapore
+            - "KP"                        # North Korea
+            
+          #-------------------------------
+          # Network Rules
+          #-------------------------------
+          allowPrivate: true              # Allow requests from private/internal networks (marked as "PRIVATE")
+          allowedIPBlocks:                # CIDR ranges to always allow (highest priority)
+            - "192.168.0.0/16"
+            - "10.0.0.0/8"
+            #- "2001:db8::/32"
+          #blockedIPBlocks:                 # CIDR ranges to always block
+            #- "203.0.113.0/24"
+            # More specific ranges (longer prefix) take precedence
+          
+          #-------------------------------
+          # Bypass Configuration
+          #-------------------------------
+          #bypassHeaders:                  # Headers that skip geoblocking entirely
+            #X-Internal-Request: "true"
+            #X-Skip-Geoblock: "1"
+            
+          #-------------------------------
+          # Error Handling and ban
+          #-------------------------------
+          banIfError: true                # Block requests if IP lookup fails
+          disallowedStatusCode: 403       # HTTP status code for blocked requests. If you are using banHtmlFilePath make sure to set this to a valid code (such as NOT 204).
+          
+          #banHtmlFilePath: "/plugins-persistent-data/traefik-geoblock/geoblockban.html"
+          # Can be:
+          # - Full path: /path/to/geoblockban.html
+          # - Directory: /path/to/ (will search for geoblockban.html recursively). Use /plugins-storage/sources/ if you are installing from plugin repository.
+          # - Empty: returns only status code
+          
+          #-------------------------------
+          # Logging Configuration
+          #-------------------------------
+          logLevel: "info"                  # Available: debug, info, warn, error
+          logFormat: "json"                 # Available: json, text
+          logPath: ""  # Empty for Traefik's standard output
+          logBannedRequests: true           # Log blocked requests. They will be logged at info level.
+
+          #-------------------------------
+          # Database Auto-Update Settings
+          #-------------------------------
+          databaseAutoUpdate: true                   
+          # Enable automatic database updates. Updates are asynchronous and triggere during middleware startup. The updated database will be used when the middleware starts again.
+          # Make sure you whitelist in your FW domains ["download.ip2location.com", "www.ip2location.com"]
+          databaseAutoUpdateDir: "/data/ip2database" 
+          # Directory to store updated databases. This must be a persitent volme in the traefik pod.
+          databaseAutoUpdateToken: ""                # IP2Location download token (if using premium)
+          databaseAutoUpdateCode: "DB1"              # Database product code to download (if using premium)

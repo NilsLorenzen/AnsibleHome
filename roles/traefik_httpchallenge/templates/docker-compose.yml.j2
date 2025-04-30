@@ -1,3 +1,5 @@
+version: '3.9'
+
 networks:
   web:
     external: true
@@ -28,7 +30,7 @@ services:
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.service=api@internal
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.tls.certresolver=letsencrypt_http
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.tls.domains[0].main={{ traefik_domain }}
-      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.middlewares=basic-auth-nils-only,crowdsec
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.middlewares=geoblock@file,crowdsec,basic-auth-nils-only
 
       - traefik.http.middlewares.basic-auth-nils-only.basicauth.users={{ traefik.nils.username }}:{{ traefik.nils.hash }}
       - traefik.http.middlewares.basic-auth-all.basicauth.users={{ traefik.nils.username }}:{{ traefik.nils.hash }},{{ traefik.other.username }}:{{ traefik.other.hash }}

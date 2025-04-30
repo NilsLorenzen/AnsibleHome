@@ -1,2 +1,2 @@
 dozzle_domain: dozzle.nlor.de
-dozzle_traefik_middleware: crowdsec
+dozzle_traefik_middleware: geoblock@file,crowdsec

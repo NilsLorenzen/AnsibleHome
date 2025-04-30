@@ -5,7 +5,7 @@ networks:
 
 services:
   spotizerr:
-    image: cooldockerizer93/spotizerr:1.3.1
+    image: cooldockerizer93/spotizerr:latest
     container_name: spotizerr-app
     networks:
      - default
@@ -27,6 +27,7 @@ services:
       - REDIS_URL=redis://redis:6379/0
       - REDIS_BACKEND=redis://redis:6379/0
       - EXPLICIT_FILTER=false # Set to true to filter out explicit content
+      - SPOTIPY_CACHE_PATH=/app/cache/.cache  # Spotify token cache path
     depends_on:
       - redis
     labels:
