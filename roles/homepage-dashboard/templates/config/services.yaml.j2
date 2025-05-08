@@ -171,6 +171,12 @@
         href: https://wiki.home-lorenzen.de/
         server: tyrion
         container: docmost
+    - Matter Hub HA:
+        icon: matter.svg
+        description: "Matter Hubs für Home Assistant"
+        href: http://192.168.10.16:8482/
+        server: tyrion
+        container: homeassistant-matter-hub
 
 - Tools without UI:
     - PiholeOrbitalSync:
@@ -246,7 +252,7 @@
           url: https://dms.home-lorenzen.de
           username: {{ paperlessngx_username }}
           password: {{ paperlessngx_password }}
-    - Homebridge:
+    {# - Homebridge:
         icon: homebridge.svg
         href: https://homebridge.home-lorenzen.de
         server: tyrion
@@ -255,7 +261,7 @@
           type: homebridge
           url: https://homebridge.home-lorenzen.de
           username: {{ homebridge_username }}
-          password: {{ homebridge_password }}
+          password: {{ homebridge_password }} #}
     - Home Assistant:
         icon: home-assistant.svg
         href: https://homeassistant.home-lorenzen.de

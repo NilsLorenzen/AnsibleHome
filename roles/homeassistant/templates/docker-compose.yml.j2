@@ -13,3 +13,18 @@ services:
     #  - /path/to/device:/path/to/device #optional
     healthcheck:
       test: "curl --fail http://localhost:8123/ || exit 1"
+
+  matter-hub:
+    image: ghcr.io/t0bst4r/home-assistant-matter-hub:latest
+    container_name: homeassistant-matter-hub
+    restart: unless-stopped
+    network_mode: host
+    environment: # more options can be found in the configuration section
+      - HAMH_HOME_ASSISTANT_URL=https://homeassistant.home-lorenzen.de/
+      - HAMH_HOME_ASSISTANT_ACCESS_TOKEN={{ vault_homeassistant_matter_token}}
+      - HAMH_LOG_LEVEL=info
+      - HAMH_HTTP_PORT=8482
+      - HAMH_HTTP_AUTH_USERNAME={{ vault_homeassistant_matter_username }}
+      - HAMH_HTTP_AUTH_PASSWORD={{ vault_homeassistant_matter_password }}
+    volumes:
+      - {{ root }}/ha-matter-hub:/data
