@@ -13,10 +13,9 @@ services:
     #ports:
       #- 7171:7171
     volumes:
-      - {{ root }}/creds:/app/creds
-      - {{ root }}/config:/app/config
-      - /data/plex/media/MusikNeu:/app/downloads  # <-- Change this for your music library dir
-      - {{ root }}/logs:/app/logs
+      - {{ root }}/logs:/app/logs 
+      - {{ root }}/data:/app/data
+      - /data/plex/media/MusikNeu:/app/downloads
     environment:
       - PUID=1000
       - PGID=1000
