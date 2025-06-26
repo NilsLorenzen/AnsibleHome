@@ -141,3 +141,7 @@
       tags:
         - scribblers
         - container
+    - role: cobaltdownloader
+      tags:
+        - cobaltdownloader
+        - container

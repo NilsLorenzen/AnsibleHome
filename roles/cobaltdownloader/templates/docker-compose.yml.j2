@@ -1,0 +1,76 @@
+networks:
+  default:
+  web:
+    external: true
+
+services:
+  cobalt-api:
+    image: ghcr.io/imputnet/cobalt:latest
+
+    init: true
+    read_only: true
+    container_name: cobaltdownloader-api
+
+    #ports:
+      #- 9000:9000/tcp
+      # - 127.0.0.1:9000:9000
+
+    networks:
+      - default
+      - web
+
+    environment:
+      # replace https://api.url.example/ with your instance's url
+      # or else tunneling functionality won't work properly
+      API_URL: "https://{{ cobaltdownloader_api_domain | mandatory }}/"
+
+      # if you want to use cookies for fetching data from services,
+      # uncomment the next line & volumes section
+      # COOKIE_PATH: "/cookies.json"
+
+      # it's recommended to configure bot protection or api keys if the instance is public,
+      # see /docs/protect-an-instance.md for more info
+
+      # see /docs/run-an-instance.md for more variables that you can use here
+
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.${COMPOSE_PROJECT_NAME}-api-service.loadbalancer.server.port=9000
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-api.service=${COMPOSE_PROJECT_NAME}-api-service
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-api.rule=Host(`{{ cobaltdownloader_api_domain | mandatory }}`)
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-api.entrypoints=https
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-api.tls=true
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-api.middlewares=lan-only
+
+  cobalt-web:
+    build:
+      context: https://github.com/NotNite/cobalt-web-docker.git
+      dockerfile: Dockerfile
+      additional_contexts:
+        cobalt-src: https://github.com/imputnet/cobalt.git
+
+      args:
+        WEB_HOST: "https://{{ cobaltdownloader_web_domain | mandatory }}/"
+        WEB_DEFAULT_API: "https://{{ cobaltdownloader_api_domain | mandatory }}/"
+
+    #ports:
+      #- 3000:3000/tcp
+
+    networks:
+      - default
+      - web
+
+    container_name: cobaltdownloader-web
+
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.${COMPOSE_PROJECT_NAME}-app-service.loadbalancer.server.port=3000
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.service=${COMPOSE_PROJECT_NAME}-app-service
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.rule=Host(`{{ cobaltdownloader_web_domain | mandatory }}`)
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.entrypoints=https
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.tls=true
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.middlewares=lan-only
+
+    # uncomment only if you use the COOKIE_PATH variable
+    # volumes:
+        # - ./cookies.json:/cookies.json
