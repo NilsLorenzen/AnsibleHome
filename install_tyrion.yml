@@ -51,10 +51,6 @@
       tags:
         - homebridge
         - container
-    - role: homeassistant
-      tags:
-        - homeassistant
-        - container
     - role: plex
       tags:
         - plex

@@ -171,12 +171,12 @@
         href: https://wiki.home-lorenzen.de/
         server: tyrion
         container: docmost
-    - Matter Hub HA:
+    {# - Matter Hub HA:
         icon: matter.svg
         description: "Matter Hubs für Home Assistant"
         href: http://192.168.10.16:8482/
         server: tyrion
-        container: homeassistant-matter-hub
+        container: homeassistant-matter-hub #}
     - Cobalt Downloader WEB:
         icon: cobalt.svg
         description: "Web Downloader"
@@ -274,12 +274,12 @@
           password: {{ homebridge_password }} #}
     - Home Assistant:
         icon: home-assistant.svg
-        href: https://homeassistant.home-lorenzen.de
+        href: http://homeassistant.home-lorenzen.de:8123
         server: tyrion
         container: homeassistant
         widget:
             type: homeassistant
-            url: http://192.168.10.16:8123
+            url: http://homeassistant.home-lorenzen.de:8123
             key: "{{ homeassistant_token }}"
             {# custom:
                 - state: sensor.total_power
@@ -431,9 +431,9 @@
         widget:
             type: proxmox
             url: https://192.168.10.43:8006
-            username: api_token_id
-            password: api_token_secret
-            #node: pve-1 # optional
+            username: {{ vault_homepage_proxmox_api_id }}
+            password: {{ vault_homepage_proxmox_api_secret }}
+            node: jon # optional
     - Proxmox - Robb:
         icon: proxmox.svg
         href: https://192.168.10.45:8006/
@@ -441,9 +441,9 @@
         widget:
             type: proxmox
             url: https://192.168.10.45:8006
-            username: api_token_id
-            password: api_token_secret
-            #node: pve-1 # optional
+            username: {{ vault_homepage_proxmox_api_id }}
+            password: {{ vault_homepage_proxmox_api_secret }}
+            node: robb # optional
     - Proxmox - Brandon:
         icon: proxmox.svg
         href: https://192.168.10.41:8006/
@@ -451,6 +451,6 @@
         widget:
             type: proxmox
             url: https://192.168.10.41:8006
-            username: api_token_id
-            password: api_token_secret
-            #node: pve-1 # optional
+            username: {{ vault_homepage_proxmox_api_id }}
+            password: {{ vault_homepage_proxmox_api_secret }}
+            node: brandon # optional
