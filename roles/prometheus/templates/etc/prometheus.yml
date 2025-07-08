@@ -11,3 +11,9 @@ scrape_configs:
     - targets: ['traefik:8080']
    tls_config:
       insecure_skip_verify: true
+ - job_name: 'node-exporter-tyrion'
+   scrape_interval: 5s
+   static_configs:
+    - targets: ['192.168.10.16:9100']
+   tls_config:
+      insecure_skip_verify: true
