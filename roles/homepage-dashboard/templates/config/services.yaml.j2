@@ -33,15 +33,13 @@
           url: "https://pihole.home-lorenzen.de"
           version: 6
           key: "{{ vault_pihole_password }}"
-    - PiHole - Arya:
+    - PiHole - Proxmox:
         icon: pi-hole.svg
-        href: http://192.168.10.40:9090/admin/
-        server: arya
-        container: pihole
-        ping: arya
+        href: http://192.168.10.40/admin/
+        siteMonitor: http://192.168.10.40/admin/
         widget:
           type: pihole
-          url: "http://192.168.10.40:9090"
+          url: "http://192.168.10.40:80"
           version: 6
           key: "{{ vault_pihole_password }}"
 
@@ -171,12 +169,6 @@
         href: https://wiki.home-lorenzen.de/
         server: tyrion
         container: docmost
-    {# - Matter Hub HA:
-        icon: matter.svg
-        description: "Matter Hubs für Home Assistant"
-        href: http://192.168.10.16:8482/
-        server: tyrion
-        container: homeassistant-matter-hub #}
     - Cobalt Downloader WEB:
         icon: cobalt.svg
         description: "Web Downloader"
@@ -275,8 +267,7 @@
     - Home Assistant:
         icon: home-assistant.svg
         href: http://homeassistant.home-lorenzen.de:8123
-        server: tyrion
-        container: homeassistant
+        siteMonitor: http://homeassistant.home-lorenzen.de:8123
         widget:
             type: homeassistant
             url: http://homeassistant.home-lorenzen.de:8123
