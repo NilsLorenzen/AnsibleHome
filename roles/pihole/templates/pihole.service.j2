@@ -7,6 +7,9 @@ OnFailure=unit-status-mail@%n.service
 [Service]
 WorkingDirectory={{ root }}
 
+Restart=on-failure
+RestartSec=5s
+
 # Required for the database healthcheck which uses an environment variable.
 #EnvironmentFile={{ root }}/.env.db
 Environment=COMPOSE_PROJECT_NAME=pihole
