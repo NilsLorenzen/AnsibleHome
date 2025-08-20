@@ -20,4 +20,4 @@ services:
       #- traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.rule=Host(`{{ webserver_domain | mandatory }}`)
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.rule=Host(`{{ webserver_domain | mandatory }}`) && !(PathPrefix(`/sl/`))
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.entrypoints=https
-      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.middlewares=geoblock@file,crowdsec
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.middlewares=crowdsec

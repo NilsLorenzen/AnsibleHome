@@ -53,7 +53,7 @@ services:
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app2.rule=Host(`nilslorenzen.de`) && !(PathPrefix(`/sl/`))
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.entrypoints=https
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app2.entrypoints=https
-      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.middlewares=geoblock@file,crowdsec
-      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app2.middlewares=geoblock@file,crowdsec
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.middlewares=crowdsec
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app2.middlewares=crowdsec
 
 # Vorlage https://github.com/techno-tim/littlelink-server/blob/master/docker-compose.yml
