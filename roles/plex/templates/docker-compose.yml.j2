@@ -28,6 +28,7 @@ services:
       - {{ root }}/config:/config
       - {{ root }}/data:/data
       - {{ root }}/transcode:/transcode
+      - {{ root }}/downloads:/downloads
     labels:
       - traefik.enable=true
 
