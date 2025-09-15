@@ -444,3 +444,38 @@
             username: {{ vault_homepage_proxmox_api_id }}
             password: {{ vault_homepage_proxmox_api_secret }}
             node: brandon # optional
+
+
+- Arrs:
+    - Sonarr:
+        icon: sonarr.svg
+        href: http://192.168.10.91:8989/
+        siteMonitor: http://192.168.10.91:8989
+        widget:
+            type: sonarr
+            url: http://192.168.10.91:8989
+            key: {{ vault_sonarr_api_key }}
+    - Radarr:
+        icon: radarr.svg
+        href: http://192.168.10.91:7878/
+        siteMonitor: http://192.168.10.91:7878
+        widget:
+            type: radarr
+            url: http://192.168.10.91:7878
+            key: {{ vault_radarr_api_key }}
+    - Prowlarr:
+        icon: prowlarr.svg
+        href: http://192.168.10.91:9696/
+        siteMonitor: http://192.168.10.91:9696
+        widget:
+            type: prowlarr
+            url: http://192.168.10.91:9696
+            key: {{ vault_prowlarr_api_key }}
+    - SABnzbd:
+        icon: sabnzbd.svg
+        href: http://192.168.10.91:8080/
+        siteMonitor: http://192.168.10.91:8080
+        widget:
+            type: sabnzbd
+            url: http://192.168.10.91:8080
+            key: {{ vault_sabnzbd_api_key }}
