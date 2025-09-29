@@ -47,10 +47,6 @@
       tags:
         - vaultwarden
         - container
-    - role: homebridge
-      tags:
-        - homebridge
-        - container
     - role: plex
       tags:
         - plex
