@@ -16,7 +16,7 @@
   ansible.builtin.import_tasks: copy-all-templates.yml
   vars:
     directory: ../templates
-    notify: restart prometheus.service
+    notify_handlers: restart {{ role_name }}.service
 
 - name: start prometheus.service
   ansible.builtin.systemd:

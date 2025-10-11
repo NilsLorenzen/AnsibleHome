@@ -14,37 +14,28 @@
     - role: traefik_httpchallenge
       tags:
         - traefik
-        - container
     - role: docker_socket_proxy
       tags:
         - dockersocketproxy
-        - container
     - role: crowdsec
       tags:
         - crowdsec
-        - container
     - role: whats-up-docker
       tags:
         - whatsupdocker
-        - container
     - role: dozzle
       tags:
         - dozzle
-        - container
     - role: wordpress_mfw
       tags:
         - wordpress_mfw
         - wordpress
-        - container
     - role: webserver
       tags:
         - webserver
-        - container
     - role: littlelink
       tags:
         - littlelink
-        - container
     - role: uptimekuma
       tags:
         - uptimekuma
-        - container

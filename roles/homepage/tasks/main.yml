@@ -19,7 +19,7 @@
   ansible.builtin.import_tasks: copy-all-templates.yml
   vars:
     directory: ../templates
-    notify: restart homepage.service
+    notify_handlers: restart {{ role_name }}.service
 
 - name: copy systemd unit
   ansible.builtin.template:

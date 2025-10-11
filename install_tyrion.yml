@@ -14,126 +14,95 @@
     - role: traefik
       tags:
         - traefik
-        - container
     - role: docker_socket_proxy
       tags:
         - dockersocketproxy
-        - container
     - role: crowdsec
       tags:
         - crowdsec
-        - container
     - role: whats-up-docker
       tags:
         - whatsupdocker
-        - container
     - role: dozzle
       tags:
         - dozzle
-        - container
     - role: pihole
       tags:
         - pihole
-        - container
     - role: pihole-orbital-sync
       tags:
         - pihole
-        - container
-    - role: homepage-dashboard
+    - role: homepage
       tags:
         - homepage
-        - container
     - role: vaultwarden
       tags:
         - vaultwarden
-        - container
     - role: plex
       tags:
         - plex
-        - container
     - role: tautulli
       tags:
         - tautulli
-        - container
     - role: overseerr
       tags:
         - overseerr
-        - container
     - role: ganymede
       tags:
         - ganymede
-        - container
     - role: spotify_tracker
       tags:
         - spotify
         - spotify_tracker
-        - container
     - role: spotizerr
       tags:
         - spotify
         - spotizerr
-        - container
     - role: it-tools
       tags:
         - it-tools
-        - container
     - role: cyberchef
       tags:
         - cyberchef
-        - container
     - role: convertx
       tags:
         - convertx
-        - container
     - role: pairdrop
       tags:
         - pairdrop
-        - container
     - role: stirling-pdf
       tags:
         - pdf
-        - container
     - role: openspeedtest
       tags:
         - openspeedtest
-        - container
     - role: speedtest-tracker
       tags:
         - speedtest-tracker
-        - container
     - role: grafana
       tags:
         - grafana
-        - container
     - role: prometheus
       tags:
         - prometheus
-        - container
     - role: wallos
       tags:
         - wallos
-        - container
     - role: crafty
       tags:
         - crafty
-        - container
     - role: uptimekuma
       tags:
         - uptimekuma
-        - container
     - role: excalidraw
       tags:
         - excalidraw
-        - container
     - role: docmost
       tags:
         - docmost
-        - container
     - role: scribblers
       tags:
         - scribblers
-        - container
     - role: cobaltdownloader
       tags:
         - cobaltdownloader
-        - container
