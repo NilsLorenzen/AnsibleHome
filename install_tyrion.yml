@@ -91,9 +91,6 @@
     - role: crafty
       tags:
         - crafty
-    - role: uptimekuma
-      tags:
-        - uptimekuma
     - role: excalidraw
       tags:
         - excalidraw
