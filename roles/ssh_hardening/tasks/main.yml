@@ -1,0 +1,27 @@
+---
+- name: Install OpenSSH server
+  apt:
+    name: openssh-server
+    state: present
+    update_cache: yes
+
+- name: Deploy hardened sshd_config
+  template:
+    src: sshd_config.j2
+    dest: /etc/ssh/sshd_config
+    owner: root
+    group: root
+    mode: '0600'
+  notify: Restart SSHD
+
+- name: Ensure SSH banner exists
+  copy:
+    dest: "{{ sshd_banner }}"
+    content: |
+      ***********************
+      * Computer sagt nein *
+      ***********************
+    owner: root
+    group: root
+    mode: '0644'
+  when: sshd_banner is defined

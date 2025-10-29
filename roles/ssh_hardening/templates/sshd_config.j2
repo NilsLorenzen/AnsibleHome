@@ -1,0 +1,22 @@
+# Managed by Ansible: SSH Hardening Role
+
+Port {{ sshd_port }}
+Protocol 2
+PermitRootLogin {{ sshd_permit_root_login }}
+PasswordAuthentication {{ sshd_password_auth }}
+PermitEmptyPasswords {{ sshd_permit_empty_passwords }}
+ChallengeResponseAuthentication no
+UsePAM yes
+X11Forwarding {{ sshd_x11_forwarding }}
+AllowTcpForwarding {{ sshd_tcp_forwarding }}
+LoginGraceTime {{ sshd_login_grace_time }}
+MaxAuthTries {{ sshd_max_auth_tries }}
+ClientAliveInterval {{ sshd_client_alive_interval }}
+ClientAliveCountMax {{ sshd_client_alive_count_max }}
+Banner {{ sshd_banner }}
+UseDNS {{ sshd_use_dns }}
+Compression {{ sshd_compression }}
+
+{% if sshd_allow_users | length > 0 %}
+AllowUsers {{ sshd_allow_users | join(' ') }}
+{% endif %}

@@ -1,0 +1,16 @@
+---
+# SSH Hardening Defaults
+sshd_port: 22
+sshd_permit_root_login: "no"
+sshd_password_auth: "no"
+sshd_x11_forwarding: "no"
+sshd_tcp_forwarding: "no"
+sshd_max_auth_tries: 3
+sshd_login_grace_time: 30
+sshd_client_alive_interval: 300
+sshd_client_alive_count_max: 2
+sshd_banner: "/etc/issue.net"
+sshd_permit_empty_passwords: "no"
+#sshd_allow_users: []
+sshd_use_dns: "no"
+sshd_compression: "no"

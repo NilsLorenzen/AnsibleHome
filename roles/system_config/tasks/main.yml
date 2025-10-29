@@ -1,0 +1,79 @@
+---
+- name: Update apt cache
+  ansible.builtin.apt:
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: Upgrade all packages
+  ansible.builtin.apt:
+    upgrade: dist
+    autoremove: yes
+  notify: Reboot if needed
+  when: not enable_auto_updates  # nur bei deaktivierten Auto-Updates
+
+- name: Set timezone
+  ansible.builtin.timezone:
+    name: "{{ base_timezone }}"
+
+- name: Set locale
+  ansible.builtin.locale_gen:
+    name: "{{ base_locale }}"
+    state: present
+
+- name: Install base packages
+  ansible.builtin.apt:
+    name: "{{ base_packages }}"
+    state: present
+
+# --- MOTD ----------------------------------------------------------
+
+- name: Disable static /etc/motd if dynamic MOTD is enabled
+  ansible.builtin.file:
+    path: /etc/motd
+    state: absent
+  when: enable_dynamic_motd
+
+- name: Deploy dynamic MOTD script
+  ansible.builtin.template:
+    src: 99-base-system-motd.j2
+    dest: /etc/update-motd.d/99-base-system
+    owner: root
+    group: root
+    mode: '0755'
+  when: enable_dynamic_motd
+
+# --- Auto Updates --------------------------------------------------
+
+- name: Install unattended-upgrades
+  ansible.builtin.apt:
+    name: unattended-upgrades
+    state: present
+  when: enable_auto_updates
+
+- name: Enable periodic security updates (APT)
+  ansible.builtin.copy:
+    dest: /etc/apt/apt.conf.d/20auto-upgrades
+    content: |
+      APT::Periodic::Update-Package-Lists "1";
+      APT::Periodic::Unattended-Upgrade "1";
+  when: enable_auto_updates
+
+- name: Configure unattended-upgrades (security only)
+  ansible.builtin.copy:
+    dest: /etc/apt/apt.conf.d/50unattended-upgrades
+    content: |
+      Unattended-Upgrade::Origins-Pattern {
+          "origin=Ubuntu,archive=${distro_codename}-security";
+      };
+      Unattended-Upgrade::Automatic-Reboot "false";
+      Unattended-Upgrade::Remove-Unused-Dependencies "true";
+      Unattended-Upgrade::Mail "root";
+  when:
+    - enable_auto_updates
+    - security_only_updates
+
+# --- Cleanup -------------------------------------------------------
+
+- name: Clean up APT cache
+  ansible.builtin.apt:
+    autoclean: yes

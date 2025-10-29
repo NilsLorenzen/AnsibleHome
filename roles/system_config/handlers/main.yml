@@ -1,0 +1,6 @@
+---
+- name: Reboot if needed
+  ansible.builtin.reboot:
+    msg: "Rebooting after system upgrade"
+    reboot_timeout: 600
+  when: ansible_facts['pkg_mgr'] == "apt"

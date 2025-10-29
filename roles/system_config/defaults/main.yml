@@ -1,0 +1,27 @@
+---
+# Base System Defaults
+base_timezone: "Europe/Berlin"
+base_locale: "de_DE.UTF-8"
+
+enable_auto_updates: true
+security_only_updates: true
+
+enable_dynamic_motd: true
+
+# Tools to install
+base_packages:
+  - vim
+  - curl
+  - git
+  - htop
+  - ncdu
+  - rsync
+  - unzip
+  - tar
+  - wget
+  - net-tools
+  - ufw
+  - bash-completion
+  - ca-certificates
+  - python3
+  - python3-pip

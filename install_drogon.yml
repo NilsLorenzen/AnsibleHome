@@ -3,12 +3,24 @@
 - hosts: drogon
   become: true
 
-  tasks:
-    - name: Set timezone to Europe/Berlin
-      community.general.timezone:
-        name: Europe/Berlin
-
   roles:
+# System Roles
+    - role: system_config
+      tags:
+        - system
+      vars:
+        enable_auto_updates: true
+        security_only_updates: true
+    - role: admin_users
+      tags:
+        - system
+    - role: ssh_hardening
+      tags:
+        - system
+      vars:
+        sshd_allow_users: ["nils"]
+
+# Docker Roles
     - role: docker
       tags: docker
     - role: traefik_httpchallenge

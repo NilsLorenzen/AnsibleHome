@@ -1,0 +1,42 @@
+---
+- name: Check if AllowUsers exists
+  command: grep -E '^AllowUsers' /etc/ssh/sshd_config
+  register: sshd_allowusers
+  ignore_errors: true
+
+- name: Add AllowUsers if missing
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    line: "AllowUsers {{ merged_users | map(attribute='name') | join(' ') }}"
+    insertafter: EOF
+    backup: yes
+  when: sshd_allowusers is failed
+  notify: Restart SSHD
+
+- name: Update existing AllowUsers line
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^AllowUsers'
+    line: >-
+      AllowUsers {{
+        (
+          ((sshd_allowusers.stdout | regex_replace('^AllowUsers', '') | trim).split())
+          +
+          (merged_users | map(attribute='name') | list)
+        )
+        | unique
+        | join(' ')
+      }}
+    backup: yes
+  when: sshd_allowusers is succeeded
+  notify: Restart SSHD
+
+
+- name: Add AllowUsers if missing
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    line: "AllowUsers {{ merged_users | map(attribute='name') | join(' ') }}"
+    insertafter: EOF
+    backup: yes
+  when: sshd_allowusers is failed
+  notify: Restart SSHD

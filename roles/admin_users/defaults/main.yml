@@ -1,0 +1,27 @@
+# Standardkonfiguration
+users:
+  - name: "nils"
+    github: "NilsLorenzen"
+
+default_user_groups:
+  - sudo
+  - docker
+  - adm
+  - admin
+  - users
+
+# Die User in dieser Datei sind die Defaults, weitere können auch direkt beim Rollen Aufruf angegeben werden:
+#
+# - role: admin_users
+#   vars:
+#     extra_users:
+#       - name: "max"
+#         github: "maxmustermann"
+#         groups: ["sudo", "docker"]
+#       - name: "anna"
+#         ssh_keys:
+#           - "ssh-ed25519 AAAAC3Nza... anna@laptop"
+#         groups: ["sudo"]
+#         shell: /usr/bin/bash
+#
+# user löschen: ansible all -b -m ansible.builtin.user -a "name=testuser state=absent remove=yes"

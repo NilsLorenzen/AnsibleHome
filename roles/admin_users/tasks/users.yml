@@ -1,0 +1,56 @@
+---
+- name: Ensure users are created
+  user:
+    name: "{{ item.name }}"
+    groups: "{{ (item.groups | default(default_user_groups)) | join(',') }}"
+    append: yes
+    shell: "{{ item.shell | default(omit) }}"
+    create_home: yes
+    state: present
+  loop: "{{ merged_users }}"
+
+- name: Ensure .ssh directory exists
+  file:
+    path: "/home/{{ item.name }}/.ssh"
+    state: directory
+    owner: "{{ item.name }}"
+    group: "{{ item.name }}"
+    mode: '0700'
+  loop: "{{ merged_users }}"
+
+- name: Fetch GitHub keys for each user (if defined)
+  ansible.builtin.uri:
+    url: "https://github.com/{{ item.github }}.keys"
+    return_content: true
+    timeout: 5
+    status_code: [200, 404]
+  register: github_keys
+  loop: "{{ merged_users | selectattr('github', 'defined') | list }}"
+  loop_control:
+    label: "{{ item.github }}"
+  retries: 2
+  delay: 2
+  ignore_errors: true
+
+- name: Build users_with_keys (GitHub + manual
+  set_fact:
+    users_with_keys: "{{ users_with_keys | default([]) + [ user_entry ] }}"
+  vars:
+    github_entry: "{{ (github_keys.results | selectattr('item.github', 'equalto', item.github) | first).content | default('') }}"
+    gh_keys: "{{ github_entry.split('\n') if github_entry|length > 0 else [] }}"
+    manual_keys: "{{ item.ssh_keys | default([]) }}"
+    user_entry:
+      name: "{{ item.name }}"
+      keys: "{{ (gh_keys + manual_keys) | select('match', '^ssh-') | list | unique }}"
+  loop: "{{ merged_users }}"
+  loop_control:
+    label: "{{ item.name }}"
+
+- name: Install authorized_keys
+  authorized_key:
+    user: "{{ item.0.name }}"
+    key: "{{ item.1 }}"
+    state: present
+  loop: "{{ (users_with_keys | default([])) | subelements('keys') }}"
+  loop_control:
+    label: "{{ item.0.name }} -> {{ (item.1 | regex_replace(' .*$', '…')) }}"

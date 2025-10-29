@@ -1,0 +1,19 @@
+#!/bin/bash
+# Managed by Ansible: Dynamic MOTD
+
+HOSTNAME=$(hostname)
+UPTIME=$(uptime -p | sed 's/^up //')
+IPADDR=$(hostname -I 2>/dev/null | awk '{print $1}')
+LOADAVG=$(awk '{print $1" "$2" "$3}' /proc/loadavg)
+DISKROOT=$(df -h / | awk 'NR==2{print $5}')
+KERNEL=$(uname -r)
+DISTRO="$(lsb_release -ds 2>/dev/null || echo $PRETTY_NAME)"
+
+echo "--------------------------------------------------"
+echo "Du bist angemeldet auf ${HOSTNAME}"
+echo "--------------------------------------------------"
+echo "System: ${DISTRO} | Kernel: ${KERNEL}"
+echo "Uptime: ${UPTIME}"
+echo "IP: ${IPADDR} | Load: ${LOADAVG}"
+echo "Disk: ${DISKROOT} used on /"
+echo "--------------------------------------------------"
