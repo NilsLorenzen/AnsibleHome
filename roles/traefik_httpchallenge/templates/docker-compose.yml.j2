@@ -4,7 +4,7 @@ networks:
 
 services:
   app:
-    image: traefik:latest
+    image: felixbuenemann/traefik:v3.6.1
     networks:
       - web
     ports:
@@ -23,12 +23,6 @@ services:
       - LEGO_DISABLE_CNAME_SUPPORT=true
     labels:
       - traefik.enable=true
-      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.entrypoints=https
-      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.rule=Host(`{{ traefik_domain }}`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))
-      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.service=api@internal
-      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.tls.certresolver=letsencrypt_http
-      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.tls.domains[0].main={{ traefik_domain }}
-      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.middlewares=crowdsec,basic-auth-nils-only
 
       - traefik.http.middlewares.basic-auth-nils-only.basicauth.users={{ traefik.nils.username }}:{{ traefik.nils.hash }}
       - traefik.http.middlewares.basic-auth-all.basicauth.users={{ traefik.nils.username }}:{{ traefik.nils.hash }},{{ traefik.other.username }}:{{ traefik.other.hash }}
@@ -37,5 +31,12 @@ services:
       - "traefik.http.middlewares.crowdsec.plugin.crowdsec-bouncer-traefik-plugin.crowdseclapischeme=http"
       - "traefik.http.middlewares.crowdsec.plugin.crowdsec-bouncer-traefik-plugin.enabled=true"
       - "traefik.http.middlewares.crowdsec.plugin.crowdsec-bouncer-traefik-plugin.crowdseclapihost=crowdsec:8080"
-    healthcheck:
-      test: traefik healthcheck
+
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.entrypoints=https
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.rule=Host(`{{ traefik_domain }}`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.service=api@internal
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.tls.certresolver=letsencrypt_http
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.tls.domains[0].main={{ traefik_domain }}
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.middlewares=crowdsec,basic-auth-nils-only
+    {# healthcheck:
+      test: traefik healthcheck #}
