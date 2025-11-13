@@ -51,3 +51,6 @@
     - role: uptimekuma
       tags:
         - uptimekuma
+    - role: teamspeak
+      tags:
+        - teamspeak

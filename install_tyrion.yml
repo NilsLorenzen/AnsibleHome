@@ -38,12 +38,6 @@
     - role: dozzle
       tags:
         - dozzle
-    - role: pihole
-      tags:
-        - pihole
-    - role: pihole-orbital-sync
-      tags:
-        - pihole
     - role: homepage
       tags:
         - homepage
@@ -115,6 +109,3 @@
     - role: cobaltdownloader
       tags:
         - cobaltdownloader
-    - role: teamspeak
-      tags:
-        - teamspeak

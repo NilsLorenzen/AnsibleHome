@@ -23,16 +23,16 @@
             #fields: ["lan_devices", "wlan_devices", "uptime"]
             username: {{ unifi_username }}
             password: {{ unifi_password }}
-    - PiHole - Tyrion:
-        icon: pi-hole.svg
-        href: https://pihole.home-lorenzen.de/admin
-        server: tyrion
-        container: pihole
-        widget:
-          type: pihole
-          url: "https://pihole.home-lorenzen.de"
-          version: 6
-          key: "{{ vault_pihole_password }}"
+    # - PiHole - Tyrion:
+    #     icon: pi-hole.svg
+    #     href: https://pihole.home-lorenzen.de/admin
+    #     server: tyrion
+    #     container: pihole
+    #     widget:
+    #       type: pihole
+    #       url: "https://pihole.home-lorenzen.de"
+    #       version: 6
+    #       key: "{{ vault_pihole_password }}"
     - PiHole - Proxmox:
         icon: pi-hole.svg
         href: http://192.168.10.20/admin/
@@ -73,16 +73,6 @@
             fields: ["pending", "approved", "available"]
             url: https://overseerr.nlor.de
             key: "{{ overseerr_apikey }}"
-    - Synology DSM - Samwell:
-        icon: synology-dsm.svg
-        href: https://nas.home-lorenzen.de:5001
-        ping: 192.168.10.11
-        widget:
-            type: diskstation
-            url: http://192.168.10.11:5000/
-            username: {{ synology_username }}
-            password: {{ synology_password }}
-            volume: volume_1
 
 - Tools:
     - PairDrop:
@@ -176,11 +166,11 @@
         container: cobaltdownloader-web
 
 - Tools without UI:
-    - PiholeOrbitalSync:
-        icon: pi-hole.svg
-        description: "Sync between multiple PiHoles"
-        server: tyrion
-        container: pihole-orbital-sync
+    # - PiholeOrbitalSync:
+    #     icon: pi-hole.svg
+    #     description: "Sync between multiple PiHoles"
+    #     server: tyrion
+    #     container: pihole-orbital-sync
     - Cobalt Downloader API:
         icon: cobalt.svg
         description: "Web Downloader API"
@@ -214,6 +204,16 @@
         widget:
           type: whatsupdocker
           url: https://whatsup.home-lorenzen.de
+    - Synology DSM - Samwell:
+        icon: synology-dsm.svg
+        href: https://nas.home-lorenzen.de:5001
+        ping: 192.168.10.11
+        widget:
+            type: diskstation
+            url: http://192.168.10.11:5000/
+            username: {{ synology_username }}
+            password: {{ synology_password }}
+            volume: volume_1
     - Speedtest Tracker:
         icon: myspeed.svg
         href: https://speed.home-lorenzen.de/
@@ -414,6 +414,16 @@
         container: scribblers
 
 - Proxmox:
+    - Proxmox - Rhaegar:
+        icon: proxmox.svg
+        href: https://rhaegar.home-lorenzen.de:8006/
+        ping: 192.168.10.15
+        widget:
+            type: proxmox
+            url: https://192.168.10.15:8006
+            username: {{ vault_homepage_proxmox_rhaegar_api_id }}
+            password: {{ vault_homepage_proxmox_rhaegar_api_secret }}
+            node: rhaegar # optional
     - Proxmox - Jon:
         icon: proxmox.svg
         href: https://jon.home-lorenzen.de:8006/

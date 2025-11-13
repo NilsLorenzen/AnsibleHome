@@ -20,3 +20,6 @@ Compression {{ sshd_compression }}
 {% if sshd_allow_users | length > 0 %}
 AllowUsers {{ sshd_allow_users | join(' ') }}
 {% endif %}
+
+# SFTP Subsystem
+Subsystem sftp {{ sshd_sftp_subsystem | default('/usr/lib/openssh/sftp-server') }}

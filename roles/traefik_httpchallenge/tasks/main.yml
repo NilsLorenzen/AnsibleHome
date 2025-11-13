@@ -2,7 +2,7 @@
   ansible.builtin.import_tasks: copy-all-templates.yml
   vars:
     directory: ../templates
-    notify_handlers: restart {{ role_name }}.service
+    notify_handlers: restart traefik.service
 
 - name: copy systemd unit
   ansible.builtin.template:
