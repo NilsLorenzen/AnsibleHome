@@ -4,7 +4,7 @@ networks:
 
 services:
   app:
-    image: felixbuenemann/traefik:v3.6.1
+    image: traefik:latest
     networks:
       - web
     ports:
@@ -38,5 +38,5 @@ services:
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.tls.certresolver=letsencrypt_http
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.tls.domains[0].main={{ traefik_domain }}
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.middlewares=crowdsec,basic-auth-nils-only
-    {# healthcheck:
-      test: traefik healthcheck #}
+    healthcheck:
+      test: traefik healthcheck
