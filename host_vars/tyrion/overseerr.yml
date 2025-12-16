@@ -1,2 +1,0 @@
-overseerr_domain: overseerr.nlor.de
-overseerr_apikey: "{{ vault_overseerr_apikey }}"

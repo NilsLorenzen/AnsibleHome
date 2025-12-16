@@ -1,0 +1,5 @@
+- name: restart seerr.service
+  when: seerr_started is not changed
+  ansible.builtin.systemd:
+    name: seerr.service
+    state: restarted

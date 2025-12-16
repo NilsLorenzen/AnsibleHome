@@ -1,0 +1,2 @@
+seerr_domain: seerr.nlor.de
+seerr_apikey: "{{ vault_seerr_apikey }}"

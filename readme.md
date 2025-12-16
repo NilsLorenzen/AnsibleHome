@@ -50,7 +50,7 @@ Durchgestrichene Rollen funktioniert zwar, werden aber aktuell nicht von mir ver
 - ~~minecraft_java: Ein Minecraft Java Edition Server~~
 - ~~[ntp_server](https://github.com/cturra/docker-ntp): NTP-Server ohne overhead~~
 - [openspeedtest](https://github.com/openspeedtest/Docker-Image): Selbstgehosteter Netzwerkgeschwindigkeitstest (leider nicht wirklich Reverse Proxy kompatibel)
-- [overseerr](https://github.com/sct/overseerr): Ermöglicht Nutzern das Anfragen neu gewünschter Filme und Serien für Plex oder Jellyfin
+- [seerr](https://github.com/seerr-team/seerr): Ermöglicht Nutzern das Anfragen neu gewünschter Filme und Serien für Plex oder Jellyfin
 - [pairdrop](https://github.com/schlagmichdoch/PairDrop): AirDrop artiger Datei-Sharing Dienst für alle Betriebssysteme
 - [pihole](https://github.com/pi-hole/pi-hole): DNS Blocker, Cache und Server als Docker Container
 - plex: Genialer Medien Streaming Dienst ähnlich zu Netflix.

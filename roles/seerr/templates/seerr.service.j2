@@ -1,5 +1,5 @@
 [Unit]
-Description=overseerr Installation von Nils Lorenzen
+Description={{ role_name }} Installation von Nils Lorenzen
 BindsTo=docker.service
 After=docker.service
 OnFailure=unit-status-mail@%n.service
@@ -9,7 +9,7 @@ WorkingDirectory={{ root }}
 
 # Required for the database healthcheck which uses an environment variable.
 #EnvironmentFile={{ root }}/.env.db
-Environment=COMPOSE_PROJECT_NAME=overseerr
+Environment=COMPOSE_PROJECT_NAME={{ role_name }}
 
 ExecStartPre=/usr/bin/docker compose config
 ExecStart=/usr/bin/docker compose up --abort-on-container-exit

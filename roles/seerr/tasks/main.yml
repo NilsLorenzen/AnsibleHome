@@ -1,13 +1,13 @@
 - name: copy systemd unit
   ansible.builtin.template:
-    src: overseerr.service.j2
-    dest: /etc/systemd/system/overseerr.service
+    src: seerr.service.j2
+    dest: /etc/systemd/system/seerr.service
     owner: root
     group: root
     mode: "644"
-  notify: restart overseerr.service
+  notify: restart seerr.service
 
-- name: create /data/overseerr dir
+- name: create /data/seerr dir
   ansible.builtin.file:
     path: "{{ root }}"
     state: directory
@@ -19,12 +19,12 @@
     owner: root
     group: root
     mode: "644"
-  notify: restart overseerr.service
+  notify: restart seerr.service
 
-- name: start overseerr.service
+- name: start seerr.service
   ansible.builtin.systemd:
     state: started
     daemon_reload: true
     enabled: true
-    name: overseerr.service
-  register: overseerr_started
+    name: seerr.service
+  register: seerr_started

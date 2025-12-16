@@ -50,9 +50,9 @@
     - role: tautulli
       tags:
         - tautulli
-    - role: overseerr
+    - role: seerr
       tags:
-        - overseerr
+        - seerr
     - role: ganymede
       tags:
         - ganymede

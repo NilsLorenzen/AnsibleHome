@@ -1,0 +1,43 @@
+networks:
+  web:
+    external: true
+
+services:
+  app:
+    image: ghcr.io/seerr-team/seerr:develop
+    container_name: seerr
+    environment:
+      - LOG_LEVEL=debug
+      - PORT=5055 #optional
+    #ports:
+    #  - 5055:5055
+    networks:
+      - web
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - {{ root }}/config:/app/config
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.${COMPOSE_PROJECT_NAME}-service.loadbalancer.server.port=5055
+
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.rule=Host(`{{ seerr_domain | mandatory }}`)
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.service=${COMPOSE_PROJECT_NAME}-service
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.entrypoints=https
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.middlewares=crowdsec
+
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-lan.rule=Host(`{{ seerr_domain | mandatory }}`) && HeaderRegexp(`X-Real-Ip`, `(^127\.)|(^10\.)|(^172\.1[6-9]\.)|(^172\.2[0-9]\.)|(^172\.3[0-1]\.)|(^192\.168\.)`)
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-lan.service=${COMPOSE_PROJECT_NAME}-service
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-lan.entrypoints=https
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-lan.middlewares=lan-only
+
+      # Redirect: overseerr.nlor.de  ->  seerr.nlor.de (permanent, inkl. Pfad)
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-redirect-old.rule=Host(`overseerr.nlor.de`)
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-redirect-old.entrypoints=https
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-redirect-old.service=noop@internal
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-redirect-old.middlewares=${COMPOSE_PROJECT_NAME}-redirect-to-seerr
+
+      - traefik.http.middlewares.${COMPOSE_PROJECT_NAME}-redirect-to-seerr.redirectregex.regex=^https?://overseerr\.nlor\.de/(.*)
+      - traefik.http.middlewares.${COMPOSE_PROJECT_NAME}-redirect-to-seerr.redirectregex.replacement=https://{{ seerr_domain }}/$$1
+      - traefik.http.middlewares.${COMPOSE_PROJECT_NAME}-redirect-to-seerr.redirectregex.permanent=true
+    healthcheck:
+      test: wget http://localhost:5055/api/v1/status -qO /dev/null || exit 1
