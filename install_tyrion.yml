@@ -44,6 +44,9 @@
     - role: vaultwarden
       tags:
         - vaultwarden
+    - role: paperlessngx
+      tags:
+        - paperlessngx
     - role: plex
       tags:
         - plex

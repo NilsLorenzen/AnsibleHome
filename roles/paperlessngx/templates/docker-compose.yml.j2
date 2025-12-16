@@ -1,0 +1,49 @@
+networks:
+  default:
+  web:
+    external: true
+
+services:
+  app:
+    image: paperlessngx/paperless-ngx:latest
+    restart: unless-stopped
+    container_name: {{ role_name }}
+    depends_on:
+      - redis
+    networks:
+     - default
+     - web
+    #ports:
+      #- "8000:8000"
+    volumes:
+      - {{ root }}/data:/usr/src/paperless/data
+      - {{ root }}/media:/usr/src/paperless/media
+      - {{ root }}/export:/usr/src/paperless/export
+      - {{ root }}/consume:/usr/src/paperless/consume
+    environment:
+      PAPERLESS_REDIS: redis://redis:6379
+      PAPERLESS_URL: https://{{ paperlessngx_domain | mandatory }}
+      USERMAP_UID: 1000
+      USERMAP_GID: 1000
+      PAPERLESS_TIME_ZONE: Europe/Berlin
+      PAPERLESS_OCR_LANGUAGE: deu+eng
+      PAPERLESS_SECRET_KEY: {{ paperlessngx_secret_key }}
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.${COMPOSE_PROJECT_NAME}-service.loadbalancer.server.port=8000
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-lan.rule=Host(`{{ paperlessngx_domain | mandatory }}`) && HeaderRegexp(`X-Real-Ip`, `(^127\.)|(^10\.)|(^172\.1[6-9]\.)|(^172\.2[0-9]\.)|(^172\.3[0-1]\.)|(^192\.168\.)`)
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-lan.service=${COMPOSE_PROJECT_NAME}-service
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-lan.entrypoints=https
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-lan.middlewares=lan-only
+
+  redis:
+    image: redis:7.2-alpine
+    restart: unless-stopped
+    networks:
+     - default
+    volumes:
+      - {{ root }}/redisdatal:/data
+    environment:
+      TZ: "Europe/Berlin"
+    labels:
+      - wud.watch=false # ignore updates in wud

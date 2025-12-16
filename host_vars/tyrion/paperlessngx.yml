@@ -1,0 +1,2 @@
+paperlessngx_domain: dms.home-lorenzen.de
+paperlessngx_secret_key: "{{ vault_paperlessngx_secret_key }}"
