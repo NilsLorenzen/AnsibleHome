@@ -1,0 +1,35 @@
+networks:
+  web:
+    external: true
+
+services:
+  app:
+    image: lissy93/networking-toolbox:latest
+    container_name: networking-toolbox
+    networks:
+      - web
+    #ports:
+      #- "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - HOST=0.0.0.0
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.${COMPOSE_PROJECT_NAME}-service.loadbalancer.server.port=3000
+      
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.rule=Host(`{{ networkingtoolbox_domain | mandatory }}`)
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.service=${COMPOSE_PROJECT_NAME}-service
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.entrypoints=https
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.middlewares=crowdsec,basic-auth-all
+
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-lan.rule=Host(`{{ networkingtoolbox_domain | mandatory }}`) && HeaderRegexp(`X-Real-Ip`, `(^127\.)|(^10\.)|(^172\.1[6-9]\.)|(^172\.2[0-9]\.)|(^172\.3[0-1]\.)|(^192\.168\.)`)
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-lan.service=${COMPOSE_PROJECT_NAME}-service
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-lan.entrypoints=https
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-lan.middlewares=lan-only
