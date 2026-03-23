@@ -23,6 +23,8 @@ services:
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.rule=Host(`{{ dozzle_domain | mandatory }}`)
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.entrypoints=https
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.middlewares={{ dozzle_traefik_middleware }}
+      
+      - wud.watch.digest=true
     healthcheck:
       test: ["CMD", "/dozzle", "healthcheck"]
       interval: 3s

@@ -38,5 +38,7 @@ services:
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.tls.certresolver=letsencrypt_http
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.tls.domains[0].main={{ traefik_domain }}
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.middlewares=crowdsec,basic-auth-nils-only
+
+      - wud.watch.digest=true
     healthcheck:
       test: traefik healthcheck

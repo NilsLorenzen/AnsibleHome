@@ -69,7 +69,8 @@ services:
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.rule=Host(`{{ cobaltdownloader_web_domain | mandatory }}`)
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.entrypoints=https
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.tls=true
-      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.middlewares=lan-only
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.middlewares=
+      - wud.watch=false # ignore updates in wud
 
     # uncomment only if you use the COOKIE_PATH variable
     # volumes:

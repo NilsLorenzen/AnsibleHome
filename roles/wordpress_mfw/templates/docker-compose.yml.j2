@@ -24,6 +24,8 @@ services:
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.entrypoints=https
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.middlewares=crowdsec
 
+      - wud.watch.digest=true
+
   db:
     image: mariadb:latest
     container_name: wordpress_mfw-db

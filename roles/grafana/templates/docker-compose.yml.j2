@@ -26,7 +26,9 @@ services:
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.rule=Host(`{{ grafana_domain | mandatory }}`)
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.service=${COMPOSE_PROJECT_NAME}-service
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.entrypoints=https
-      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.middlewares=lan-only
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.middlewares=
+      
+      - wud.watch.digest=true
     healthcheck:
       test: ["CMD-SHELL", "curl -f localhost:3000/api/health && echo 'ready'"]
       interval: 10s

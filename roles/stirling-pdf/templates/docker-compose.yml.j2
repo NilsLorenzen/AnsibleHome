@@ -33,3 +33,5 @@ services:
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-lan.service=${COMPOSE_PROJECT_NAME}-service
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-lan.entrypoints=https
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-lan.middlewares=lan-only
+
+      - wud.watch.digest=true

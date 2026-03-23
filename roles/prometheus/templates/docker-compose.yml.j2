@@ -29,5 +29,7 @@ services:
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.rule=Host(`{{ prometheus_domain | mandatory }}`)
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.service=${COMPOSE_PROJECT_NAME}-service
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.entrypoints=https
-      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.middlewares=lan-only
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.middlewares=
+      
+      - wud.watch.digest=true
 

@@ -11,3 +11,5 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - {{ root }}/data:/var/tsserver
+    labels:
+      - wud.watch.digest=true

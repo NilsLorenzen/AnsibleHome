@@ -43,5 +43,7 @@ services:
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.tls.domains[0].main={{ traefik_acme_domain }}
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.tls.domains[0].sans=*.{{ traefik_acme_domain }}
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.middlewares=lan-only
+
+      - wud.watch.digest=true
     healthcheck:
       test: traefik healthcheck

@@ -36,6 +36,8 @@ services:
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-lan.entrypoints=https
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-lan.middlewares=lan-only
 
+      - wud.watch.digest=true
+
   redis:
     image: redis:7.2-alpine
     restart: unless-stopped

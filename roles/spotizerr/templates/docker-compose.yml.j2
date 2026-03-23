@@ -38,6 +38,8 @@ services:
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.tls=true
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.middlewares=lan-only
 
+      - wud.watch.digest=true
+
   redis:
     image: redis:alpine
     container_name: spotizerr-redis

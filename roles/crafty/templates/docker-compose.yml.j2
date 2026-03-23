@@ -5,7 +5,7 @@ networks:
 services:
   crafty:
     container_name: {{ role_name }}
-    image: registry.gitlab.com/crafty-controller/crafty-4:latest
+    image: arcadiatechnology/crafty-4:latest
     ports:
       #- "8443:8443" # HTTPS
       #- "8223:8123" # DYNMAP
@@ -32,3 +32,5 @@ services:
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-web.entrypoints=https
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-web.tls=true
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-web.middlewares=lan-only
+
+      - wud.watch.digest=true

@@ -33,6 +33,8 @@ services:
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.entrypoints=https
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.tls=true
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.middlewares=lan-only
+
+      - wud.watch.digest=true
     healthcheck:
       test: curl -fSs APP_URL/api/healthcheck | jq -r .message || exit 1
       interval: 10s
