@@ -48,3 +48,5 @@ services:
     volumes:
       - {{ root }}/redis-data:/data
     command: redis-server --appendonly yes
+    labels:
+      - wud.watch=false # ignore updates in wud
