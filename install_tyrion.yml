@@ -29,9 +29,9 @@
     - role: docker_socket_proxy
       tags:
         - dockersocketproxy
-    - role: crowdsec
-      tags:
-        - crowdsec
+    # - role: crowdsec
+    #   tags:
+    #     - crowdsec
     - role: whats-up-docker
       tags:
         - whatsupdocker
