@@ -8,4 +8,4 @@ Wants=network-online.target systemd-resolved.service
 What=//{{ smb_server | mandatory }}/{{ smb_share | mandatory }}
 Where={{ mountpoint | mandatory }}
 Type=cifs
-Options=username={{ vault_unas_username | mandatory }},password={{ vault_unas_password | mandatory }},iocharset=utf8,vers=3.0,nofail,noexec,_netdev
+Options=username={{ vault_unas_username | mandatory }},password={{ vault_unas_password | mandatory }},iocharset=utf8,vers=3.0,nofail,noexec,_netdev,uid=0,gid=0,file_mode=0777,dir_mode=0777
