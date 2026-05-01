@@ -1,11 +1,11 @@
 [Unit]
-Description=Medien-Speicher für plex Installation
+Description=Medien-Speicher für {{ role_name }} Installation
 Requires=network-online.target
 After=network-online.target systemd-resolved.service
 Wants=network-online.target systemd-resolved.service
 
 [Mount]
-What={{ plex_fileserver | mandatory }}
+What=//{{ smb_server | mandatory }}/{{ smb_share | mandatory }}
 Where={{ mountpoint | mandatory }}
-Type=nfs
-Options=nofail,noexec,defaults
+Type=cifs
+Options=username={{ vault_unas_username | mandatory }},password={{ vault_unas_password | mandatory }},iocharset=utf8,vers=3.0,nofail,noexec,_netdev

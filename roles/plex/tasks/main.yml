@@ -1,7 +1,7 @@
-- name: Update repositories cache and install "nfs-common" package
+- name: Update repositories cache and install "cifs-utils" package
   ansible.builtin.apt:
-    name: nfs-common
-    update_cache: yes
+    name: cifs-utils
+    update_cache: no
 
 - name: copy systemd unit
   ansible.builtin.template:
