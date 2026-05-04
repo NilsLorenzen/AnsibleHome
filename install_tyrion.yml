@@ -100,9 +100,6 @@
     - role: wallos
       tags:
         - wallos
-    - role: crafty
-      tags:
-        - crafty
     - role: excalidraw
       tags:
         - excalidraw
