@@ -10,7 +10,7 @@ Hosts (Auszug)
   - VM `homeassistant`
   - LXC-Container (z.B. Pi-hole)
 - 3x ZimaBoards als Proxmox HA Cluster (nicht mit Ansible verwaltet)
-- Synology NAS `samwell` (Netzwerkspeicher, nicht mit Ansible verwaltet)
+- Ubiquiti NAS `UNAS-Pro` (Netzwerkspeicher, nicht mit Ansible verwaltet)
 
 Voraussetzungen
 - Mac: Homebrew, dann:
