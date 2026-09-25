@@ -11,9 +11,9 @@ services:
     hostname: littlelink
     environment:
       - META_TITLE=Nils Lorenzen
-      - META_DESCRIPTION=Network-Administrator, Homelab-Enthusiast and motorcycle rider :)
+      - META_DESCRIPTION=Hybrid Cloud Network-Administrator by day, Homelab-Enthusiast and motorcycle rider by night :)
       - META_AUTHOR=Nils Lorenzen
-      - META_KEYWORDS=Ansible, IT-Security, Windows, Firewall, Administrator, PowerShell, Hyper-V, Sophos, Linux
+      - META_KEYWORDS=Terraform, Ansible, IT-Security, Public Cloud, Private Cloud, GCP, Azure, Firewall, Networks, Administrator, Linux
       - LANG=en
       - META_INDEX_STATUS=all
       - OG_SITE_NAME=Nils Lorenzen
@@ -29,7 +29,7 @@ services:
       - AVATAR_2X_URL=https://n1ls.wtf/images/profile-img.webp
       - AVATAR_ALT=Nils Lorenzen Profile Pic
       - NAME=Nils Lorenzen
-      - BIO=Network-Administrator, Homelab-Enthusiast, Hobbyist Photographer and Motorcycle Rider :)
+      - BIO=Hybrid Cloud Network-Administrator by day, Homelab-Enthusiast and motorcycle rider by night :)
       # use ENV variable names for order, listed buttons will be boosted to the top
       - BUTTON_ORDER=GITHUB,INSTAGRAM,LINKED_IN,XING
       # you can render an unlimited amount of custom buttons by adding 
@@ -45,7 +45,7 @@ services:
       - CUSTOM_BUTTON_ALT_TEXT=My selfmade picture Library,Contact me via email
       - CUSTOM_BUTTON_NAME=SUTTERSTOCK,MAIL
       - CUSTOM_BUTTON_ICON=fa-solid fa-camera,fa-solid fa-envelope
-      - FOOTER=Nils Lorenzen © 2025
+      - FOOTER=Nils Lorenzen © {{ ansible_date_time.year }}
     labels:
       - traefik.enable=true
       #- traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.rule=Host(`{{ littlelink_domain | mandatory }}`)
