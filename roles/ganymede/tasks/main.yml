@@ -9,7 +9,7 @@
     dest: /etc/systemd/system/{{ role_name }}.service
     owner: root
     group: root
-    mode: "666"
+    mode: "644"
   notify: restart {{ role_name }}.service
 
 - name: create /data/{{ role_name }} dir
@@ -23,7 +23,7 @@
     dest: "/etc/systemd/system/data-{{ role_name }}-media.mount"
     owner: root
     group: root
-    mode: "666"
+    mode: "600"
   notify: restart data-{{ role_name }}-media.mount
 
 - name: start data-{{ role_name }}-media.mount
@@ -40,7 +40,7 @@
     dest: "{{ root }}/docker-compose.yml"
     owner: root
     group: root
-    mode: "666"
+    mode: "644"
   notify: restart {{ role_name }}.service
 
 - name: start {{ role_name }}.service
