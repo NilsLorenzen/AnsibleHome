@@ -1,0 +1,27 @@
+---
+# Wird auch von ansible-lint für die yaml[*]-Regeln gelesen.
+# yamllint selbst liegt im pipx-venv von ansible-lint:
+#   ~/.local/pipx/venvs/ansible-lint/bin/yamllint .
+
+extends: default
+
+ignore: |
+  .ansible/
+  *.vault.yml
+
+rules:
+  document-start: disable
+  line-length:
+    max: 160
+  truthy:
+    allowed-values: ["true", "false"]
+    check-keys: false
+  comments:
+    min-spaces-from-content: 1
+  # Die folgenden Werte verlangt ansible-lint, sonst verweigert es die Config.
+  comments-indentation: false
+  braces:
+    max-spaces-inside: 1
+  octal-values:
+    forbid-implicit-octal: true
+    forbid-explicit-octal: true

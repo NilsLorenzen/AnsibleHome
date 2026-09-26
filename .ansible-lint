@@ -1,0 +1,33 @@
+---
+# Aufruf: ~/.local/bin/ansible-lint (ohne Argumente, prüft das ganze Repo).
+# Regeln unter warn_list werden gemeldet, lassen den Lauf aber nicht scheitern.
+# Sobald eine Regel sauber ist, fliegt sie aus der warn_list.
+
+exclude_paths:
+  - .ansible/
+  - .claude/
+  - .vscode/
+  - "**/*.vault.yml" # verschlüsselt, ohne Vault-Passwort nicht lesbar
+
+skip_list:
+  - name[casing] # Task-Namen in Kleinbuchstaben sind Hausstil
+  - name[template] # "{{ role_name }}" mitten im Namen ist gewolltes Muster
+
+warn_list:
+  # T13
+  - risky-file-permissions
+  - fqcn[action-core]
+  - fqcn[action]
+  - fqcn[canonical]
+  - no-changed-when
+  - name[missing]
+  - name[play]
+  - jinja[spacing]
+  - yaml[truthy]
+  - yaml[new-line-at-end-of-file]
+  - yaml[empty-lines]
+  - yaml[line-length]
+  - yaml[comments]
+  # T20: root -> <rolle>_root, Rollennamen mit Bindestrich
+  - var-naming[no-role-prefix]
+  - role-name
