@@ -3,21 +3,8 @@
     name: cifs-utils
     update_cache: false
 
-- name: copy systemd unit
-  ansible.builtin.template:
-    src: "{{ role_name }}.service.j2"
-    dest: /etc/systemd/system/{{ role_name }}.service
-    owner: root
-    group: root
-    mode: "644"
-  notify: restart {{ role_name }}.service
-
-- name: create /data/{{ role_name }} dir
-  ansible.builtin.file:
-    path: "{{ root }}"
-    state: directory
-    mode: '755'
-
+# Der NAS-Mount muss laufen, bevor der Container startet. Die Mount-Unit enthält das
+# NAS-Passwort (600) und ist deshalb unten per copy_exclude vom Spiegeln nach /data ausgenommen.
 - name: copy mount file for {{ role_name }}_media volume
   ansible.builtin.template:
     src: data-{{ role_name }}-media.mount.j2
@@ -35,19 +22,8 @@
     name: data-{{ role_name }}-media.mount
   register: ganymede_media_started
 
-- name: copy docker-compose file
-  ansible.builtin.template:
-    src: docker-compose.yml.j2
-    dest: "{{ root }}/docker-compose.yml"
-    owner: root
-    group: root
-    mode: "644"
-  notify: restart {{ role_name }}.service
-
-- name: start {{ role_name }}.service
-  ansible.builtin.systemd:
-    state: started
-    daemon_reload: true
-    enabled: true
-    name: "{{ role_name }}.service"
-  register: ganymede_started
+- name: Deploy {{ role_name }}
+  ansible.builtin.import_tasks: docker-compose-service.yml
+  vars:
+    copy_exclude:
+      - data-{{ role_name }}-media.mount.j2
