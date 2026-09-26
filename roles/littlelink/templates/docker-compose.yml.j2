@@ -45,7 +45,7 @@ services:
       - CUSTOM_BUTTON_ALT_TEXT=My selfmade picture Library,Contact me via email
       - CUSTOM_BUTTON_NAME=SUTTERSTOCK,MAIL
       - CUSTOM_BUTTON_ICON=fa-solid fa-camera,fa-solid fa-envelope
-      - FOOTER=Nils Lorenzen © {{ ansible_date_time.year }}
+      - FOOTER=Nils Lorenzen © {{ ansible_facts.date_time.year }}
     labels:
       - traefik.enable=true
       #- traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.rule=Host(`{{ littlelink_domain | mandatory }}`)

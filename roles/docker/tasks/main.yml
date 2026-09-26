@@ -5,7 +5,7 @@
     docker_install_compose_plugin: true
     docker_install_compose: false
     docker_users:
-      - "{{ ansible_env.SUDO_USER | default(ansible_user_id) }}"
+      - "{{ ansible_facts.env.SUDO_USER | default(ansible_facts.user_id) }}"
 
 - name: Support docker management via ansible
   ansible.builtin.include_role:
@@ -23,8 +23,8 @@
     mode: "640"
   notify: restart docker.service
 
-- name: Add user "{{ passwordless_sudo_user | default(ansible_env.SUDO_USER, true) }}" to group "docker"
+- name: Add user "{{ passwordless_sudo_user | default(ansible_facts.env.SUDO_USER, true) }}" to group "docker"
   ansible.builtin.user:
-    name: "{{ passwordless_sudo_user | default(ansible_env.SUDO_USER, true) }}"
+    name: "{{ passwordless_sudo_user | default(ansible_facts.env.SUDO_USER, true) }}"
     groups: "docker"
     append: true
