@@ -35,30 +35,15 @@
     mode: "644"
   notify: restart webserver.service
 
-- name: Recursively remove directory data
-  ansible.builtin.file:
-    path: "{{ root }}/data/"
-    state: absent
-
+# force, damit lokale Abweichungen verworfen werden statt den Task scheitern
+# zu lassen. Vorher wurde dafuer das ganze Verzeichnis geloescht und neu
+# geklont, was bei jedem Lauf einen Restart ausgeloest hat.
 - name: Git checkout from n1ls.wtf repo
   ansible.builtin.git:
-    repo: "https://github.com/NilsLorenzen/n1ls.wtf.git"
+    repo: "{{ webserver_git_repo }}"
     dest: "{{ root }}/data/"
-  notify: restart webserver.service
-
-- name: remove readme.md
-  ansible.builtin.file:
-    path: "{{ root }}/data/README.md"
-    state: absent
-
-- name: Recursively change ownership of a directory
-  ansible.builtin.file:
-    path: "{{ root }}/data/"
-    state: directory
-    recurse: yes
-    owner: root
-    group: root
-    mode: '1777'
+    version: "{{ webserver_git_version }}"
+    force: true
   notify: restart webserver.service
 
 - name: start webserver.service

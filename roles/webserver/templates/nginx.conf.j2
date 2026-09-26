@@ -91,5 +91,16 @@ http {
       root   /usr/share/nginx/html;
       index  index.html;
     }
+
+    # Das README des Content-Repos gehoert nicht zur Website.
+    location = /README.md {
+      return 404;
+    }
+
+    # Dotfiles nicht ausliefern, insbesondere das mitgeklonte .git-Verzeichnis.
+    # /.well-known bleibt erreichbar.
+    location ~ /\.(?!well-known).* {
+      deny all;
+    }
   }
 }

@@ -1,1 +1,5 @@
 root: /data/webserver
+
+# Inhalt der Website. Wird bei jedem Lauf auf diesen Stand gezogen.
+webserver_git_repo: "https://github.com/NilsLorenzen/n1ls.wtf.git"
+webserver_git_version: main
