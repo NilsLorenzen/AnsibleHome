@@ -45,7 +45,6 @@ Durchgestrichene Rollen funktioniert zwar, werden aber aktuell nicht von mir ver
 - [homepage-dashboard](https://github.com/gethomepage/homepage): Mein Lieblings Homelab Dashboard. Die gesamte Konfiguration passiert in Config-Files.
 - [it-tools](https://github.com/CorentinTh/it-tools): Web-Tool mit vielen nützlichen kleinen Werkzeugen für den IT-Alltag.
 - [littlelink](https://github.com/techno-tim/littlelink-server): Simple, selbstbetriebene Alternative zu LinkTree
-- ~~[lubelogger](https://github.com/hargata/lubelog): Web-Tool zum erfassen von Wartungsarbeiten und anderen Fahrzeug-Daten~~
 - ~~minecraft_bedrock: Ein Minecraft Bedrock Edition Server~~
 - ~~minecraft_java: Ein Minecraft Java Edition Server~~
 - ~~[ntp_server](https://github.com/cturra/docker-ntp): NTP-Server ohne overhead~~
