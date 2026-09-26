@@ -1,0 +1,32 @@
+# Gemeinsamer Ablauf für Docker-Compose-Dienste, Aufruf aus einer Rolle:
+#
+#   - name: Deploy {{ role_name }}
+#     ansible.builtin.import_tasks: docker-compose-service.yml
+#
+# Kopiert alle Templates der Rolle (siehe copy-all-templates.yml, die Unit landet in
+# /etc/systemd/system), startet den Service bei Änderungen sofort neu und stellt sicher,
+# dass er läuft und beim Boot startet. Die Rolle braucht dafür nur den Handler
+# "restart {{ role_name }}.service" (mit daemon_reload).
+#
+# Parameter: compose_file_mode (Default '644') für die Dateien in /data/<rolle>.
+
+- name: Copy templates
+  ansible.builtin.import_tasks: copy-all-templates.yml
+  vars:
+    directory: ../templates
+    notify_handlers: restart {{ role_name }}.service
+    file_mode: "{{ compose_file_mode | default('644') }}"
+
+# Handler hier statt am Ende des Plays abarbeiten: so ist der Restart erledigt, bevor
+# der Start-Task läuft, und ein frisch gestarteter Service wird nicht gleich wieder
+# neu gestartet. Achtung: flush_handlers arbeitet auch anstehende Handler früherer Rollen ab.
+# (meta-Tasks rendern keine Variablen im Namen, deshalb ohne role_name)
+- name: Restart service if its files changed
+  ansible.builtin.meta: flush_handlers
+
+- name: start {{ role_name }}.service
+  ansible.builtin.systemd:
+    name: "{{ role_name }}.service"
+    state: started
+    enabled: true
+    daemon_reload: true
