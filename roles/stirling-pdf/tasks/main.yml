@@ -1,13 +1,2 @@
-- name: Copy templates
-  ansible.builtin.import_tasks: copy-all-templates.yml
-  vars:
-    directory: ../templates
-    notify_handlers: restart {{ role_name }}.service
-
-- name: start stirling-pdf.service
-  ansible.builtin.systemd:
-    state: started
-    daemon_reload: true
-    enabled: true
-    name: stirling-pdf.service
-  register: stirling_pdf_started
+- name: Deploy {{ role_name }}
+  ansible.builtin.import_tasks: docker-compose-service.yml

@@ -1,13 +1,4 @@
-- name: Copy templates
-  ansible.builtin.import_tasks: copy-all-templates.yml
+- name: Deploy {{ role_name }}
+  ansible.builtin.import_tasks: docker-compose-service.yml
   vars:
-    directory: ../templates
-    notify_handlers: restart {{ role_name }}.service
-
-- name: start homepage.service
-  ansible.builtin.systemd:
-    state: started
-    daemon_reload: true
-    enabled: true
-    name: homepage.service
-  register: homepage_started
+    file_mode: '640' # Config enthält Basic-Auth-Passwort im Klartext, Proxmox-API-Secrets u.a.

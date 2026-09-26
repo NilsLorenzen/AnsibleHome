@@ -1,4 +1,4 @@
 - name: Deploy {{ role_name }}
   ansible.builtin.import_tasks: docker-compose-service.yml
   vars:
-    compose_file_mode: '640' # ADMIN_TOKEN in der Compose-Datei
+    file_mode: '640' # ADMIN_TOKEN in der Compose-Datei

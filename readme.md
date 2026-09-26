@@ -120,11 +120,18 @@ Diese Rollen bleiben im Repo, werden aber aktuell nicht ausgerollt:
 
 Fast alle Dienst-Rollen folgen demselben Muster: eine systemd-Unit startet `docker compose up` im Verzeichnis `/data/<rolle>`, beides kommt aus Jinja-Templates, Änderungen lösen über einen Handler einen Restart aus.
 
-Einige Rollen kopieren ihre Templates über das gemeinsame `tasks/copy-all-templates.yml`:
+Der Ablauf steht einmal zentral in `tasks/docker-compose-service.yml`, eine Rolle braucht nur:
+- in `tasks/main.yml` den Aufruf `ansible.builtin.import_tasks: docker-compose-service.yml` (zusätzliche Tasks, die vor dem Start fertig sein müssen, stehen davor),
+- in `handlers/main.yml` den Handler `restart {{ role_name }}.service` mit `daemon_reload: true`.
+
+Geänderte Dateien lösen den Restart sofort per `flush_handlers` aus, noch bevor der Service gestartet wird. Das arbeitet auch anstehende Handler früherer Rollen im selben Lauf ab.
+
+Kopiert werden die Templates über `tasks/copy-all-templates.yml`:
 - Der ganze `templates/`-Ordner wird nach `/data/<rolle>` gespiegelt, `.j2` wird gerendert.
 - Dateien mit dem Prefix `nr_` lösen keinen Restart aus (das Prefix wird beim Kopieren entfernt).
 - `*.service.j2` landet in `/etc/systemd/system`, `*-logrotate.j2` in `/etc/logrotate.d`.
-- `file_mode` setzt den Modus der Dateien in `/data/<rolle>` (Default `664`). Traefik nutzt `640`, weil in der Compose-Datei die INWX-Zugangsdaten stehen.
+- `file_mode` setzt den Modus der Dateien in `/data/<rolle>` (Default `644`). Traefik, Vaultwarden und Homepage nutzen `640`, weil in ihren Dateien Zugangsdaten mit Wirkung über den eigenen Dienst hinaus stehen.
+- `copy_exclude` nimmt Templates aus, die die Rolle selbst an einen anderen Ort schreibt (z.B. Mount-Units bei plex und ganymede).
 
 ## SSL Zertifikate
 

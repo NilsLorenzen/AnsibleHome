@@ -1,6 +1,6 @@
 # Dateien die mit nr_ beginnen, lösen keinen Restart aus.
 # *.service.j2 landen in /etc/systemd/system, *-logrotate.j2 in /etc/logrotate.d, nicht im Datenverzeichnis.
-# file_mode (Default '664') gilt für alle Dateien im Datenverzeichnis, z.B. '640' bei Secrets in der Compose-Datei.
+# file_mode (Default '644') gilt für alle Dateien im Datenverzeichnis, z.B. '640' bei Secrets in der Compose-Datei.
 # copy_exclude: Liste von Pfaden relativ zu templates/ (z.B. ['resolv.conf.j2']), die hier komplett
 # ignoriert werden, weil die Rolle sie selbst an einen anderen Ort schreibt.
 
@@ -58,7 +58,7 @@
     src: "{{ item.src }}"
     dest: "{{ target | default(root) }}/{{ item.path
                                            | regex_replace('(^|.*/)(nr_)([^/]+)$', '\\1\\3') }}"
-    mode: "{{ file_mode | default('664') }}"
+    mode: "{{ file_mode | default('644') }}"
   when:
     - item.state == 'file'
     - item.path not in (copy_exclude | default([]))
@@ -74,7 +74,7 @@
   ansible.builtin.copy:
     src: "{{ item.src }}"
     dest: "{{ target | default(root) }}/{{ item.path }}"
-    mode: "{{ file_mode | default('664') }}"
+    mode: "{{ file_mode | default('644') }}"
   when:
     - item.state == 'file'
     - item.path not in (copy_exclude | default([]))
@@ -93,7 +93,7 @@
     dest: "{{ target | default(root) }}/{{ (item.path
                                             | regex_replace('\\.j2$', '')
                                             | regex_replace('(^|.*/)(nr_)([^/]+)$', '\\1\\3')) }}"
-    mode: "{{ file_mode | default('664') }}"
+    mode: "{{ file_mode | default('644') }}"
     lstrip_blocks: true
   when:
     - item.state == 'file'
@@ -112,7 +112,7 @@
   ansible.builtin.template:
     src: "{{ item.src }}"
     dest: "{{ target | default(root) }}/{{ item.path | regex_replace('\\.j2$', '') }}"
-    mode: "{{ file_mode | default('664') }}"
+    mode: "{{ file_mode | default('644') }}"
     lstrip_blocks: true
   when:
     - item.state == 'file'

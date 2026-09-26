@@ -8,14 +8,14 @@
 # dass er läuft und beim Boot startet. Die Rolle braucht dafür nur den Handler
 # "restart {{ role_name }}.service" (mit daemon_reload).
 #
-# Parameter: compose_file_mode (Default '644') für die Dateien in /data/<rolle>.
+# Parameter (werden an copy-all-templates.yml durchgereicht): file_mode (Default '644')
+# für die Dateien in /data/<rolle>, copy_exclude für Templates, die die Rolle selbst schreibt.
 
 - name: Copy templates
   ansible.builtin.import_tasks: copy-all-templates.yml
   vars:
     directory: ../templates
     notify_handlers: restart {{ role_name }}.service
-    file_mode: "{{ compose_file_mode | default('644') }}"
 
 # Handler hier statt am Ende des Plays abarbeiten: so ist der Restart erledigt, bevor
 # der Start-Task läuft, und ein frisch gestarteter Service wird nicht gleich wieder
