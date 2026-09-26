@@ -1,12 +1,3 @@
-- name: copy systemd unit
-  ansible.builtin.template:
-    src: "{{ role_name }}.service.j2"
-    dest: "/etc/systemd/system/{{ role_name }}.service"
-    owner: root
-    group: root
-    mode: "644"
-  notify: restart {{ role_name }}.service
-
 - name: create /data/{{ role_name }} dir
   ansible.builtin.file:
     path: "{{ root }}"

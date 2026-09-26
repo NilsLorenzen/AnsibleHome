@@ -1,12 +1,3 @@
-- name: copy systemd unit
-  ansible.builtin.template:
-    src: grafana.service.j2
-    dest: /etc/systemd/system/grafana.service
-    owner: root
-    group: root
-    mode: "644"
-  notify: restart grafana.service
-
 - name: create /data/grafana dir
   ansible.builtin.file:
     path: "{{ root }}"

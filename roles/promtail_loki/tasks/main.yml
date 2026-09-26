@@ -1,12 +1,3 @@
-- name: copy systemd unit
-  ansible.builtin.template:
-    src: promtail_loki.service.j2
-    dest: /etc/systemd/system/promtail_loki.service
-    owner: root
-    group: root
-    mode: "644"
-  notify: restart promtail_loki.service
-
 - name: create /data/promtail_loki dir
   ansible.builtin.file:
     path: "{{ root }}"

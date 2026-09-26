@@ -4,23 +4,6 @@
     directory: ../templates
     notify_handlers: restart {{ role_name }}.service
 
-- name: copy systemd unit
-  ansible.builtin.template:
-    src: traefik.service.j2
-    dest: /etc/systemd/system/traefik.service
-    owner: root
-    group: root
-    mode: "644"
-  notify: restart traefik.service
-
-- name: copy logrotate file
-  ansible.builtin.template:
-    src: traefik-logrotate.j2
-    dest: /etc/logrotate.d/traefik-logrotate
-    owner: root
-    group: root
-    mode: "644"
-
 - name: Create docker network web
   docker_network:
     name: web

@@ -4,15 +4,6 @@
     directory: ../templates
     notify_handlers: restart {{ role_name }}.service
 
-- name: copy systemd unit
-  ansible.builtin.template:
-    src: homepage.service.j2
-    dest: /etc/systemd/system/homepage.service
-    owner: root
-    group: root
-    mode: "644"
-  notify: restart homepage.service
-
 - name: start homepage.service
   ansible.builtin.systemd:
     state: started
