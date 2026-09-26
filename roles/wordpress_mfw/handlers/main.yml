@@ -1,5 +1,5 @@
-- name: restart wordpress_mfw.service
-  when: wordpress_mfw_started is not changed
+- name: restart {{ role_name }}.service
   ansible.builtin.systemd:
-    name: wordpress_mfw.service
+    name: "{{ role_name }}.service"
     state: restarted
+    daemon_reload: true

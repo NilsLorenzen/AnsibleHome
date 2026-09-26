@@ -1,5 +1,5 @@
-- name: restart ntp_server.service
-  when: ntp_server_started is not changed
+- name: restart {{ role_name }}.service
   ansible.builtin.systemd:
-    name: ntp_server.service
+    name: "{{ role_name }}.service"
     state: restarted
+    daemon_reload: true

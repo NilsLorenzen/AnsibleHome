@@ -1,5 +1,5 @@
-- name: restart spotify_tracker.service
-  when: spotify_tracker_started is not changed
+- name: restart {{ role_name }}.service
   ansible.builtin.systemd:
-    name: spotify_tracker.service
+    name: "{{ role_name }}.service"
     state: restarted
+    daemon_reload: true

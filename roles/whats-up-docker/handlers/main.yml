@@ -1,5 +1,5 @@
-- name: restart whats-up-docker.service
-  when: whats_up_docker_started is not changed
+- name: restart {{ role_name }}.service
   ansible.builtin.systemd:
-    name: whats-up-docker.service
+    name: "{{ role_name }}.service"
     state: restarted
+    daemon_reload: true

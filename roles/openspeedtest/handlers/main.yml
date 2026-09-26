@@ -1,5 +1,5 @@
-- name: restart openspeedtest.service
-  when: openspeedtest_started is not changed
+- name: restart {{ role_name }}.service
   ansible.builtin.systemd:
-    name: openspeedtest.service
+    name: "{{ role_name }}.service"
     state: restarted
+    daemon_reload: true
