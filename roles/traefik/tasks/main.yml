@@ -6,7 +6,7 @@
     file_mode: '640' # INWX-Credentials in der Compose-Datei
 
 - name: Create docker network web
-  docker_network:
+  community.docker.docker_network:
     name: web
 
 - name: start traefik.service

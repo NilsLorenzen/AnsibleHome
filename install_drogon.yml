@@ -1,6 +1,7 @@
 ---
 
-- hosts: drogon
+- name: Configure drogon
+  hosts: drogon
   become: true
 
   roles:

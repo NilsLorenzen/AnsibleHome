@@ -5,7 +5,7 @@
     notify_handlers: restart traefik.service
 
 - name: Create docker network web
-  docker_network:
+  community.docker.docker_network:
     name: web
 
 - name: start traefik.service

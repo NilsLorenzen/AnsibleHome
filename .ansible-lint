@@ -16,13 +16,6 @@ skip_list:
 warn_list:
   # T13
   - risky-file-permissions
-  - fqcn[action-core]
-  - fqcn[action]
-  - fqcn[canonical]
-  - no-changed-when
-  - name[missing]
-  - name[play]
-  - jinja[spacing]
   - yaml[truthy]
   - yaml[new-line-at-end-of-file]
   - yaml[empty-lines]

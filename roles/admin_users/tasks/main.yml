@@ -1,19 +1,20 @@
 ---
 - name: Merge user lists
-  set_fact:
+  ansible.builtin.set_fact:
     merged_users: "{{ users | default([]) + (hostvars[inventory_hostname]['extra_users'] | default([])) }}"
 
 - name: Ensure all standard groups exist
-  group:
+  ansible.builtin.group:
     name: "{{ item }}"
     state: present
   loop: "{{ default_user_groups }}"
 
 - name: Ensure passwordless sudo for sudo group
-  template:
+  ansible.builtin.template:
     src: sudoers.j2
     dest: "/etc/sudoers.d/sudo"
     mode: '0440'
 
 
-- include_tasks: users.yml
+- name: Create users and install ssh keys
+  ansible.builtin.include_tasks: users.yml

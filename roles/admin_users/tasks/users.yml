@@ -1,6 +1,6 @@
 ---
 - name: Ensure users are created
-  user:
+  ansible.builtin.user:
     name: "{{ item.name }}"
     groups: "{{ (item.groups | default(default_user_groups)) | join(',') }}"
     append: yes
@@ -10,7 +10,7 @@
   loop: "{{ merged_users }}"
 
 - name: Ensure .ssh directory exists
-  file:
+  ansible.builtin.file:
     path: "/home/{{ item.name }}/.ssh"
     state: directory
     owner: "{{ item.name }}"
@@ -32,9 +32,9 @@
   delay: 2
   ignore_errors: true
 
-- name: Build users_with_keys (GitHub + manual
-  set_fact:
-    users_with_keys: "{{ users_with_keys | default([]) + [ user_entry ] }}"
+- name: Build users_with_keys (GitHub + manual)
+  ansible.builtin.set_fact:
+    users_with_keys: "{{ users_with_keys | default([]) + [user_entry] }}"
   vars:
     github_entry: "{{ (github_keys.results | selectattr('item.github', 'equalto', item.github) | first).content | default('') }}"
     gh_keys: "{{ github_entry.split('\n') if github_entry|length > 0 else [] }}"
@@ -47,7 +47,7 @@
     label: "{{ item.name }}"
 
 - name: Install authorized_keys
-  authorized_key:
+  ansible.posix.authorized_key:
     user: "{{ item.0.name }}"
     key: "{{ item.1 }}"
     state: present

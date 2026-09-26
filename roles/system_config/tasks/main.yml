@@ -12,11 +12,11 @@
   when: not enable_auto_updates  # nur bei deaktivierten Auto-Updates
 
 - name: Set timezone
-  ansible.builtin.timezone:
+  community.general.timezone:
     name: "{{ base_timezone }}"
 
 - name: Set locale
-  ansible.builtin.locale_gen:
+  community.general.locale_gen:
     name: "{{ base_locale }}"
     state: present
 

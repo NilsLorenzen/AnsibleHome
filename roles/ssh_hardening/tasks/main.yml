@@ -1,12 +1,12 @@
 ---
 - name: Install OpenSSH server
-  apt:
+  ansible.builtin.apt:
     name: openssh-server
     state: present
     update_cache: yes
 
 - name: Deploy hardened sshd_config
-  template:
+  ansible.builtin.template:
     src: sshd_config.j2
     dest: /etc/ssh/sshd_config
     owner: root
@@ -15,7 +15,7 @@
   notify: Restart SSHD
 
 - name: Ensure SSH banner exists
-  copy:
+  ansible.builtin.copy:
     dest: "{{ sshd_banner }}"
     content: |
       ***********************
