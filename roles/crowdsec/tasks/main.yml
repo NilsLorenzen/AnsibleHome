@@ -18,12 +18,6 @@
     directory: ../templates
     notify_handlers: restart {{ role_name }}.service
 
-- name: Replace placeholder with var
-  ansible.builtin.replace:
-    path: "{{ root }}/config/notifications/discord.yaml"
-    regexp: 'webhookURL'
-    replace: "{{ vault_crowdsec_discord_webhook }}"
-
 - name: start {{ role_name }}.service
   ansible.builtin.systemd:
     state: started

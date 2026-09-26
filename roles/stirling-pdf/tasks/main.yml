@@ -18,15 +18,6 @@
     directory: ../templates
     notify_handlers: restart {{ role_name }}.service
 
-- name: copy docker-compose file
-  ansible.builtin.template:
-    src: docker-compose.yml.j2
-    dest: "{{ root }}/docker-compose.yml"
-    owner: root
-    group: root
-    mode: "644"
-  notify: restart stirling-pdf.service
-
 - name: start stirling-pdf.service
   ansible.builtin.systemd:
     state: started

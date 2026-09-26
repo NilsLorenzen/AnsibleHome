@@ -1,0 +1,13 @@
+type: http
+name: discord
+log_level: info
+format: |
+  {
+    "content": "```\n{% raw %}{{range . -}}{{$alert := . -}}{{range .Decisions -}} {{.Value}} got a {{.Type}} for the next '{{.Duration}}' with reason: '{{.Scenario}}'\n{{end -}}{{end -}}{% endraw %}\n```"
+  }
+
+url: {{ vault_crowdsec_discord_webhook | mandatory }}
+
+method: POST
+headers:
+  Content-Type: application/json
