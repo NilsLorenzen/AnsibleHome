@@ -33,6 +33,10 @@ services:
 
       # see /docs/run-an-instance.md for more variables that you can use here
 
+    # uncomment only if you use the COOKIE_PATH variable
+    # volumes:
+      # - ./cookies.json:/cookies.json
+
     labels:
       - traefik.enable=true
       - traefik.http.services.${COMPOSE_PROJECT_NAME}-api-service.loadbalancer.server.port=9000
@@ -43,15 +47,11 @@ services:
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-api.middlewares=lan-only
 
   cobalt-web:
-    build:
-      context: https://github.com/NotNite/cobalt-web-docker.git
-      dockerfile: Dockerfile
-      additional_contexts:
-        cobalt-src: https://github.com/imputnet/cobalt.git
+    # cobalt liefert absichtlich kein offizielles Frontend-Image, nur die API.
+    # Dieses Image baut das offizielle Frontend aus imputnet/cobalt.
+    image: ghcr.io/spotdemo4/cobalt-web:latest
 
-      args:
-        WEB_HOST: "https://{{ cobaltdownloader_web_domain | mandatory }}/"
-        WEB_DEFAULT_API: "https://{{ cobaltdownloader_api_domain | mandatory }}/"
+    container_name: cobaltdownloader-web
 
     #ports:
       #- 3000:3000/tcp
@@ -60,7 +60,13 @@ services:
       - default
       - web
 
-    container_name: cobaltdownloader-web
+    environment:
+      # Domain, auf der das Frontend laeuft (nur Hostname, ohne Schema)
+      WEB_HOST: "{{ cobaltdownloader_web_domain | mandatory }}"
+      # API-Instanz, die das Frontend im Browser anspricht
+      WEB_DEFAULT_API: "https://{{ cobaltdownloader_api_domain | mandatory }}/"
+      # Image lauscht per Default auf 8787; 3000 haelt das Traefik-Label unveraendert
+      PORT: "3000"
 
     labels:
       - traefik.enable=true
@@ -69,9 +75,5 @@ services:
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.rule=Host(`{{ cobaltdownloader_web_domain | mandatory }}`)
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.entrypoints=https
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.tls=true
-      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.middlewares=
-      - wud.watch=false # ignore updates in wud
-
-    # uncomment only if you use the COOKIE_PATH variable
-    # volumes:
-        # - ./cookies.json:/cookies.json
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.middlewares=lan-only
+      - wud.watch.digest=true
