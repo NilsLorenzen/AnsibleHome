@@ -1,5 +1,5 @@
-- name: restart minecraft_java.service
-  when: minecraft_java_started is not changed
+- name: restart {{ role_name }}.service
   ansible.builtin.systemd:
-    name: minecraft_java.service
+    name: "{{ role_name }}.service"
     state: restarted
+    daemon_reload: true

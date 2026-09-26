@@ -1,41 +1,10 @@
-- name: copy systemd unit
-  ansible.builtin.template:
-    src: webserver.service.j2
-    dest: /etc/systemd/system/webserver.service
-    owner: root
-    group: root
-    mode: "644"
-  notify: restart webserver.service
-
-- name: create /data/webserver dir
-  ansible.builtin.file:
-    path: "{{ root }}"
-    state: directory
-    mode: '755'
-
+# Checkout vor dem Deploy: ein neuer Stand löst den Restart aus, und der
+# gemeinsame Ablauf arbeitet ihn per flush_handlers vor dem Start-Task ab.
 - name: create /data/webserver/data dir
   ansible.builtin.file:
     path: "{{ root }}/data"
     state: directory
     mode: '755'
-
-- name: copy nginx conf file
-  ansible.builtin.template:
-    src: nginx.conf.j2
-    dest: "{{ root }}/nginx.conf"
-    owner: root
-    group: root
-    mode: "644"
-  notify: restart webserver.service
-
-- name: copy docker-compose file
-  ansible.builtin.template:
-    src: docker-compose.yml.j2
-    dest: "{{ root }}/docker-compose.yml"
-    owner: root
-    group: root
-    mode: "644"
-  notify: restart webserver.service
 
 # force, damit lokale Abweichungen verworfen werden statt den Task scheitern
 # zu lassen. Vorher wurde dafuer das ganze Verzeichnis geloescht und neu
@@ -48,10 +17,5 @@
     force: true
   notify: restart webserver.service
 
-- name: start webserver.service
-  ansible.builtin.systemd:
-    state: started
-    daemon_reload: true
-    enabled: true
-    name: webserver.service
-  register: webserver_started
+- name: Deploy {{ role_name }}
+  ansible.builtin.import_tasks: docker-compose-service.yml
