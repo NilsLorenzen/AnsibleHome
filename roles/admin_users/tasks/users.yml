@@ -3,9 +3,9 @@
   ansible.builtin.user:
     name: "{{ item.name }}"
     groups: "{{ (item.groups | default(default_user_groups)) | join(',') }}"
-    append: yes
+    append: true
     shell: "{{ item.shell | default(omit) }}"
-    create_home: yes
+    create_home: true
     state: present
   loop: "{{ merged_users }}"
 

@@ -6,14 +6,14 @@ positions:
   filename: /tmp/positions.yaml
 
 clients:
-  - url: http://loki:3100/loki/api/v1/push  #http://promtail_loki-loki-1:3100/loki/api/v1/push
+  - url: http://loki:3100/loki/api/v1/push  # http://promtail_loki-loki-1:3100/loki/api/v1/push
 
 # local machine logs
 scrape_configs:
   - job_name: treafik
     static_configs:
-    - targets:
-        - treafik
-      labels:
-        job: treafik
-        __path__: /var/logs/treafik/*.log
+      - targets:
+          - treafik
+        labels:
+          job: treafik
+          __path__: /var/logs/treafik/*.log

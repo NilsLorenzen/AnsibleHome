@@ -16,11 +16,6 @@ skip_list:
 warn_list:
   # T13
   - risky-file-permissions
-  - yaml[truthy]
-  - yaml[new-line-at-end-of-file]
-  - yaml[empty-lines]
-  - yaml[line-length]
-  - yaml[comments]
   # T20: root -> <rolle>_root, Rollennamen mit Bindestrich
   - var-naming[no-role-prefix]
   - role-name

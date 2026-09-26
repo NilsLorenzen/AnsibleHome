@@ -28,4 +28,3 @@
     enabled: true
     name: vaultwarden.service
   register: vaultwarden_started
-

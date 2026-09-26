@@ -28,4 +28,3 @@
     enabled: true
     name: "{{ role_name }}.service"
   register: uptimekuma_started
-

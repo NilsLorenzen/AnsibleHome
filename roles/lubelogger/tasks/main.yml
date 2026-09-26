@@ -37,4 +37,3 @@
     enabled: true
     name: lubelogger.service
   register: lubelogger_started
-

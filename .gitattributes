@@ -1,0 +1,2 @@
+# Textdateien immer mit LF einchecken und auschecken, auch unter Windows.
+* text=auto eol=lf

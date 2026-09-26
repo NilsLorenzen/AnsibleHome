@@ -3,7 +3,7 @@
   ansible.builtin.apt:
     name: openssh-server
     state: present
-    update_cache: yes
+    update_cache: true
 
 - name: Deploy hardened sshd_config
   ansible.builtin.template:

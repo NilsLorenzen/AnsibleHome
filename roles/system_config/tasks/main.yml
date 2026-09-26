@@ -1,13 +1,13 @@
 ---
 - name: Update apt cache
   ansible.builtin.apt:
-    update_cache: yes
+    update_cache: true
     cache_valid_time: 3600
 
 - name: Upgrade all packages
   ansible.builtin.apt:
     upgrade: dist
-    autoremove: yes
+    autoremove: true
   notify: Reboot if needed
   when: not enable_auto_updates  # nur bei deaktivierten Auto-Updates
 
@@ -76,4 +76,4 @@
 
 - name: Clean up APT cache
   ansible.builtin.apt:
-    autoclean: yes
+    autoclean: true

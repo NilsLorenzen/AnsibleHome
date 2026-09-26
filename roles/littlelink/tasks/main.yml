@@ -28,4 +28,3 @@
     enabled: true
     name: littlelink.service
   register: littlelink_started
-
