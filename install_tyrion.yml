@@ -18,6 +18,8 @@
       tags:
         - system
       vars:
+        # Einzige Quelle fuer AllowUsers. Kommt via admin_users/extra_users ein
+        # weiterer User dazu, muss er auch hier stehen, sonst kein SSH-Zugang.
         sshd_allow_users: ["nils"]
 
 # Docker Roles

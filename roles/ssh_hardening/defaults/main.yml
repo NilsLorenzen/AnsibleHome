@@ -11,6 +11,8 @@ sshd_client_alive_interval: 300
 sshd_client_alive_count_max: 2
 sshd_banner: "/etc/issue.net"
 sshd_permit_empty_passwords: "no"
-#sshd_allow_users: []
+# Leere Liste = kein AllowUsers in der sshd_config, also keine
+# Einschraenkung auf bestimmte User. Die Playbooks setzen den Wert.
+sshd_allow_users: []
 sshd_use_dns: "no"
 sshd_compression: "no"
