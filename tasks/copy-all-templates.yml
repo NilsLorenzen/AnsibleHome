@@ -1,6 +1,8 @@
 # Dateien die mit nr_ beginnen, lösen keinen Restart aus.
 # *.service.j2 landen in /etc/systemd/system, *-logrotate.j2 in /etc/logrotate.d, nicht im Datenverzeichnis.
 # file_mode (Default '664') gilt für alle Dateien im Datenverzeichnis, z.B. '640' bei Secrets in der Compose-Datei.
+# copy_exclude: Liste von Pfaden relativ zu templates/ (z.B. ['resolv.conf.j2']), die hier komplett
+# ignoriert werden, weil die Rolle sie selbst an einen anderen Ort schreibt.
 
 - name: Copy systemd units
   ansible.builtin.template:
@@ -11,6 +13,7 @@
     mode: '644'
   when:
     - item.state == 'file'
+    - item.path not in (copy_exclude | default([]))
     - item.path.endswith('.service.j2')
   with_community.general.filetree: "{{ directory }}"
   loop_control:
@@ -26,6 +29,7 @@
     mode: '644'
   when:
     - item.state == 'file'
+    - item.path not in (copy_exclude | default([]))
     - item.path.endswith('-logrotate.j2')
   with_community.general.filetree: "{{ directory }}"
   loop_control:
@@ -57,6 +61,7 @@
     mode: "{{ file_mode | default('664') }}"
   when:
     - item.state == 'file'
+    - item.path not in (copy_exclude | default([]))
     - not item.path.endswith('.j2')
     - item.path | basename != '.gitignore'
     - item.path | basename != '.DS_Store'
@@ -72,6 +77,7 @@
     mode: "{{ file_mode | default('664') }}"
   when:
     - item.state == 'file'
+    - item.path not in (copy_exclude | default([]))
     - not item.path.endswith('.j2')
     - item.path | basename != '.gitignore'
     - item.path | basename != '.DS_Store'
@@ -91,6 +97,7 @@
     lstrip_blocks: true
   when:
     - item.state == 'file'
+    - item.path not in (copy_exclude | default([]))
     - item.path.endswith('.j2')
     - not item.path.endswith('.service.j2')
     - not item.path.endswith('-logrotate.j2')
@@ -109,6 +116,7 @@
     lstrip_blocks: true
   when:
     - item.state == 'file'
+    - item.path not in (copy_exclude | default([]))
     - item.path.endswith('.j2')
     - not item.path.endswith('.service.j2')
     - not item.path.endswith('-logrotate.j2')

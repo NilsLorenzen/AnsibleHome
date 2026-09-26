@@ -1,3 +1,5 @@
+# Host-Dateien unter /etc schreibt die Rolle selbst, sie gehören nicht nach /data/pihole
+# und sind deshalb unten per copy_exclude vom gemeinsamen Ablauf ausgenommen.
 - name: deactivate systemd resolve - copy resolved.conf # restart required
   ansible.builtin.template:
     src: resolved.conf.j2
@@ -14,34 +16,9 @@
     group: root
     mode: "644"
 
-- name: copy systemd unit
-  ansible.builtin.template:
-    src: pihole.service.j2
-    dest: /etc/systemd/system/pihole.service
-    owner: root
-    group: root
-    mode: "644"
-  notify: restart pihole.service
-
-- name: create /data/pihole dir
-  ansible.builtin.file:
-    path: "{{ root }}"
-    state: directory
-    mode: '755'
-
-- name: copy docker-compose file
-  ansible.builtin.template:
-    src: docker-compose.yml.j2
-    dest: "{{ root }}/docker-compose.yml"
-    owner: root
-    group: root
-    mode: "644"
-  notify: restart pihole.service
-
-- name: start pihole.service
-  ansible.builtin.systemd:
-    state: started
-    daemon_reload: true
-    enabled: true
-    name: pihole.service
-  register: pihole_started
+- name: Deploy {{ role_name }}
+  ansible.builtin.import_tasks: docker-compose-service.yml
+  vars:
+    copy_exclude:
+      - resolved.conf.j2
+      - resolv.conf.j2
