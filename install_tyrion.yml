@@ -32,6 +32,7 @@
     - role: docker_socket_proxy
       tags:
         - dockersocketproxy
+    # Ruht: IDS/IPS und Geoblocking übernimmt der Ubiquiti-Router (siehe readme).
     # - role: crowdsec
     #   tags:
     #     - crowdsec
@@ -94,6 +95,7 @@
     - role: speedtest-tracker
       tags:
         - speedtest-tracker
+    # Ruhen: werden nicht gebraucht. Offene Punkte für eine Reaktivierung stehen in der readme.
     # - role: grafana
     #   tags:
     #     - grafana
@@ -115,6 +117,6 @@
     - role: cobaltdownloader
       tags:
         - cobaltdownloader
-    # - role: yarnl
-    #   tags:
-    #     - yarnl
+
+# Nicht eingebunden, ruhend (Begründungen in der readme):
+# crafty, homeassistant, homebridge, pihole, minecraft_java, minecraft_bedrock, ntp_server

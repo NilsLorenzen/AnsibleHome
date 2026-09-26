@@ -1,3 +1,0 @@
-yarnl_domain: yarnl.home-lorenzen.de
-yarnl_db_password: "{{ vault_yarnl_db_password }}"
-yarnl_admin_password: "{{ vault_yarnl_admin_password }}"

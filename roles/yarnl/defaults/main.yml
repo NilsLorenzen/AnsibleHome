@@ -1,5 +1,0 @@
-root: /data/{{ role_name }}
-yarnl_db_name: yarnl
-yarnl_db_user: yarnl
-yarnl_admin_username: admin
-yarnl_tz: Europe/Berlin
