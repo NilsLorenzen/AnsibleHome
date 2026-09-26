@@ -3,21 +3,8 @@
     name: cifs-utils
     update_cache: false
 
-- name: copy systemd unit
-  ansible.builtin.template:
-    src: plex.service.j2
-    dest: /etc/systemd/system/plex.service
-    owner: root
-    group: root
-    mode: "644"
-  notify: restart plex.service
-
-- name: create /data/plex dir
-  ansible.builtin.file:
-    path: "{{ root }}"
-    state: directory
-    mode: '755'
-
+# Der NAS-Mount muss laufen, bevor der Container startet. Die Mount-Unit enthält das
+# NAS-Passwort (600) und ist deshalb unten per copy_exclude vom Spiegeln nach /data ausgenommen.
 - name: copy mount file for plex_media volume
   ansible.builtin.template:
     src: data-plex-media.mount.j2
@@ -45,19 +32,9 @@
     mode: "644"
   notify: update initramfs
 
-- name: copy docker-compose file
-  ansible.builtin.template:
-    src: docker-compose.yml.j2
-    dest: "{{ root }}/docker-compose.yml"
-    owner: root
-    group: root
-    mode: "644"
-  notify: restart plex.service
-
-- name: start plex.service
-  ansible.builtin.systemd:
-    state: started
-    daemon_reload: true
-    enabled: true
-    name: plex.service
-  register: plex_started
+- name: Deploy {{ role_name }}
+  ansible.builtin.import_tasks: docker-compose-service.yml
+  vars:
+    copy_exclude:
+      - data-plex-media.mount.j2
+      - i915.conf.j2
