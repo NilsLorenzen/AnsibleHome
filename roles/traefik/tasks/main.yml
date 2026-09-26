@@ -3,6 +3,7 @@
   vars:
     directory: ../templates
     notify_handlers: restart {{ role_name }}.service
+    file_mode: '640' # INWX-Credentials in der Compose-Datei
 
 - name: Create docker network web
   docker_network:

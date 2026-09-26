@@ -18,7 +18,7 @@
     dest: "{{ root }}/docker-compose.yml"
     owner: root
     group: root
-    mode: "644"
+    mode: "640" # ADMIN_TOKEN
   notify: restart vaultwarden.service
 
 - name: start vaultwarden.service
