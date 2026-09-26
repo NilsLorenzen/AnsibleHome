@@ -14,8 +14,6 @@ skip_list:
   - name[template] # "{{ role_name }}" mitten im Namen ist gewolltes Muster
 
 warn_list:
-  # T13
-  - risky-file-permissions
   # T20: root -> <rolle>_root, Rollennamen mit Bindestrich
   - var-naming[no-role-prefix]
   - role-name

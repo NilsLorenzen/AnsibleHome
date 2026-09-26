@@ -1,8 +1,3 @@
-- name: create /data/prometheus dir
-  ansible.builtin.file:
-    path: "{{ root }}"
-    state: directory
-
 - name: Copy templates
   ansible.builtin.import_tasks: copy-all-templates.yml
   vars:

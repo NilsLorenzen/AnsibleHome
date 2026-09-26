@@ -53,6 +53,7 @@
 - name: Enable periodic security updates (APT)
   ansible.builtin.copy:
     dest: /etc/apt/apt.conf.d/20auto-upgrades
+    mode: '644'
     content: |
       APT::Periodic::Update-Package-Lists "1";
       APT::Periodic::Unattended-Upgrade "1";
@@ -61,6 +62,7 @@
 - name: Configure unattended-upgrades (security only)
   ansible.builtin.copy:
     dest: /etc/apt/apt.conf.d/50unattended-upgrades
+    mode: '644'
     content: |
       Unattended-Upgrade::Origins-Pattern {
           "origin=Ubuntu,archive=${distro_codename}-security";

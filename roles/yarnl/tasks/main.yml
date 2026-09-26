@@ -11,6 +11,7 @@
   ansible.builtin.file:
     path: "{{ root }}"
     state: directory
+    mode: '755'
 
 - name: copy {{ role_name }} docker-compose file
   ansible.builtin.template:
