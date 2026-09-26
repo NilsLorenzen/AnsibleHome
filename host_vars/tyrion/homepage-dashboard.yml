@@ -1,4 +1,3 @@
 homepage_domain: dashboard.nlor.de
 unifi_username: "unifi-reader"
 unifi_password: "{{ vault_unifi_password }}"
-local_plex: "true"
