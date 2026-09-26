@@ -93,12 +93,12 @@
     - role: speedtest-tracker
       tags:
         - speedtest-tracker
-    - role: grafana
-      tags:
-        - grafana
-    - role: prometheus
-      tags:
-        - prometheus
+    # - role: grafana
+    #   tags:
+    #     - grafana
+    # - role: prometheus
+    #   tags:
+    #     - prometheus
     - role: wallos
       tags:
         - wallos
