@@ -12,6 +12,8 @@
     owner: root
     group: root
     mode: '0600'
+    # Kaputte Config gar nicht erst schreiben: sonst startet sshd beim Restart nicht mehr.
+    validate: /usr/sbin/sshd -t -f %s
   notify: Restart SSHD
 
 - name: Ensure SSH banner exists
