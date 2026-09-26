@@ -24,7 +24,7 @@ services:
       - DB_HOST=db
       - DB_PORT=5432
       - DB_USER=ganymede
-      - DB_PASS=PASSWORD
+      - DB_PASS={{ ganymede_db_password | mandatory }}
       - DB_NAME=ganymede-prd
       - DB_SSL=disable
       # - DB_SSL_ROOT_CERT= # path to cert in the container if DB_SSL is not disabled
@@ -75,7 +75,7 @@ services:
     networks:
       - default
     environment:
-      - POSTGRES_PASSWORD=PASSWORD
+      - POSTGRES_PASSWORD={{ ganymede_db_password | mandatory }}
       - POSTGRES_USER=ganymede
       - POSTGRES_DB=ganymede-prd
     #ports:
