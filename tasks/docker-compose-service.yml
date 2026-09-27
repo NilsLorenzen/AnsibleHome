@@ -3,13 +3,26 @@
 #   - name: Deploy {{ role_name }}
 #     ansible.builtin.import_tasks: docker-compose-service.yml
 #
-# Kopiert alle Templates der Rolle (siehe copy-all-templates.yml, die Unit landet in
-# /etc/systemd/system), startet den Service bei Änderungen sofort neu und stellt sicher,
-# dass er läuft und beim Boot startet. Die Rolle braucht dafür nur den Handler
-# "restart {{ role_name }}.service" (mit daemon_reload).
+# Schreibt die gemeinsame systemd-Unit (templates/docker-compose.service.j2), kopiert alle
+# Templates der Rolle (siehe copy-all-templates.yml), startet den Service bei Änderungen
+# sofort neu und stellt sicher, dass er läuft und beim Boot startet. Die Rolle braucht
+# dafür nur den Handler "restart {{ role_name }}.service" (mit daemon_reload).
 #
 # Parameter (werden an copy-all-templates.yml durchgereicht): file_mode (Default '644')
 # für die Dateien in /data/<rolle>, copy_exclude für Templates, die die Rolle selbst schreibt.
+# Unit-Varianten über service_description, service_requires_mounts_for, service_restart.
+# Eine Rolle mit eigenem templates/<rolle>.service.j2 behält ihre eigene Unit.
+
+- name: copy {{ role_name }} systemd unit
+  ansible.builtin.template:
+    src: "{{ playbook_dir }}/templates/docker-compose.service.j2"
+    dest: "/etc/systemd/system/{{ role_name }}.service"
+    owner: root
+    group: root
+    mode: '644'
+    lstrip_blocks: true
+  when: not (role_path ~ '/templates/' ~ role_name ~ '.service.j2') is file
+  notify: restart {{ role_name }}.service
 
 - name: Copy templates
   ansible.builtin.import_tasks: copy-all-templates.yml

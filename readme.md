@@ -121,7 +121,10 @@ Fast alle Dienst-Rollen folgen demselben Muster: eine systemd-Unit startet `dock
 
 Der Ablauf steht einmal zentral in `tasks/docker-compose-service.yml`, eine Rolle braucht nur:
 - in `tasks/main.yml` den Aufruf `ansible.builtin.import_tasks: docker-compose-service.yml` (zusätzliche Tasks, die vor dem Start fertig sein müssen, stehen davor),
-- in `handlers/main.yml` den Handler `restart {{ role_name }}.service` mit `daemon_reload: true`.
+- in `handlers/main.yml` den Handler `restart {{ role_name }}.service` mit `daemon_reload: true`,
+- in `templates/` die `docker-compose.yml.j2` (und was sonst nach `/data/<rolle>` gehört).
+
+Die systemd-Unit ist für alle Dienste dieselbe: `templates/docker-compose.service.j2` im Repo-Root. Abweichungen gibt die Rolle als `vars:` am `import_tasks` mit — `service_description`, `service_requires_mounts_for` (plex, ganymede), `service_restart` (pihole). **Nicht** in `defaults/main.yml`: Rollen-Defaults gelten für alle Rollen im selben Play. Eine Rolle mit eigenem `templates/<rolle>.service.j2` behält ihre eigene Unit.
 
 Geänderte Dateien lösen den Restart sofort per `flush_handlers` aus, noch bevor der Service gestartet wird. Das arbeitet auch anstehende Handler früherer Rollen im selben Lauf ab.
 

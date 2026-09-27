@@ -1,0 +1,34 @@
+{# Gemeinsame systemd-Unit für alle Docker-Compose-Dienste, geschrieben von
+   tasks/docker-compose-service.yml. Optionale Variablen service_description,
+   service_requires_mounts_for, service_restart gibt die Rolle als vars: am
+   import_tasks mit - NICHT in defaults/main.yml, die gelten sonst für alle Rollen im Play. #}
+[Unit]
+Description={{ service_description | default(role_name ~ ' Installation von Nils Lorenzen') }}
+BindsTo=docker.service
+After=docker.service
+OnFailure=unit-status-mail@%n.service
+{% if service_requires_mounts_for is defined %}
+
+RequiresMountsFor={{ service_requires_mounts_for }}
+{% endif %}
+
+[Service]
+WorkingDirectory={{ root }}
+{% if service_restart is defined %}
+
+Restart={{ service_restart }}
+RestartSec=5s
+{% endif %}
+
+# Required for the database healthcheck which uses an environment variable.
+#EnvironmentFile={{ root }}/.env.db
+Environment=COMPOSE_PROJECT_NAME={{ role_name }}
+
+ExecStartPre=/usr/bin/docker compose config
+ExecStart=/usr/bin/docker compose up --abort-on-container-exit
+ExecStop=/usr/bin/docker compose stop
+
+ExecReload=/usr/bin/docker compose up --detach
+
+[Install]
+WantedBy=multi-user.target

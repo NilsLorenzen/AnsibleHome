@@ -19,3 +19,5 @@
 
 - name: Deploy {{ role_name }}
   ansible.builtin.import_tasks: docker-compose-service.yml
+  vars:
+    service_description: NGINX Webserver Installation von Nils Lorenzen

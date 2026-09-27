@@ -35,6 +35,7 @@
 - name: Deploy {{ role_name }}
   ansible.builtin.import_tasks: docker-compose-service.yml
   vars:
+    service_requires_mounts_for: "{{ mountpoint }}"
     copy_exclude:
       - data-plex-media.mount.j2
       - i915.conf.j2

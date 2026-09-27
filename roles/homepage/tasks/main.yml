@@ -1,4 +1,5 @@
 - name: Deploy {{ role_name }}
   ansible.builtin.import_tasks: docker-compose-service.yml
   vars:
+    service_description: Homepage Installation von Nils Lorenzen
     file_mode: '640' # Config enthält Basic-Auth-Passwort im Klartext, Proxmox-API-Secrets u.a.

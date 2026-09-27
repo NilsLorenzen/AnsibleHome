@@ -19,6 +19,7 @@
 - name: Deploy {{ role_name }}
   ansible.builtin.import_tasks: docker-compose-service.yml
   vars:
+    service_restart: on-failure
     copy_exclude:
       - resolved.conf.j2
       - resolv.conf.j2

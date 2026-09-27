@@ -1,2 +1,4 @@
 - name: Deploy {{ role_name }}
   ansible.builtin.import_tasks: docker-compose-service.yml
+  vars:
+    service_description: Minecraft Bedrock Server von Nils Lorenzen
