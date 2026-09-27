@@ -20,7 +20,7 @@ ping: {}
       version: "v1.4.4" #}
 
 log:
-  level: DEBUG
+  level: INFO
   #filePath: "/logs/traefik.log"
   #format: json
 
@@ -42,7 +42,7 @@ accessLog:
       names:
         StartLocal: keep
         User-Agent: keep
-        Authorization: keep
+        Authorization: redact # Basic-Auth-Zugangsdaten nicht ins Log schreiben
 
 {% if traefik_metrics %}
 metrics:
