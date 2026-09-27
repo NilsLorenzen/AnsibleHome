@@ -3,7 +3,14 @@
   community.docker.docker_network:
     name: web
 
+# Von den Dateien in templates/conf/dynamic/ werden nur die in traefik_dynamic_configs
+# ausgerollt, alle anderen per copy_exclude übersprungen.
 - name: Deploy {{ role_name }}
   ansible.builtin.import_tasks: docker-compose-service.yml
   vars:
-    file_mode: '640' # INWX-Credentials in der Compose-Datei
+    file_mode: '640' # INWX-Credentials (dns) und Basic-Auth-Hashes in der Compose-Datei
+    copy_exclude: >-
+      {{ query('ansible.builtin.fileglob', role_path ~ '/templates/conf/dynamic/*.j2')
+         | map('basename') | map('regex_replace', '\.j2$', '')
+         | difference(traefik_dynamic_configs)
+         | map('regex_replace', '^(.*)$', 'conf/dynamic/\1.j2') | list }}

@@ -1,1 +1,19 @@
 root: /data/traefik
+
+# dns: Zertifikate per DNS-Challenge über INWX (erlaubt Wildcards, braucht die inwx-Variablen)
+# http: Zertifikate per HTTP-Challenge (Host muss auf Port 80 aus dem Internet erreichbar sein)
+traefik_challenge: dns
+traefik_certresolver: "{{ 'letsencrypt-inwx-dns' if traefik_challenge == 'dns' else 'letsencrypt_http' }}"
+
+# Middleware vor dem Traefik-Dashboard
+traefik_dashboard_middleware: basic-auth-nils-only
+
+# Ist die Variable gesetzt, wird die Middleware lan-only mit diesen IP-Bereichen definiert.
+# traefik_lan_only_sourcerange: "192.168.10.0/22, 172.16.0.0/12"
+
+# Prometheus-Metriken in der statischen Config aktivieren
+traefik_metrics: false
+
+# Dateinamen aus templates/conf/dynamic/ (ohne .j2), die auf diesem Host ausgerollt werden.
+# Alle anderen werden nicht kopiert.
+traefik_dynamic_configs: []

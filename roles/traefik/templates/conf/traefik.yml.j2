@@ -44,12 +44,14 @@ accessLog:
         User-Agent: keep
         Authorization: keep
 
+{% if traefik_metrics %}
 metrics:
   prometheus:
     addEntryPointsLabels: true
     addRoutersLabels: true
     addServicesLabels: true
 
+{% endif %}
 entryPoints:
   http:
     address: ":80"
@@ -64,12 +66,13 @@ entryPoints:
     address: ":443"
     http:
       tls:
-        certResolver: letsencrypt-inwx-dns
+        certResolver: {{ traefik_certresolver }}
 
 certificatesResolvers:
-  letsencrypt-inwx-dns:
+  {{ traefik_certresolver }}:
     acme:
       email: {{ inwx.acme_email }}
+{% if traefik_challenge == 'dns' %}
       storage: /etc/traefik/acme/inwx-dns.json
       dnsChallenge:
         provider: inwx
@@ -87,3 +90,8 @@ certificatesResolvers:
           - ns.inwx.de
           - ns2.inwx.de
           - ns3.inwx.eu
+{%- else %}
+      storage: /etc/traefik/acme/le.json
+      httpChallenge:
+        entrypoint: http
+{%- endif %}

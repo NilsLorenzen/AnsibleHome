@@ -21,16 +21,20 @@ services:
     container_name: traefik
     environment:
       - LEGO_DISABLE_CNAME_SUPPORT=true
+{% if traefik_challenge == 'dns' %}
       - INWX_USERNAME={{ inwx.username }}
       - INWX_PASSWORD={{ inwx.password }}
       - INWX_SHARED_SECRET={{ inwx.shared_secret }}
       - INWX_PROPAGATION_TIMEOUT=100
+{% endif %}
     labels:
       - traefik.enable=true
 
       - traefik.http.middlewares.basic-auth-nils-only.basicauth.users={{ traefik.nils.username }}:{{ traefik.nils.hash | replace('$', '$$') }}
       - traefik.http.middlewares.basic-auth-all.basicauth.users={{ traefik.nils.username }}:{{ traefik.nils.hash | replace('$', '$$') }},{{ traefik.other.username }}:{{ traefik.other.hash | replace('$', '$$') }}
-      - traefik.http.middlewares.lan-only.ipallowlist.sourcerange=192.168.10.0/22, 192.168.2.0/24, 172.16.0.0/12, 192.168.13.0/24
+{% if traefik_lan_only_sourcerange is defined %}
+      - traefik.http.middlewares.lan-only.ipallowlist.sourcerange={{ traefik_lan_only_sourcerange }}
+{% endif %}
 
       {# - "traefik.http.middlewares.crowdsec.plugin.crowdsec-bouncer-traefik-plugin.crowdseclapikey={{ vault_crowdsec_traefik_key }}"
       - "traefik.http.middlewares.crowdsec.plugin.crowdsec-bouncer-traefik-plugin.crowdseclapischeme=http"
@@ -40,10 +44,14 @@ services:
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.entrypoints=https
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.rule=Host(`{{ traefik_domain }}`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.service=api@internal
-      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.tls.certresolver=letsencrypt-inwx-dns
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.tls.certresolver={{ traefik_certresolver }}
+{% if traefik_challenge == 'dns' %}
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.tls.domains[0].main={{ traefik_acme_domain }}
       - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.tls.domains[0].sans=*.{{ traefik_acme_domain }}
-      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.middlewares=lan-only
+{% else %}
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.tls.domains[0].main={{ traefik_domain }}
+{% endif %}
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-dashboard.middlewares={{ traefik_dashboard_middleware }}
 
       - wud.watch.digest=true
     healthcheck:

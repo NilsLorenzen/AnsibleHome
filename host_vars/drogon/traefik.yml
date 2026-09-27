@@ -1,0 +1,6 @@
+traefik_domain: "traefik.{{ traefik_acme_domain }}"
+traefik_acme_domain: nlor.de
+traefik_challenge: http
+traefik_dashboard_middleware: basic-auth-nils-only
+traefik_dynamic_configs:
+  - linkshortener.yml

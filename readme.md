@@ -86,8 +86,7 @@ Durchgestrichene Rollen funktionieren zwar, werden aber aktuell nicht von mir ve
 - [stirling-pdf](https://github.com/Stirling-Tools/Stirling-PDF): Webanwendung mit einer menge nützlicher Werkzeuge zur arbeit mit PDF Dateien. (tyrion)
 - [tautulli](https://github.com/Tautulli/Tautulli): Auswertungs- und Statistik Dashboard für Plex. (tyrion)
 - teamspeak: Teamspeak 6 Server mit Sprach Video und Text Chat. (drogon)
-- [traefik](https://github.com/traefik/traefik): Dockerbasierter Reverse Proxy mit LetsEncrypt und Docker Socket Integration (tyrion, siehe [SSL Zertifikate](#ssl-zertifikate))
-- traefik_httpchallenge: Variante von traefik mit HTTP-Challenge. (drogon)
+- [traefik](https://github.com/traefik/traefik): Dockerbasierter Reverse Proxy mit LetsEncrypt und Docker Socket Integration (beide, siehe [SSL Zertifikate](#ssl-zertifikate))
 - [uptimekuma](https://github.com/louislam/uptime-kuma): Monitoring-Tool / Status-Website (drogon)
 - [vaultwarden](https://github.com/dani-garcia/vaultwarden): Kostenlose Rust Implementierung des Bitwarden Passwort Managers (tyrion)
 - [wallos](https://github.com/ellite/wallos): Simpler Abo Tracker mit Web-Interface (tyrion)
@@ -136,9 +135,11 @@ Kopiert werden die Templates über `tasks/copy-all-templates.yml`:
 ## SSL Zertifikate
 
 Alle benötigen SSL-Zertifikate werden von Traefik Docker Containern erstellt.
-Es gibt 2 unterschiedliche Trafik Rollen:
-- traefik -> wird für interne Dienste genutzt und generiert Zertifikate per DNS-Challenge
-- traefik_httpchallenge -> wird für externe Dienste genutzt und geniert Zertifikate per HTTP-Challenge
+Beide Hosts nutzen dieselbe Rolle `traefik`, die Unterschiede stehen in `host_vars/<host>/traefik.yml`:
+- `traefik_challenge`: `dns` auf tyrion (INWX, erlaubt Wildcard-Zertifikate), `http` auf drogon
+- `traefik_dashboard_middleware`: Middleware vor dem Traefik-Dashboard
+- `traefik_lan_only_sourcerange`: nur wenn gesetzt, wird die Middleware `lan-only` definiert (tyrion)
+- `traefik_dynamic_configs`: welche Dateien aus `roles/traefik/templates/conf/dynamic/` auf dem Host landen. Alle anderen werden nicht ausgerollt — wichtig, weil z.B. `linkshortener.yml` Router ohne Host-Regel enthält, die auf jeder Domain greifen würden.
 
 Traefik auf `tyrion` ist über Port-Forwarding 80/443 direkt aus dem Internet erreichbar. Die Zugriffsgrenze ist deshalb die Middleware am jeweiligen Router:
 - `lan-only`: nur aus den eigenen Netzen erreichbar.
@@ -178,5 +179,5 @@ Bewusst nicht in diesem Repo, damit es nicht wie ein Versehen aussieht:
 - **Backups** werden außerhalb dieses Repos geregelt.
 - **ufw** wird von `system_config` installiert, aber nicht konfiguriert.
 - **Fehlermails der Units**: alle systemd-Units verweisen auf `OnFailure=unit-status-mail@%n.service`, diese Unit wird aber nirgends angelegt. Fällt ein Dienst aus, kommt also keine Mail.
-- **Crowdsec auf drogon**: drogon (Hetzner) steht nicht hinter dem Ubiquiti-Router und hat damit weder dessen IDS/IPS noch Geoblocking. Crowdsec wäre dort die Schutzschicht, ist aber aus, weil das Traefik-Plugin `crowdsec-bouncer-traefik-plugin` nicht mehr funktioniert. Die Middleware-Labels in `traefik_httpchallenge` und an den Routern sind auskommentiert. Sollte repariert werden.
+- **Crowdsec auf drogon**: drogon (Hetzner) steht nicht hinter dem Ubiquiti-Router und hat damit weder dessen IDS/IPS noch Geoblocking. Crowdsec wäre dort die Schutzschicht, ist aber aus, weil das Traefik-Plugin `crowdsec-bouncer-traefik-plugin` nicht mehr funktioniert. Die Middleware-Labels in der Rolle `traefik` und an den Routern sind auskommentiert. Sollte repariert werden.
 - **Kein Restart bei Absturz**: die Units starten `docker compose up --abort-on-container-exit` ohne `Restart=` (einzige Ausnahme: `pihole`). Stirbt ein Container, bleibt der ganze Stack unten, bis man eingreift.

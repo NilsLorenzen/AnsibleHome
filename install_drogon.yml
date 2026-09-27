@@ -26,7 +26,7 @@
 # Docker Roles
     - role: docker
       tags: docker
-    - role: traefik_httpchallenge
+    - role: traefik
       tags:
         - traefik
     - role: docker_socket_proxy

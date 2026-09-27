@@ -1,2 +1,8 @@
 traefik_domain: "traefik.{{ traefik_acme_domain }}"
 traefik_acme_domain: home-lorenzen.de
+traefik_challenge: dns
+traefik_dashboard_middleware: lan-only
+traefik_lan_only_sourcerange: "192.168.10.0/22, 192.168.2.0/24, 172.16.0.0/12, 192.168.13.0/24"
+traefik_metrics: true
+traefik_dynamic_configs:
+  - servers-transports.yml
