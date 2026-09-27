@@ -1,5 +1,3 @@
-root: /data/traefik
-
 # dns: Zertifikate per DNS-Challenge über INWX (erlaubt Wildcards, braucht die inwx-Variablen)
 # http: Zertifikate per HTTP-Challenge (Host muss auf Port 80 aus dem Internet erreichbar sein)
 traefik_challenge: dns

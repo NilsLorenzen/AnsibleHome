@@ -6,7 +6,7 @@
 
 
 - name: restart data-plex-media.mount
-  when: plexmedia_started is not changed
+  when: plex_media_started is not changed
   ansible.builtin.systemd:
     name: data-plex-media.mount
     state: restarted

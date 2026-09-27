@@ -1,13 +1,13 @@
 ---
 - name: Merge user lists
   ansible.builtin.set_fact:
-    merged_users: "{{ users | default([]) + (hostvars[inventory_hostname]['extra_users'] | default([])) }}"
+    merged_users: "{{ admin_users_default | default([]) + (hostvars[inventory_hostname]['extra_users'] | default([])) }}"
 
 - name: Ensure all standard groups exist
   ansible.builtin.group:
     name: "{{ item }}"
     state: present
-  loop: "{{ default_user_groups }}"
+  loop: "{{ admin_users_default_groups }}"
 
 - name: Ensure passwordless sudo for sudo group
   ansible.builtin.template:

@@ -1,9 +1,9 @@
 # Standardkonfiguration
-users:
+admin_users_default:
   - name: "nils"
     github: "NilsLorenzen"
 
-default_user_groups:
+admin_users_default_groups:
   - sudo
   - docker
   - adm

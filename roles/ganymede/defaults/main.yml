@@ -1,4 +1,3 @@
-root: "/data/{{ role_name }}"
-mountpoint: "{{ root }}/media"
-smb_server: "192.168.10.10"
-smb_share: "ganymede"
+ganymede_mountpoint: "{{ root }}/media"
+ganymede_smb_server: "192.168.10.10"
+ganymede_smb_share: "ganymede"

@@ -2,7 +2,7 @@
 - name: Ensure users are created
   ansible.builtin.user:
     name: "{{ item.name }}"
-    groups: "{{ (item.groups | default(default_user_groups)) | join(',') }}"
+    groups: "{{ (item.groups | default(admin_users_default_groups)) | join(',') }}"
     append: true
     shell: "{{ item.shell | default(omit) }}"
     create_home: true

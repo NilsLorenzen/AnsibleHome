@@ -14,6 +14,7 @@ skip_list:
   - name[template] # "{{ role_name }}" mitten im Namen ist gewolltes Muster
 
 warn_list:
-  # T20: root -> <rolle>_root, Rollennamen mit Bindestrich
+  # Bewusst behalten: sshd_*, base_* & Co. sind eigene, eindeutige Namensräume.
   - var-naming[no-role-prefix]
+  # Bewusst behalten: Umbenennen würde Unit, COMPOSE_PROJECT_NAME und /data/<rolle> auf den Hosts ändern.
   - role-name

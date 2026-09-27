@@ -25,6 +25,6 @@
 - name: Deploy {{ role_name }}
   ansible.builtin.import_tasks: docker-compose-service.yml
   vars:
-    service_requires_mounts_for: "{{ mountpoint }}"
+    service_requires_mounts_for: "{{ ganymede_mountpoint }}"
     copy_exclude:
       - data-{{ role_name }}-media.mount.j2

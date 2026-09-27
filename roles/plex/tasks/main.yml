@@ -20,7 +20,7 @@
     daemon_reload: true
     enabled: true
     name: data-plex-media.mount
-  register: plexmedia_started
+  register: plex_media_started
 
 # source: https://forums.plex.tv/t/ubuntu-intel-n5105-qsv-hw-transcoder-not-detected/803491/141?u=thomas_9
 - name: copy initramfs conf file for enabling hardware transcoding
@@ -35,7 +35,7 @@
 - name: Deploy {{ role_name }}
   ansible.builtin.import_tasks: docker-compose-service.yml
   vars:
-    service_requires_mounts_for: "{{ mountpoint }}"
+    service_requires_mounts_for: "{{ plex_mountpoint }}"
     copy_exclude:
       - data-plex-media.mount.j2
       - i915.conf.j2

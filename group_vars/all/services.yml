@@ -1,0 +1,4 @@
+# Datenverzeichnis jedes Dienstes. role_name wird erst bei der Verwendung ausgewertet,
+# jede Rolle bekommt also /data/<rolle>. Einmal hier statt in jeder Rolle, weil Rollen-Defaults
+# für alle Rollen im selben Play gelten.
+root: "/data/{{ role_name }}"
