@@ -1,8 +1,13 @@
 ---
 # For configuration options and examples, please see:
 # https://gethomepage.dev/latest/configs/services
+#
+# Tab "Home": alles mit Status, Tab "Apps": Anwendungen, Tab "Cloud": drogon (siehe settings.yaml).
+# proxmoxNode/proxmoxVMID zeigen den Status der VM bzw. des LXC auf Rhaegar (proxmox.yaml).
 
-- Network:
+# ---------------------------------------------------------------- Tab Home
+
+- Netzwerk:
     - FritzBox:
         icon: fritzbox.svg
         href: http://192.168.5.1/
@@ -18,30 +23,91 @@
         id: unifiID
         ping: 192.168.10.1
         widget:
-            type: unifi
-            url: https://192.168.10.1
-            #fields: ["lan_devices", "wlan_devices", "uptime"]
-            username: {{ unifi_username }}
-            password: {{ unifi_password }}
-    # - PiHole - Tyrion:
-    #     icon: pi-hole.svg
-    #     href: https://pihole.home-lorenzen.de/admin
-    #     server: tyrion
-    #     container: pihole
-    #     widget:
-    #       type: pihole
-    #       url: "https://pihole.home-lorenzen.de"
-    #       version: 6
-    #       key: "{{ vault_pihole_password }}"
-    - PiHole - Proxmox:
+          type: unifi
+          url: https://192.168.10.1
+          username: {{ unifi_username }}
+          password: {{ unifi_password }}
+    - Pi-hole:
         icon: pi-hole.svg
         href: http://192.168.10.20/admin/
         ping: 192.168.10.20
+        proxmoxNode: rhaegar
+        proxmoxVMID: 750
+        proxmoxType: lxc
         widget:
           type: pihole
           url: "http://192.168.10.20:80"
           version: 6
           key: "{{ vault_pihole_password }}"
+    - Nginx Proxy Manager:
+        icon: nginx-proxy-manager.svg
+        href: https://npm.home-lorenzen.de/
+        siteMonitor: https://npm.home-lorenzen.de/
+        proxmoxNode: rhaegar
+        proxmoxVMID: 775
+        proxmoxType: lxc
+    - Speedtest Tracker:
+        icon: myspeed.svg
+        href: https://speed.home-lorenzen.de/
+        server: tyrion
+        container: speedtest-tracker
+        widget:
+          type: speedtest
+          url: https://speed.home-lorenzen.de
+          bitratePrecision: 2
+
+- Infrastruktur:
+    - Proxmox - Rhaegar:
+        icon: proxmox.svg
+        href: https://rhaegar.home-lorenzen.de:8006/
+        ping: 192.168.10.15
+        widget:
+          type: proxmox
+          url: https://192.168.10.15:8006
+          username: {{ vault_homepage_proxmox_rhaegar_api_id }}
+          password: {{ vault_homepage_proxmox_rhaegar_api_secret }}
+          node: rhaegar
+    - UNAS Pro:
+        icon: unifi.svg
+        href: https://192.168.10.10/
+        description: "NAS für Plex und Ganymede"
+        ping: 192.168.10.10
+    - Tyrion:
+        icon: ubuntu-linux.svg
+        description: "Docker-VM"
+        ping: 192.168.10.16
+        proxmoxNode: rhaegar
+        proxmoxVMID: 100
+        proxmoxType: qemu
+    - Downloader:
+        icon: mdi-download-network
+        description: "VM für die Arrs"
+        ping: 192.168.10.91
+        proxmoxNode: rhaegar
+        proxmoxVMID: 142
+        proxmoxType: qemu
+    - Home Assistant:
+        icon: home-assistant.svg
+        href: https://homeassistant.home-lorenzen.de:8123
+        ping: homeassistant.home-lorenzen.de
+        proxmoxNode: rhaegar
+        proxmoxVMID: 200
+        proxmoxType: qemu
+        widget:
+          type: homeassistant
+          url: https://homeassistant.home-lorenzen.de:8123
+          key: "{{ homeassistant_token }}"
+    - Uptime Kuma:
+        icon: uptime-kuma.svg
+        href: http://192.168.10.21:3001/
+        ping: 192.168.10.21
+        proxmoxNode: rhaegar
+        proxmoxVMID: 725
+        proxmoxType: lxc
+        widget:
+          type: uptimekuma
+          url: http://192.168.10.21:3001/
+          slug: n1ls
 
 - Media:
     - Plex:
@@ -51,42 +117,104 @@
         container: plex
         id: plexID
         widget:
-            type: plex
-            url: http://plex:32400
-            key: "{{ plex_apikey }}"
-    - Tautulli for Plex:
+          type: plex
+          url: http://plex:32400
+          key: "{{ plex_apikey }}"
+    - Tautulli:
         icon: tautulli.svg
         href: https://tautulli.home-lorenzen.de
         server: tyrion
         container: tautulli
         widget:
-            type: tautulli
-            url: https://tautulli.home-lorenzen.de
-            key: "{{ tautulli_apikey }}"
-    - Seerr for Plex:
+          type: tautulli
+          url: https://tautulli.home-lorenzen.de
+          key: "{{ tautulli_apikey }}"
+    - Seerr:
         icon: seerr.svg
         href: https://seerr.nlor.de
         server: tyrion
         container: seerr
         widget:
-            type: seerr
-            fields: ["pending", "approved", "available"]
-            url: https://seerr.nlor.de
-            key: "{{ seerr_apikey }}"
+          type: seerr
+          fields: ["pending", "approved", "available"]
+          url: https://seerr.nlor.de
+          key: "{{ seerr_apikey }}"
 
-- Tools:
-    - PairDrop:
-        icon: pairdrop.webp
-        description: "Sharing files made easy"
-        href: https://drop.nlor.de/
+- Downloads:
+    - Sonarr:
+        icon: sonarr.svg
+        href: http://192.168.10.91:8989/
+        siteMonitor: http://192.168.10.91:8989
+        widget:
+          type: sonarr
+          url: http://192.168.10.91:8989
+          key: {{ vault_sonarr_api_key }}
+    - Radarr:
+        icon: radarr.svg
+        href: http://192.168.10.91:7878/
+        siteMonitor: http://192.168.10.91:7878
+        widget:
+          type: radarr
+          url: http://192.168.10.91:7878
+          key: {{ vault_radarr_api_key }}
+    - Prowlarr:
+        icon: prowlarr.svg
+        href: http://192.168.10.91:9696/
+        siteMonitor: http://192.168.10.91:9696
+        widget:
+          type: prowlarr
+          url: http://192.168.10.91:9696
+          key: {{ vault_prowlarr_api_key }}
+    - SABnzbd:
+        icon: sabnzbd.svg
+        href: http://192.168.10.91:8080/
+        siteMonitor: http://192.168.10.91:8080
+        widget:
+          type: sabnzbd
+          url: http://192.168.10.91:8080
+          key: {{ vault_sabnzbd_api_key }}
+
+- Tyrion Docker:
+    - Traefik:
+        icon: traefik.svg
+        href: https://traefik.home-lorenzen.de/dashboard/
         server: tyrion
-        container: pairdrop
+        container: traefik
+        widget:
+          type: traefik
+          url: https://traefik.home-lorenzen.de
+          username: {{ traefik.nils.username }}
+          password: {{ traefik.nils.password }}
+    - Whats up Docker:
+        icon: sh-wud.svg
+        href: https://whatsup.home-lorenzen.de
+        server: tyrion
+        container: whatsupdocker
+        widget:
+          type: whatsupdocker
+          url: https://whatsup.home-lorenzen.de
+    - Dozzle:
+        icon: dozzle.svg
+        description: "Log viewer for Docker"
+        href: https://dozzle.home-lorenzen.de/
+        server: tyrion
+        container: dozzle
+
+# ---------------------------------------------------------------- Tab Apps
+
+- Werkzeuge:
     - IT-Tools:
         icon: it-tools.svg
         description: "Collection of useful IT-Tools"
         href: https://tools.nlor.de/
         server: tyrion
         container: it-tools
+    - Networking Toolbox:
+        icon: mdi-lan
+        description: "Network tools in the browser"
+        href: https://nettools.nlor.de/
+        server: tyrion
+        container: networking-toolbox
     - CyberChef:
         icon: cyberchef.svg
         description: "The Swiss Army Knife of Encryption"
@@ -105,36 +233,62 @@
         href: https://converter.nlor.de/
         server: tyrion
         container: convertx
-    - OpenSpeedTest:
-        icon: openspeedtest.png
-        description: "Speedtest for your local network"
-        href: http://speedtest.home-lorenzen.de:7070/?S=L
+    - PairDrop:
+        icon: pairdrop.webp
+        description: "Sharing files made easy"
+        href: https://drop.nlor.de/
         server: tyrion
-        container: openspeedtest
+        container: pairdrop
     - Excalidraw:
         icon: sh-excalidraw.webp
         description: "Collaborative whiteboard tool"
         href: https://draw.home-lorenzen.de/
         server: tyrion
         container: excalidraw
-    - VaultWarden:
+    - Cobalt Downloader:
+        icon: cobalt.svg
+        description: "Web Downloader"
+        href: https://download.home-lorenzen.de/
+        server: tyrion
+        container: cobaltdownloader-web
+    - OpenSpeedTest:
+        icon: openspeedtest.png
+        description: "Speedtest for your local network"
+        href: http://speedtest.home-lorenzen.de:7070/?S=L
+        server: tyrion
+        container: openspeedtest
+
+- Organisation:
+    - Paperless-ngx:
+        icon: paperless-ngx.svg
+        href: https://dms.home-lorenzen.de
+        server: tyrion
+        container: paperlessngx
+        widget:
+          type: paperlessngx
+          url: https://dms.home-lorenzen.de
+          username: {{ paperlessngx_username }}
+          password: {{ paperlessngx_password }}
+    - Vaultwarden:
         icon: vaultwarden.svg
         description: "Self-hosted password manager"
         href: https://passwords.nlor.de/
         server: tyrion
         container: vaultwarden
-    - Dozzle - Tyrion:
-        icon: dozzle.svg
-        description: "Log viewer for Docker"
-        href: https://dozzle.home-lorenzen.de/
+    - Docmost:
+        icon: sh-docmost.webp
+        description: "Wiki"
+        href: https://wiki.home-lorenzen.de/
         server: tyrion
-        container: dozzle
-    - Ganymede - Tyrion:
-        icon: sh-ganymede
-        description: "Twitch Livestream Archiver"
-        href: https://ganymede.home-lorenzen.de/
+        container: docmost
+    - WallOS:
+        icon: wallos.webp
+        description: "Subscription Tracker"
+        href: https://abos.home-lorenzen.de/
         server: tyrion
-        container: ganymede
+        container: wallos
+
+- Musik & Archiv:
     - Your Spotify:
         icon: sh-your-spotify.svg
         description: "Statistic Collector for Spotify"
@@ -147,140 +301,58 @@
         href: https://spotizerr.home-lorenzen.de/
         server: tyrion
         container: spotizerr-app
-    - WallOS:
-        icon: wallos.webp
-        description: "Subscribtion Tracker"
-        href: https://abos.home-lorenzen.de/
+    - Ganymede:
+        icon: sh-ganymede
+        description: "Twitch Livestream Archiver"
+        href: https://ganymede.home-lorenzen.de/
         server: tyrion
-        container: wallos
-    - DocMost:
-        icon: sh-docmost.webp
-        description: "wiki.home-lorenzen.de"
-        href: https://wiki.home-lorenzen.de/
-        server: tyrion
-        container: docmost
-    - Cobalt Downloader WEB:
-        icon: cobalt.svg
-        description: "Web Downloader"
-        href: https://download.home-lorenzen.de/
-        server: tyrion
-        container: cobaltdownloader-web
+        container: ganymede
 
-- Tools without UI:
-    # - PiholeOrbitalSync:
-    #     icon: pi-hole.svg
-    #     description: "Sync between multiple PiHoles"
-    #     server: tyrion
-    #     container: pihole-orbital-sync
+- Spiele:
+    - Minecraft Bauserver:
+        icon: minecraft.svg
+        href: https://192.168.10.26:8443/
+        description: "Crafty-LXC"
+        widget:
+          type: minecraft
+          url: udp://192.168.10.26:25565
+    - Minecraft NiNi Server:
+        icon: minecraft.svg
+        href: https://192.168.10.26:8443/
+        description: "Crafty-LXC"
+        widget:
+          type: minecraft
+          url: udp://192.168.10.26:25566
+    - Crafty:
+        icon: crafty-controller.svg
+        id: craftyID
+        description: "Minecraft Server Management Tool"
+        href: https://192.168.10.26:8443/
+        ping: 192.168.10.26
+        proxmoxNode: rhaegar
+        proxmoxVMID: 800
+        proxmoxType: lxc
+    - Scribblers:
+        icon: https://scribble.nlor.de/resources/favicon.svg
+        id: scribblersID
+        description: "Scribble.io but self hosted"
+        href: https://scribble.nlor.de/
+        server: tyrion
+        container: scribblers
+
+- Hintergrund:
     - Cobalt Downloader API:
         icon: cobalt.svg
         description: "Web Downloader API"
         server: tyrion
         container: cobaltdownloader-api
+    - Docker Socket Proxy:
+        icon: docker.svg
+        description: "Docker-API für Traefik & Co."
+        server: tyrion
+        container: docker_socket_proxy
 
-- HomeLab:
-    - Traefik - Tyrion:
-        icon: traefik.svg
-        href: https://traefik.home-lorenzen.de/dashboard/
-        server: tyrion
-        container: traefik
-        widget:
-          type: traefik
-          url: https://traefik.home-lorenzen.de
-          username: {{ traefik.nils.username }}
-          password: {{ traefik.nils.password }}
-    - UptimeKuma - Proxmox:
-        icon: uptime-kuma.svg
-        href: http://192.168.10.21:3001/
-        ping: 192.168.10.21
-        widget:
-            type: uptimekuma
-            url: http://192.168.10.21:3001/
-            slug: n1ls
-    - Whats up Docker - Tyrion:
-        icon: sh-wud.svg
-        href: https://whatsup.home-lorenzen.de
-        server: tyrion
-        container: whatsupdocker
-        widget:
-          type: whatsupdocker
-          url: https://whatsup.home-lorenzen.de
-    - Synology DSM - Samwell:
-        icon: synology-dsm.svg
-        href: https://nas.home-lorenzen.de:5001
-        ping: 192.168.10.11
-        widget:
-            type: diskstation
-            url: http://192.168.10.11:5000/
-            username: {{ synology_username }}
-            password: {{ synology_password }}
-            volume: volume_1
-    - Speedtest Tracker:
-        icon: myspeed.svg
-        href: https://speed.home-lorenzen.de/
-        server: tyrion
-        container: speedtest-tracker
-        widget:
-            type: speedtest
-            url: https://speed.home-lorenzen.de
-            bitratePrecision: 2 # optional, default is 0
-    - Grafana:
-        icon: grafana.svg
-        href: https://grafana.home-lorenzen.de
-        id: grafanaID
-        server: tyrion
-        container: grafana
-        widget:
-          type: grafana
-          fields: ["dashboards", "datasources", "alertstriggered"]
-          url: https://grafana.home-lorenzen.de
-          username: {{ vault_grafana_user }}
-          password: {{ vault_grafana_password }}
-    - Prometheus - Tyrion:
-        icon: prometheus.svg
-        href: https://prometheus.home-lorenzen.de
-        server: tyrion
-        container: prometheus
-        widget:
-          type: prometheus
-          url: https://prometheus.home-lorenzen.de
-    - PaperlessNGX - Tyrion:
-        icon: paperless-ngx.svg
-        href: https://dms.home-lorenzen.de
-        server: tyrion
-        container: paperlessngx
-        widget:
-          type: paperlessngx
-          url: https://dms.home-lorenzen.de
-          username: {{ paperlessngx_username }}
-          password: {{ paperlessngx_password }}
-    {# - Homebridge:
-        icon: homebridge.svg
-        href: https://homebridge.home-lorenzen.de
-        server: tyrion
-        container: homebridge
-        widget:
-          type: homebridge
-          url: https://homebridge.home-lorenzen.de
-          username: {{ homebridge_username }}
-          password: {{ homebridge_password }} #}
-    - Home Assistant - Proxmox:
-        icon: home-assistant.svg
-        href: https://homeassistant.home-lorenzen.de:8123
-        ping: homeassistant.home-lorenzen.de
-        widget:
-            type: homeassistant
-            url: https://homeassistant.home-lorenzen.de:8123
-            key: "{{ homeassistant_token }}"
-            {# custom:
-                - state: sensor.total_power
-                - state: sensor.total_energy_today
-                label: energy today
-                - template: "{{ states.switch|selectattr('state','equalto','on')|list|length }}"
-                label: switches on
-                - state: weather.forecast_home
-                label: wind speed
-                value: "{attributes.wind_speed} {attributes.wind_speed_unit}" #}
+# ---------------------------------------------------------------- Tab Cloud
 
 - Drogon:
     - Traefik - Drogon:
@@ -306,15 +378,15 @@
         href: https://status.nlor.de
         siteMonitor: https://status.nlor.de/status/n1ls/
         widget:
-            type: uptimekuma
-            url: https://status.nlor.de
-            slug: n1ls
-
-- Drogon2:
+          type: uptimekuma
+          url: https://status.nlor.de
+          slug: n1ls
     - Dozzle - Drogon:
         icon: dozzle.svg
         href: https://dozzle.nlor.de/
         siteMonitor: https://dozzle.nlor.de/
+
+- Websites:
     - Wordpress MFW:
         icon: wordpress.svg
         href: https://motorradfreunde-wilferdingen.de/
@@ -327,166 +399,3 @@
         icon: littlelink-custom.svg
         href: https://me.nilslorenzen.de/
         siteMonitor: https://me.nilslorenzen.de/
-    - {{ vault_homepage_secret_service1_name }}:
-        icon: {{ vault_homepage_secret_service1_url }}assets/favicon/favicon.png
-        href: {{ vault_homepage_secret_service1_url }}
-        siteMonitor: {{ vault_homepage_secret_service1_url }}
-    - {{ vault_homepage_secret_service2_name }}:
-        icon: si-dotnet
-        href: {{ vault_homepage_secret_service2_url }}
-        siteMonitor: {{ vault_homepage_secret_service2_url }}api/v1/healthz
-        widget:
-            type: customapi
-            url: {{ vault_homepage_secret_service2_url }}api/v1/dashboard/statistic
-            refreshInterval: 10000 # optional - in milliseconds, defaults to 10s
-            method: GET # optional, e.g. POST
-            #display: # optional, default to block, see below
-            mappings:
-              - field: totalNumberOfSmokes
-                label: anzSmokes
-                format: number # optional - defaults to text
-              - field: totalNumberOfHeads
-                label: anzKöpfe
-                format: number # optional - defaults to text
-              - field: totalNumberOfShishas
-                label: anzShishas
-                format: number # optional - defaults to text
-              - field: daysSinceLastSmoke
-                label: seit Kopf
-                format: number # optional - defaults to text
-                suffix: "Tage"
-    - {{ vault_homepage_secret_service3_name }}:
-        icon: {{ vault_homepage_secret_service1_url }}assets/favicon/favicon.png
-        href: {{ vault_homepage_secret_service3_url }}
-        siteMonitor: {{ vault_homepage_secret_service3_url }}
-    - {{ vault_homepage_secret_service4_name }}:
-        icon: si-dotnet
-        href: {{ vault_homepage_secret_service4_url }}
-        siteMonitor: {{ vault_homepage_secret_service4_url }}api/v1/healthz
-        widget:
-            type: customapi
-            url: {{ vault_homepage_secret_service4_url }}api/v1/dashboard/statistic
-            refreshInterval: 10000 # optional - in milliseconds, defaults to 10s
-            method: GET # optional, e.g. POST
-            #display: # optional, default to block, see below
-            mappings:
-              - field: totalNumberOfSmokes
-                label: anzSmokes
-                format: number # optional - defaults to text
-              - field: totalNumberOfHeads
-                label: anzKöpfe
-                format: number # optional - defaults to text
-              - field: totalNumberOfShishas
-                label: anzShishas
-                format: number # optional - defaults to text
-              - field: daysSinceLastSmoke
-                label: seit Kopf
-                format: number # optional - defaults to text
-                suffix: "Tage"
-
-- GameServer:
-    - Minecraft Bauserver:
-        icon: minecraft.svg
-        href: https://crafty.home-lorenzen.de/
-        description: "On Tyrion via Crafty"
-        widget:
-          type: minecraft
-          url: udp://192.168.10.16:25565
-    - Minecraft NiNi Server:
-        icon: minecraft.svg
-        href: https://crafty.home-lorenzen.de/
-        description: "On Tyrion via Crafty"
-        widget:
-          type: minecraft
-          url: udp://192.168.10.16:25566
-    - Crafty - Tyrion:
-        icon: crafty-controller.svg
-        id: craftyID
-        description: "Minecraft Server Management Tool"
-        href: https://crafty.home-lorenzen.de/
-        server: tyrion
-        container: crafty
-    - Scribblers:
-        icon: https://scribble.nlor.de/resources/favicon.svg
-        id: scribblersID
-        description: "Scribble.io but self hosted"
-        href: https://scribble.nlor.de/
-        server: tyrion
-        container: scribblers
-
-- Proxmox:
-    - Proxmox - Rhaegar:
-        icon: proxmox.svg
-        href: https://rhaegar.home-lorenzen.de:8006/
-        ping: 192.168.10.15
-        widget:
-            type: proxmox
-            url: https://192.168.10.15:8006
-            username: {{ vault_homepage_proxmox_rhaegar_api_id }}
-            password: {{ vault_homepage_proxmox_rhaegar_api_secret }}
-            node: rhaegar # optional
-    - Proxmox - Jon:
-        icon: proxmox.svg
-        href: https://jon.home-lorenzen.de:8006/
-        ping: 192.168.10.43
-        widget:
-            type: proxmox
-            url: https://192.168.10.43:8006
-            username: {{ vault_homepage_proxmox_api_id }}
-            password: {{ vault_homepage_proxmox_api_secret }}
-            node: jon # optional
-    - Proxmox - Robb:
-        icon: proxmox.svg
-        href: https://robb.home-lorenzen.de:8006/
-        ping: 192.168.10.45
-        widget:
-            type: proxmox
-            url: https://192.168.10.45:8006
-            username: {{ vault_homepage_proxmox_api_id }}
-            password: {{ vault_homepage_proxmox_api_secret }}
-            node: robb # optional
-    - Proxmox - Brandon:
-        icon: proxmox.svg
-        href: https://brandon.home-lorenzen.de:8006/
-        ping: 192.168.10.41
-        widget:
-            type: proxmox
-            url: https://192.168.10.41:8006
-            username: {{ vault_homepage_proxmox_api_id }}
-            password: {{ vault_homepage_proxmox_api_secret }}
-            node: brandon # optional
-
-
-- Arrs:
-    - Sonarr:
-        icon: sonarr.svg
-        href: http://192.168.10.91:8989/
-        siteMonitor: http://192.168.10.91:8989
-        widget:
-            type: sonarr
-            url: http://192.168.10.91:8989
-            key: {{ vault_sonarr_api_key }}
-    - Radarr:
-        icon: radarr.svg
-        href: http://192.168.10.91:7878/
-        siteMonitor: http://192.168.10.91:7878
-        widget:
-            type: radarr
-            url: http://192.168.10.91:7878
-            key: {{ vault_radarr_api_key }}
-    - Prowlarr:
-        icon: prowlarr.svg
-        href: http://192.168.10.91:9696/
-        siteMonitor: http://192.168.10.91:9696
-        widget:
-            type: prowlarr
-            url: http://192.168.10.91:9696
-            key: {{ vault_prowlarr_api_key }}
-    - SABnzbd:
-        icon: sabnzbd.svg
-        href: http://192.168.10.91:8080/
-        siteMonitor: http://192.168.10.91:8080
-        widget:
-            type: sabnzbd
-            url: http://192.168.10.91:8080
-            key: {{ vault_sabnzbd_api_key }}

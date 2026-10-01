@@ -14,58 +14,74 @@ disableCollapse: true
 fullWidth: true
 
 layout:
-  Network:
-    tab: HomeLab
+  # Tab Home: Zustand des Homelabs auf einen Blick
+  Netzwerk:
+    tab: Home
+    style: row
+    columns: 5
+    useEqualHeights: true
+    icon: mdi-lan
+  Infrastruktur:
+    tab: Home
     style: row
     columns: 3
     useEqualHeights: true
-    icon: netbox.svg
-  Media:
-    tab: HomeLab
-    style: row
-    columns: 3
-    useEqualHeights: true
-    icon: synology-video-station.png
-  HomeLab:
-    tab: HomeLab
-    style: row
-    columns: 3
-    useEqualHeights: true
-    icon: ubuntu-linux.svg
-  Drogon:
-    tab: Cloud
-    style: row
-    columns: 3
-    icon: hetzner.svg
-  Drogon2:
-    tab: Cloud
-    style: row
-    columns: 4
-    header: false
-  GameServer:
-    tab: Cloud
-    style: row
-    columns: 2
-    icon: sh-free-games-claimer.webp
-  Proxmox:
-    tab: Proxmox
-    style: row
-    columns: 2
     icon: proxmox.svg
+  Media:
+    tab: Home
+    style: row
+    columns: 3
     useEqualHeights: true
-  Arrs:
-    tab: Arrs
+    icon: plex.svg
+  Downloads:
+    tab: Home
     style: row
     columns: 4
-    icon: media.svg
     useEqualHeights: true
-  Tools:
-    tab: Tools
+    icon: mdi-download-network
+  Tyrion Docker:
+    tab: Home
+    style: row
+    columns: 3
+    useEqualHeights: true
+    icon: docker.svg
+  # Tab Apps: Anwendungen
+  Werkzeuge:
+    tab: Apps
     style: row
     columns: 5
     icon: mdi-hammer-wrench
-  Tools without UI:
-    tab: Tools
+  Organisation:
+    tab: Apps
+    style: row
+    columns: 4
+    useEqualHeights: true
+    icon: mdi-folder-account
+  Musik & Archiv:
+    tab: Apps
+    style: row
+    columns: 3
+    icon: mdi-music-box-multiple
+  Spiele:
+    tab: Apps
+    style: row
+    columns: 4
+    useEqualHeights: true
+    icon: minecraft.svg
+  Hintergrund:
+    tab: Apps
     style: row
     columns: 5
     icon: si-framework
+  # Tab Cloud: drogon bei Hetzner
+  Drogon:
+    tab: Cloud
+    style: row
+    columns: 4
+    useEqualHeights: true
+    icon: hetzner.svg
+  Websites:
+    tab: Cloud
+    style: row
+    columns: 3
+    icon: mdi-web

@@ -13,8 +13,13 @@
     refresh: 10000 # optional, in ms
 
 - resources:
-    label: NAS
+    label: UNAS
     disk: /data/plex/media
+
+- unifi_console:
+    url: https://192.168.10.1
+    username: {{ unifi_username }}
+    password: {{ unifi_password }}
 
 - search:
     provider: custom

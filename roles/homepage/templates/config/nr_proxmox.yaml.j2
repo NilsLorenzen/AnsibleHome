@@ -1,2 +1,9 @@
 ---
-# Für diese Datei gibts es bisher keine Vorlage
+# Proxmox-Anbindung für proxmoxNode/proxmoxVMID in services.yaml
+# (Status, CPU und RAM der VMs und LXCs). Das Token braucht die Rolle PVEAuditor auf /.
+# https://gethomepage.dev/configs/proxmox/
+
+rhaegar:
+  url: https://192.168.10.15:8006
+  token: {{ vault_homepage_proxmox_rhaegar_api_id }}
+  secret: {{ vault_homepage_proxmox_rhaegar_api_secret }}
