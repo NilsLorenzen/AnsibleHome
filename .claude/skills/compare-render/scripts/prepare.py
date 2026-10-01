@@ -9,17 +9,21 @@ Aufruf: prepare.py <seitenverzeichnis> <repo-host-vars-dir> <vars.yml> <rolle>..
 - root kommt für alle Rollen aus einer Play-Variable (wie group_vars/all/services.yml).
 """
 import glob
+import os
 import re
 import sys
 
 import yaml
 
 side, _hostvars, varsfile, *roles = sys.argv[1:]
+# Neue oder gelöschte Rollen gibt es nur auf einer Seite; ihre Dateien erscheinen dann als Abweichung.
+roles = [r for r in roles if os.path.isdir(f"{side}/roles/{r}")]
 
 STUB_MODULES = [
     "ansible.builtin.systemd",
     "ansible.builtin.apt",
     "community.docker.docker_network",
+    "community.docker.docker_login",
 ]
 
 for path in (glob.glob(f"{side}/tasks/*.yml")

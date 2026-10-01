@@ -1,0 +1,38 @@
+networks:
+  web:
+    external: true
+
+services:
+  app:
+    image: ghcr.io/nilslorenzen/nilslorenzende:latest
+    container_name: {{ role_name }}
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - web
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.${COMPOSE_PROJECT_NAME}-service.loadbalancer.server.port=8080
+
+      # Öffentlich, drogon hat keinen Router-Schutz. /sl/* bleibt bei den Kurzlink-Redirects
+      # aus conf/dynamic/linkshortener.yml (priority 1, würden sonst von diesem Router überdeckt).
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.rule=Host(`{{ nilslorenzende_domain | mandatory }}`) && !PathPrefix(`/sl/`)
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.service=${COMPOSE_PROJECT_NAME}-service
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.entrypoints=https
+
+      # Redirect: me.nilslorenzen.de  ->  nilslorenzen.de (permanent, inkl. Pfad)
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-redirect.rule=Host(`{{ nilslorenzende_redirect_domain | mandatory }}`)
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-redirect.entrypoints=https
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-redirect.service=noop@internal
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-redirect.middlewares=${COMPOSE_PROJECT_NAME}-redirect-to-domain
+
+      - traefik.http.middlewares.${COMPOSE_PROJECT_NAME}-redirect-to-domain.redirectregex.regex=^https?://{{ nilslorenzende_redirect_domain | regex_escape }}/(.*)
+      - traefik.http.middlewares.${COMPOSE_PROJECT_NAME}-redirect-to-domain.redirectregex.replacement=https://{{ nilslorenzende_domain }}/$$1
+      - traefik.http.middlewares.${COMPOSE_PROJECT_NAME}-redirect-to-domain.redirectregex.permanent=true
+
+      - wud.watch.digest=true

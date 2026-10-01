@@ -1,0 +1,37 @@
+---
+# Einmalig pro Klon einrichten:   pre-commit install
+# Alle Hooks über das ganze Repo: pre-commit run --all-files
+# Versionen der Hook-Repos aktualisieren: pre-commit autoupdate
+
+repos:
+  - repo: local
+    hooks:
+      # Hält die Rollenliste in readme.md aktuell (Texte in docs/roles.yml).
+      # Ändert der Hook die readme, schlägt der Commit fehl: readme.md mit stagen und erneut committen.
+      - id: update-readme
+        name: readme-Rollenliste aktualisieren
+        entry: python scripts/update_readme.py
+        language: python
+        additional_dependencies: [pyyaml]
+        pass_filenames: false
+        files: ^(roles/|install_[^/]+\.yml$|docs/roles\.yml$|readme\.md$|scripts/update_readme\.py$)
+
+      # Braucht Ansible auf dem Rechner (brew install ansible), kein Vault-Passwort.
+      - id: syntax-check
+        name: ansible-playbook --syntax-check
+        entry: ansible-playbook --syntax-check install_tyrion.yml install_drogon.yml
+        language: system
+        pass_filenames: false
+        files: \.(ya?ml|j2)$
+
+  - repo: https://github.com/adrienverge/yamllint
+    rev: v1.38.0
+    hooks:
+      - id: yamllint
+        exclude: \.vault\.yml$
+
+  - repo: https://github.com/ansible/ansible-lint
+    rev: v26.9.0
+    hooks:
+      # prüft immer das ganze Repo (Konfiguration in .ansible-lint)
+      - id: ansible-lint

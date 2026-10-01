@@ -1,0 +1,135 @@
+# Beschreibungen für die Rollenliste in readme.md.
+# Host und Status (aktiv/ruhend) ermittelt scripts/update_readme.py aus den Playbooks,
+# hier stehen nur Text und Projekt-Link. Jede Rolle unter roles/ braucht einen Eintrag.
+
+admin_users:
+  description: Legt die Admin-User samt Gruppen an, richtet passwortloses sudo ein und holt die SSH-Keys von GitHub.
+cobaltdownloader:
+  description: Downloader für Videos und Audio von Social-Media-Seiten, API und selbst gehostetes Web-Frontend.
+  url: https://github.com/imputnet/cobalt
+convertx:
+  description: Mächtiger Datei Converter mit Web-Oberfläche.
+  url: https://github.com/C4illin/ConvertX
+crafty:
+  description: Minecraft Server Manager
+  url: https://gitlab.com/crafty-controller/crafty-4
+crowdsec:
+  description: Erkennung und Blockieren von Angriffen, mit Discord-Benachrichtigung.
+  url: https://github.com/crowdsecurity/crowdsec
+cyberchef:
+  description: Web-Tool mit fokus auf Text Formatierung und Umwandlung.
+  url: https://github.com/gchq/CyberChef
+docker:
+  description: Installiert automatisch die richtige Docker Version auf dem Host.
+docker_socket_proxy:
+  description: Proxy um einen sicheren Zugriff auf den Docker Socket für andere Container zu ermöglichen.
+  url: https://github.com/linuxserver/docker-socket-proxy
+docmost:
+  description: Wiki für Dokumentation und Notizen.
+  url: https://github.com/docmost/docmost
+dozzle:
+  description: Super simpler Browser basierter Docker Container Log-Viewer.
+  url: https://github.com/amir20/dozzle
+excalidraw:
+  description: Virtuelles Whiteboard für Skizzen und Diagramme.
+  url: https://github.com/excalidraw/excalidraw
+ganymede:
+  description: Twitch Livestream Downloader und Archiv
+  url: https://github.com/Zibbp/ganymede
+grafana:
+  description: Web-Dashboard für alle erdenklichen Grafiken und Diagramme.
+  url: https://github.com/grafana/grafana
+homeassistant:
+  description: Smart Home
+  url: https://github.com/home-assistant
+homebridge:
+  description: Tool um nicht unterstützte Smart Home Geräte in Apple Homekit zu integrieren.
+  url: https://github.com/homebridge/homebridge
+homepage:
+  description: Mein Lieblings Homelab Dashboard. Die gesamte Konfiguration passiert in Config-Files.
+  url: https://github.com/gethomepage/homepage
+it-tools:
+  description: Web-Tool mit vielen nützlichen kleinen Werkzeugen für den IT-Alltag.
+  url: https://github.com/CorentinTh/it-tools
+littlelink:
+  description: Simple, selbstbetriebene Alternative zu LinkTree
+  url: https://github.com/techno-tim/littlelink-server
+minecraft_bedrock:
+  description: Ein Minecraft Bedrock Edition Server
+minecraft_java:
+  description: Ein Minecraft Java Edition Server
+networking-toolbox:
+  description: Sammlung von Netzwerk-Werkzeugen im Browser.
+  url: https://github.com/Lissy93/networking-toolbox
+nilslorenzende:
+  description: Meine persönliche Website unter nilslorenzen.de, als privates Image aus GHCR.
+  url: https://github.com/NilsLorenzen/nilslorenzende
+ntp_server:
+  description: NTP-Server ohne overhead
+  url: https://github.com/cturra/docker-ntp
+openspeedtest:
+  description: Selbstgehosteter Netzwerkgeschwindigkeitstest (leider nicht wirklich Reverse Proxy kompatibel)
+  url: https://github.com/openspeedtest/Docker-Image
+pairdrop:
+  description: AirDrop artiger Datei-Sharing Dienst für alle Betriebssysteme
+  url: https://github.com/schlagmichdoch/PairDrop
+paperlessngx:
+  description: Dokumentenverwaltung mit Texterkennung (OCR).
+  url: https://github.com/paperless-ngx/paperless-ngx
+pihole:
+  description: DNS Blocker, Cache und Server als Docker Container
+  url: https://github.com/pi-hole/pi-hole
+plex:
+  description: Genialer Medien Streaming Dienst ähnlich zu Netflix.
+prometheus:
+  description: Metric-Collector der in meinem Fall für Traefik Metriken verwendet wird.
+  url: https://github.com/prometheus/prometheus
+scribblers:
+  description: Multiplayer Zeichen- und Ratespiel im Browser.
+  url: https://github.com/scribble-rs/scribble.rs
+seerr:
+  description: Ermöglicht Nutzern das Anfragen neu gewünschter Filme und Serien für Plex oder Jellyfin
+  url: https://github.com/seerr-team/seerr
+speedtest-tracker:
+  description: Web-Tool das automatisch regelmäsig Internet-Speedtest durchführt und diese in einer Historie dokumentiert.
+  url: https://github.com/alexjustesen/speedtest-tracker
+spotify_tracker:
+  description: Geniales Statistik Tool für sämtliche Informationen über den eigenen Spotify Musik Konsum.
+  url: https://github.com/Yooooomi/your_spotify
+spotizerr:
+  description: Musik-Downloader mit Web-Oberfläche.
+ssh_hardening:
+  description: Gehärtete `sshd_config`. Einzige Quelle für `AllowUsers` ist `sshd_allow_users` im Playbook.
+stirling-pdf:
+  description: Webanwendung mit einer menge nützlicher Werkzeuge zur arbeit mit PDF Dateien.
+  url: https://github.com/Stirling-Tools/Stirling-PDF
+system_config:
+  description: Zeitzone, Locale, Basis-Pakete und automatische Sicherheitsupdates.
+tautulli:
+  description: Auswertungs- und Statistik Dashboard für Plex.
+  url: https://github.com/Tautulli/Tautulli
+teamspeak:
+  description: Teamspeak 6 Server mit Sprach Video und Text Chat.
+traefik:
+  description: Dockerbasierter Reverse Proxy mit LetsEncrypt und Docker Socket Integration
+  url: https://github.com/traefik/traefik
+uptimekuma:
+  description: Monitoring-Tool / Status-Website
+  url: https://github.com/louislam/uptime-kuma
+vaultwarden:
+  description: Kostenlose Rust Implementierung des Bitwarden Passwort Managers
+  url: https://github.com/dani-garcia/vaultwarden
+wallos:
+  description: Simpler Abo Tracker mit Web-Interface
+  url: https://github.com/ellite/wallos
+webserver:
+  description: Simpler nginx Webserver als Docker-Container
+  url: https://github.com/nginx/nginx
+whats-up-docker:
+  description: >-
+    Docker Image Überwachungstool das z.B. Discord Benachrichtigung sendet wenn neue Images
+    verfügbar sind oder diese auf Wunsch automatisch installiert.
+  url: https://github.com/getwud/wud
+wordpress_mfw:
+  description: Wordpress Installation mit MariaDB als Docker Container
+  url: https://github.com/WordPress/WordPress

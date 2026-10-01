@@ -2,7 +2,8 @@
 
 Ansible für zwei unabhängige Docker-Hosts: `tyrion` (Proxmox-VM im Heimnetz, `install_tyrion.yml`)
 und `drogon` (Hetzner Cloud, `install_drogon.yml`). Kein Dienst wird über den anderen Host veröffentlicht.
-Rollen, ruhende Rollen und bekannte Lücken: readme.md.
+Rollen, ruhende Rollen und bekannte Lücken: readme.md. Die Rollenliste darin wird aus `docs/roles.yml`
+und den Playbooks erzeugt (`scripts/update_readme.py`, läuft per pre-commit) – nicht von Hand ändern.
 
 ## Arbeitsweise
 
@@ -48,6 +49,7 @@ Neue Rolle: Skill `new-service-role`.
 
 ## Prüfen (lokal, ohne Host)
 
+- `pre-commit run --all-files` bündelt readme-Rollenliste, Syntax-Check, yamllint und ansible-lint.
 - `ansible-playbook --syntax-check install_tyrion.yml install_drogon.yml < /dev/null`
 - `~/.local/bin/ansible-lint` muss mit Exit 0 enden; ein Treffer ohne „(warning)" ist eine Regression.
 - `~/.local/pipx/venvs/ansible-lint/bin/yamllint .`

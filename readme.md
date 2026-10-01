@@ -40,15 +40,17 @@ Jede Rolle hat im Playbook einen Tag, damit lässt sich ein einzelner Dienst aus
 ## Meine Ansible Rollen in diesem Repo
 
 Die meisten meiner Ansible Rollen sind Docker Dienste.
-Im folgenden findest du eine Liste mit kurzer Beschreibung.
+Im folgenden findest du eine Liste mit kurzer Beschreibung. Sie wird automatisch erzeugt, Texte und Links stehen in [docs/roles.yml](docs/roles.yml).
 Durchgestrichene Rollen funktionieren zwar, werden aber aktuell nicht von mir verwendet — die Gründe stehen unter [Ruhende Rollen](#ruhende-rollen).
 
-### System-Rollen (beide Hosts)
+<!-- BEGIN ROLLENLISTE: automatisch erzeugt von scripts/update_readme.py, Texte in docs/roles.yml -->
 
-- admin_users: Legt die Admin-User samt Gruppen an, richtet passwortloses sudo ein und holt die SSH-Keys von GitHub.
-- docker: Installiert automatisch die richtige Docker Version auf dem Host.
-- ssh_hardening: Gehärtete `sshd_config`. Einzige Quelle für `AllowUsers` ist `sshd_allow_users` im Playbook.
-- system_config: Zeitzone, Locale, Basis-Pakete und automatische Sicherheitsupdates.
+### System-Rollen
+
+- admin_users: Legt die Admin-User samt Gruppen an, richtet passwortloses sudo ein und holt die SSH-Keys von GitHub. (beide)
+- docker: Installiert automatisch die richtige Docker Version auf dem Host. (beide)
+- ssh_hardening: Gehärtete `sshd_config`. Einzige Quelle für `AllowUsers` ist `sshd_allow_users` im Playbook. (beide)
+- system_config: Zeitzone, Locale, Basis-Pakete und automatische Sicherheitsupdates. (beide)
 
 ### Dienste
 
@@ -67,10 +69,11 @@ Durchgestrichene Rollen funktionieren zwar, werden aber aktuell nicht von mir ve
 - ~~[homebridge](https://github.com/homebridge/homebridge): Tool um nicht unterstützte Smart Home Geräte in Apple Homekit zu integrieren.~~
 - [homepage](https://github.com/gethomepage/homepage): Mein Lieblings Homelab Dashboard. Die gesamte Konfiguration passiert in Config-Files. (tyrion)
 - [it-tools](https://github.com/CorentinTh/it-tools): Web-Tool mit vielen nützlichen kleinen Werkzeugen für den IT-Alltag. (tyrion)
-- [littlelink](https://github.com/techno-tim/littlelink-server): Simple, selbstbetriebene Alternative zu LinkTree (drogon)
+- ~~[littlelink](https://github.com/techno-tim/littlelink-server): Simple, selbstbetriebene Alternative zu LinkTree~~
 - ~~minecraft_bedrock: Ein Minecraft Bedrock Edition Server~~
 - ~~minecraft_java: Ein Minecraft Java Edition Server~~
 - [networking-toolbox](https://github.com/Lissy93/networking-toolbox): Sammlung von Netzwerk-Werkzeugen im Browser. (tyrion)
+- [nilslorenzende](https://github.com/NilsLorenzen/nilslorenzende): Meine persönliche Website unter nilslorenzen.de, als privates Image aus GHCR. (drogon)
 - ~~[ntp_server](https://github.com/cturra/docker-ntp): NTP-Server ohne overhead~~
 - [openspeedtest](https://github.com/openspeedtest/Docker-Image): Selbstgehosteter Netzwerkgeschwindigkeitstest (leider nicht wirklich Reverse Proxy kompatibel) (tyrion)
 - [pairdrop](https://github.com/schlagmichdoch/PairDrop): AirDrop artiger Datei-Sharing Dienst für alle Betriebssysteme (tyrion)
@@ -86,13 +89,15 @@ Durchgestrichene Rollen funktionieren zwar, werden aber aktuell nicht von mir ve
 - [stirling-pdf](https://github.com/Stirling-Tools/Stirling-PDF): Webanwendung mit einer menge nützlicher Werkzeuge zur arbeit mit PDF Dateien. (tyrion)
 - [tautulli](https://github.com/Tautulli/Tautulli): Auswertungs- und Statistik Dashboard für Plex. (tyrion)
 - teamspeak: Teamspeak 6 Server mit Sprach Video und Text Chat. (drogon)
-- [traefik](https://github.com/traefik/traefik): Dockerbasierter Reverse Proxy mit LetsEncrypt und Docker Socket Integration (beide, siehe [SSL Zertifikate](#ssl-zertifikate))
+- [traefik](https://github.com/traefik/traefik): Dockerbasierter Reverse Proxy mit LetsEncrypt und Docker Socket Integration (beide)
 - [uptimekuma](https://github.com/louislam/uptime-kuma): Monitoring-Tool / Status-Website (drogon)
 - [vaultwarden](https://github.com/dani-garcia/vaultwarden): Kostenlose Rust Implementierung des Bitwarden Passwort Managers (tyrion)
 - [wallos](https://github.com/ellite/wallos): Simpler Abo Tracker mit Web-Interface (tyrion)
 - [webserver](https://github.com/nginx/nginx): Simpler nginx Webserver als Docker-Container (drogon)
 - [whats-up-docker](https://github.com/getwud/wud): Docker Image Überwachungstool das z.B. Discord Benachrichtigung sendet wenn neue Images verfügbar sind oder diese auf Wunsch automatisch installiert. (beide)
 - [wordpress_mfw](https://github.com/WordPress/WordPress): Wordpress Installation mit MariaDB als Docker Container (drogon)
+
+<!-- END ROLLENLISTE -->
 
 ### Ruhende Rollen
 
@@ -105,6 +110,7 @@ Diese Rollen bleiben im Repo, werden aber aktuell nicht ausgerollt:
 | grafana, prometheus | Werden nicht gebraucht. Im Playbook auskommentiert, offene Punkte siehe unten. |
 | homeassistant | Läuft als eigene VM auf Proxmox. |
 | homebridge | Wird aktuell nicht genutzt. |
+| littlelink | Ersetzt durch die eigene Website `nilslorenzende`, me.nilslorenzen.de leitet dorthin um. |
 | minecraft_java, minecraft_bedrock | Werden aktuell nicht genutzt. |
 | ntp_server | Wird aktuell nicht genutzt. |
 | pihole | Läuft als LXC-Container auf Proxmox. |
@@ -173,6 +179,8 @@ Konventionen:
 - Bei Traefik hängen zwei Werte zusammen: `vault_traefik_nils_hash` (Basic-Auth) und `vault_traefik_nils_password` (Klartext für die Homepage-Widgets). Bei einer Rotation beide ändern.
 
 ## Lokale Prüfung
+
+Alle Prüfungen laufen per [pre-commit](https://pre-commit.com) bei jedem Commit: einmalig `pre-commit install`, manuell `pre-commit run --all-files`. Dabei wird auch die Rollenliste oben aus `docs/roles.yml` und den Playbooks neu erzeugt – neue Rollen brauchen dort einen Eintrag.
 
 - `ansible-playbook --syntax-check install_tyrion.yml install_drogon.yml` (braucht kein Vault-Passwort)
 - `ansible-lint` (Konfiguration in `.ansible-lint`; Regeln in der `warn_list` sind bekannte Altlasten)

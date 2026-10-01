@@ -1,0 +1,13 @@
+# Das Image liegt privat in GHCR. docker compose zieht es beim Start als root,
+# deshalb muss der Login für root vor dem Deploy stehen (landet in /root/.docker/config.json).
+- name: Log in to ghcr.io
+  community.docker.docker_login:
+    registry_url: ghcr.io
+    username: "{{ ghcr.username | mandatory }}"
+    password: "{{ ghcr.password | mandatory }}"
+  no_log: true
+
+- name: Deploy {{ role_name }}
+  ansible.builtin.import_tasks: docker-compose-service.yml
+  vars:
+    service_description: Persönliche Website von Nils Lorenzen

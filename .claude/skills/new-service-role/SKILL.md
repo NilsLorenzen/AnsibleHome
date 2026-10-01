@@ -114,17 +114,17 @@ CLAUDE.md und readme.md (Abschnitt „SSL Zertifikate") ergänzen.
         tags:
           - <rolle>
   ```
-- **readme.md**, Liste „Dienste" alphabetisch: `- [<rolle>](<projekt-url>): <ein Satz>. (<host>)`
+- **docs/roles.yml**, alphabetisch: `<rolle>:` mit `description:` (ein Satz) und `url:` (Projekt-Link).
+  Die Rollenliste in readme.md erzeugt `scripts/update_readme.py` daraus (läuft per pre-commit).
 - **Vault**: nicht selbst anlegen. Nils die Liste geben, z.B.
   `ansible-vault create host_vars/<host>/<rolle>.vault.yml` mit `vault_<rolle>_example_secret: …`.
 
 ## 5. Prüfen
 
-1. `ansible-playbook --syntax-check install_tyrion.yml install_drogon.yml < /dev/null`
-2. `~/.local/bin/ansible-lint` (Exit 0) und `~/.local/pipx/venvs/ansible-lint/bin/yamllint .`
-3. Jeder Router der neuen Rolle hat eine Middleware (außer bestätigt öffentlich):
+1. `pre-commit run --all-files` (readme-Rollenliste, Syntax-Check, yamllint, ansible-lint)
+2. Jeder Router der neuen Rolle hat eine Middleware (außer bestätigt öffentlich):
    `grep -n "routers\..*\.rule=\|middlewares=" roles/<rolle>/templates/docker-compose.yml.j2`
-4. Skill `compare-render` mit `--host <host>`: die **einzige** Abweichung dürfen die neuen Dateien
+3. Skill `compare-render` mit `--host <host>`: die **einzige** Abweichung dürfen die neuen Dateien
    der Rolle sein (neue Unit + `/data/<rolle>/…`), alle anderen Dienste unverändert.
 
 ## 6. Ergebnis an Nils
