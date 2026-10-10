@@ -1,0 +1,6 @@
+spielekiste_domain: spielekiste.nilslorenzen.de
+# Betreiberangaben für das Impressum (/api/site-info). Persönliche Daten, deshalb im Vault.
+spielekiste_operator_name: "{{ vault_spielekiste_operator_name }}"
+spielekiste_operator_street: "{{ vault_spielekiste_operator_street }}"
+spielekiste_operator_city: "{{ vault_spielekiste_operator_city }}"
+spielekiste_operator_email: "{{ vault_spielekiste_operator_email }}"

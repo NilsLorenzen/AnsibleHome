@@ -1,0 +1,52 @@
+networks:
+  web:
+    external: true
+
+services:
+  app:
+    image: ghcr.io/nilslorenzen/spielekiste:latest
+    container_name: {{ role_name }}
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=16m
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    mem_limit: 256m
+    pids_limit: 128
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: '3'
+    networks:
+      - web
+    environment:
+      # Fails closed: Anfragen für andere Hostnamen bekommen 400.
+      - AllowedHosts={{ spielekiste_domain | mandatory }}
+      # Betreiberangaben fürs Impressum. X-Forwarded-* von Traefik vertraut die App ohne
+      # ReverseProxy__TrustedNetworks__0, weil das Docker-Netz privat ist.
+      - Site__OperatorName={{ spielekiste_operator_name | mandatory }}
+      - Site__Street={{ spielekiste_operator_street | mandatory }}
+      - Site__City={{ spielekiste_operator_city | mandatory }}
+      - Site__Email={{ spielekiste_operator_email | mandatory }}
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.${COMPOSE_PROJECT_NAME}-service.loadbalancer.server.port=8080
+
+      # Rate-Limit vor der Basic-Auth, damit es auch Rateversuche bremst.
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.rule=Host(`{{ spielekiste_domain | mandatory }}`)
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.service=${COMPOSE_PROJECT_NAME}-service
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.entrypoints=https
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.middlewares=${COMPOSE_PROJECT_NAME}-ratelimit,basic-auth-all,${COMPOSE_PROJECT_NAME}-compress
+
+      # Grobes Limit pro Client-IP (die App begrenzt selbst feiner), Werte aus deploy/compose.traefik.yaml
+      - traefik.http.middlewares.${COMPOSE_PROJECT_NAME}-ratelimit.ratelimit.average=300
+      - traefik.http.middlewares.${COMPOSE_PROJECT_NAME}-ratelimit.ratelimit.period=1m
+      - traefik.http.middlewares.${COMPOSE_PROJECT_NAME}-ratelimit.ratelimit.burst=60
+      - traefik.http.middlewares.${COMPOSE_PROJECT_NAME}-compress.compress=true
+
+      - wud.watch.digest=true
+
+# Vorlage https://github.com/NilsLorenzen/spielekiste/blob/main/deploy/compose.traefik.yaml

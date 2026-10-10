@@ -84,6 +84,7 @@ Durchgestrichene Rollen funktionieren zwar, werden aber aktuell nicht von mir ve
 - [scribblers](https://github.com/scribble-rs/scribble.rs): Multiplayer Zeichen- und Ratespiel im Browser. (tyrion)
 - [seerr](https://github.com/seerr-team/seerr): Ermöglicht Nutzern das Anfragen neu gewünschter Filme und Serien für Plex oder Jellyfin (tyrion)
 - [speedtest-tracker](https://github.com/alexjustesen/speedtest-tracker): Web-Tool das automatisch regelmäsig Internet-Speedtest durchführt und diese in einer Historie dokumentiert. (tyrion)
+- [spielekiste](https://github.com/NilsLorenzen/spielekiste): Meine Web-App mit Minispielen, solo und online mit Lobbys, als privates Image aus GHCR. (drogon)
 - [spotify_tracker](https://github.com/Yooooomi/your_spotify): Geniales Statistik Tool für sämtliche Informationen über den eigenen Spotify Musik Konsum. (tyrion)
 - spotizerr: Musik-Downloader mit Web-Oberfläche. (tyrion)
 - [stirling-pdf](https://github.com/Stirling-Tools/Stirling-PDF): Webanwendung mit einer menge nützlicher Werkzeuge zur arbeit mit PDF Dateien. (tyrion)

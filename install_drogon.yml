@@ -54,6 +54,9 @@
     - role: nilslorenzende
       tags:
         - nilslorenzende
+    - role: spielekiste
+      tags:
+        - spielekiste
     - role: uptimekuma
       tags:
         - uptimekuma

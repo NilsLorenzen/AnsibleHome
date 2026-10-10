@@ -90,6 +90,9 @@ scribblers:
 seerr:
   description: Ermöglicht Nutzern das Anfragen neu gewünschter Filme und Serien für Plex oder Jellyfin
   url: https://github.com/seerr-team/seerr
+spielekiste:
+  description: Meine Web-App mit Minispielen, solo und online mit Lobbys, als privates Image aus GHCR.
+  url: https://github.com/NilsLorenzen/spielekiste
 speedtest-tracker:
   description: Web-Tool das automatisch regelmäsig Internet-Speedtest durchführt und diese in einer Historie dokumentiert.
   url: https://github.com/alexjustesen/speedtest-tracker
