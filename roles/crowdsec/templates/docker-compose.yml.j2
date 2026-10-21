@@ -11,7 +11,13 @@ services:
     environment:
       TZ: "Europe/Berlin"
       PGID: "1000"
-      COLLECTIONS: "crowdsecurity/traefik crowdsecurity/http-cve"
+      COLLECTIONS: "crowdsecurity/traefik crowdsecurity/http-cve crowdsecurity/appsec-virtual-patching crowdsecurity/appsec-generic-rules"
+      # Registriert den Traefik-Bouncer mit festem Key, das Plugin in Traefik nutzt denselben
+      BOUNCER_KEY_traefik: "{{ crowdsec_bouncer_key_traefik | mandatory }}"
+      # Anmeldung an der Web-Konsole app.crowdsec.net, die Instanz dort einmalig bestätigen
+      ENROLL_KEY: "{{ crowdsec_enroll_key | mandatory }}"
+      ENROLL_INSTANCE_NAME: "{{ inventory_hostname }}"
+      ENROLL_TAGS: "docker traefik"
     expose:
       - 8080 # http api for bouncers
       - 6060 # metrics endpoint for prometheus
@@ -20,8 +26,6 @@ services:
       - {{ root }}/logs:/var/log/crowdsec:ro
       - {{ root }}/db:/var/lib/crowdsec/data
       - {{ root }}/config:/etc/crowdsec
-      - /var/log/auth.log:/var/log/auth.log:ro
-      - /var/log/syslog:/var/log/syslog:ro
       - /data/traefik/logs:/var/log/traefik:ro
     labels:
       - traefik.enable=false

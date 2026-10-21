@@ -1,0 +1,5 @@
+crowdsec_discord_webhook: "{{ vault_crowdsec_discord_webhook }}"
+# Denselben Key nutzt das Bouncer-Plugin in Traefik
+crowdsec_bouncer_key_traefik: "{{ vault_crowdsec_bouncer_key_traefik }}"
+# Enroll-Key aus app.crowdsec.net (Security Engines → Add Security Engine)
+crowdsec_enroll_key: "{{ vault_crowdsec_enroll_key }}"

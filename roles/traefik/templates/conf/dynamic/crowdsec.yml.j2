@@ -1,0 +1,22 @@
+# CrowdSec-Bouncer: IP-Sperren aus der Local API und AppSec-WAF, beides im Container crowdsec (Rolle crowdsec).
+# Steht diese Datei in traefik_dynamic_configs, lädt traefik.yml das Plugin und hängt die Middleware
+# an den Entrypoint https, also vor jeden Router des Hosts.
+# Fällt crowdsec aus, gehen Anfragen ungeprüft durch: Die Units haben kein Restart=, sonst stünden
+# alle Seiten des Hosts still.
+http:
+  middlewares:
+    crowdsec:
+      plugin:
+        bouncer:
+          enabled: true
+          crowdsecMode: stream
+          updateIntervalSeconds: 60
+          updateMaxFailure: -1
+          streamStartupBlock: false
+          crowdsecLapiScheme: http
+          crowdsecLapiHost: crowdsec:8080
+          crowdsecLapiKey: "{{ traefik_crowdsec_bouncer_key | mandatory }}"
+          crowdsecAppsecEnabled: true
+          crowdsecAppsecHost: crowdsec:7422
+          crowdsecAppsecFailureBlock: false
+          crowdsecAppsecUnreachableBlock: false

@@ -4,3 +4,7 @@ traefik_challenge: http
 traefik_dashboard_middleware: basic-auth-nils-only
 traefik_dynamic_configs:
   - linkshortener.yml
+  - crowdsec.yml
+
+# Bouncer-Key für die Middleware in crowdsec.yml, derselbe Vault-Wert wie crowdsec_bouncer_key_traefik
+traefik_crowdsec_bouncer_key: "{{ vault_crowdsec_bouncer_key_traefik }}"

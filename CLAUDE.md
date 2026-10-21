@@ -26,7 +26,7 @@ Neue Rolle: Skill `new-service-role`.
   `service_restart`) als `vars:` am `import_tasks` – **nie in `defaults/main.yml`**: Rollen-Defaults gelten
   für alle Rollen im Play, und alle Rollen eines Hosts laufen in einem Play.
 - `root` ist `/data/{{ role_name }}` und steht nur in `group_vars/all/services.yml`.
-- `file_mode` Default `644`; `640` bei traefik, vaultwarden, homepage (Zugangsdaten mit Außenwirkung)
+- `file_mode` Default `644`; `640` bei traefik, vaultwarden, homepage, crowdsec (Zugangsdaten mit Außenwirkung)
   und spielekiste (Admin-Passwort-Hash).
 - `nr_`-Prefix in `templates/`: Datei wird ohne Restart kopiert (Prefix fällt weg).
   `copy_exclude`: Templates, die die Rolle selbst woanders hinschreibt (Mount-Units mit NAS-Passwort,
@@ -44,7 +44,10 @@ Neue Rolle: Skill `new-service-role`.
   Router ohne mTLS anlegen. CA-Schlüssel und `.p12` nie ins Repo, nur `traefik_mtls_ca_cert` (öffentlich).
 - Übliches Muster: Router `-lan` (`HeaderRegexp` auf private IPs + `lan-only`) und Router `-app`
   (gleicher Host + `basic-auth-*`) – im LAN ohne Passwort, von außen mit.
-- `lan-only` gibt es nur auf tyrion. drogon hat keinen Router-Schutz (kein IDS/IPS, kein Geoblocking).
+- `lan-only` gibt es nur auf tyrion. drogon hat kein IDS/IPS und kein Geoblocking; dort hängt CrowdSec + AppSec
+  (`crowdsec.yml` in `traefik_dynamic_configs`) am Entrypoint `https`, also vor jedem Router. Fällt crowdsec
+  aus, gehen Anfragen durch. Die Plugin-Version ist in `traefik.yml.j2` gepinnt – vor dem Hochziehen den
+  Changelog lesen. Auf tyrion ist crowdsec aus (IDS/IPS übernimmt der Ubiquiti-Router).
 - Secrets nur über den Vault: `vault_<rolle>_<name>` in `*.vault.yml` (Vault-ID `nlo`), in der
   Datei daneben auf den Rollennamen gemappt, im Template mit `| mandatory`.
 - bcrypt-Hashes liegen im Vault mit einfachem `$`; die Traefik-Templates verdoppeln selbst.

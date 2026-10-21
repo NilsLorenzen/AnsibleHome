@@ -13,11 +13,15 @@ api:
 # docker exec traefik traefik healthcheck
 ping: {}
 
-{# experimental:
+{% if 'crowdsec.yml' in traefik_dynamic_configs %}
+# CrowdSec-Bouncer (IP-Sperren + AppSec-WAF), Middleware in dynamic/crowdsec.yml.
+# Gepinnt: vor dem Hochziehen den Changelog lesen, Traefik lädt das Plugin bei jedem Start.
+experimental:
   plugins:
-    crowdsec-bouncer-traefik-plugin:
-      moduleName: "github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin"
-      version: "v1.4.4" #}
+    bouncer:
+      moduleName: github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin
+      version: v1.8.1
+{% endif %}
 
 log:
   level: INFO
@@ -67,6 +71,11 @@ entryPoints:
     http:
       tls:
         certResolver: {{ traefik_certresolver }}
+{% if 'crowdsec.yml' in traefik_dynamic_configs %}
+      # Gilt für jeden Router auf diesem Entrypoint, auch für künftige, und läuft vor deren Middlewares
+      middlewares:
+        - crowdsec@file
+{% endif %}
 
 certificatesResolvers:
   {{ traefik_certresolver }}:

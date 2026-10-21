@@ -57,7 +57,7 @@ Durchgestrichene Rollen funktionieren zwar, werden aber aktuell nicht von mir ve
 - [cobaltdownloader](https://github.com/imputnet/cobalt): Downloader für Videos und Audio von Social-Media-Seiten, API und selbst gehostetes Web-Frontend. (tyrion)
 - [convertx](https://github.com/C4illin/ConvertX): Mächtiger Datei Converter mit Web-Oberfläche. (tyrion)
 - ~~[crafty](https://gitlab.com/crafty-controller/crafty-4): Minecraft Server Manager~~
-- ~~[crowdsec](https://github.com/crowdsecurity/crowdsec): Erkennung und Blockieren von Angriffen, mit Discord-Benachrichtigung.~~
+- [crowdsec](https://github.com/crowdsecurity/crowdsec): Erkennung und Blockieren von Angriffen, mit WAF (AppSec), Web-Konsole und Discord-Benachrichtigung. (drogon)
 - [cyberchef](https://github.com/gchq/CyberChef): Web-Tool mit fokus auf Text Formatierung und Umwandlung. (tyrion)
 - [docker_socket_proxy](https://github.com/linuxserver/docker-socket-proxy): Proxy um einen sicheren Zugriff auf den Docker Socket für andere Container zu ermöglichen. (beide)
 - [docmost](https://github.com/docmost/docmost): Wiki für Dokumentation und Notizen. (tyrion)
@@ -107,7 +107,7 @@ Diese Rollen bleiben im Repo, werden aber aktuell nicht ausgerollt:
 | Rolle | Grund |
 |---|---|
 | crafty | Läuft inzwischen als LXC-Container auf Proxmox. |
-| crowdsec | tyrion: IDS/IPS und Geoblocking übernimmt der Ubiquiti-Router. drogon steht nicht hinter diesem Router; dort ist crowdsec aus, weil die Crowdsec-Middleware in Traefik nicht mehr funktioniert (siehe Bekannte Lücken). In beiden Playbooks auskommentiert. |
+| crowdsec (nur tyrion) | IDS/IPS und Geoblocking übernimmt der Ubiquiti-Router. Auf drogon läuft crowdsec (siehe [CrowdSec und WAF](#crowdsec-und-waf-drogon)). |
 | grafana, prometheus | Werden nicht gebraucht. Im Playbook auskommentiert, offene Punkte siehe unten. |
 | homeassistant | Läuft als eigene VM auf Proxmox, von außen über Traefik auf tyrion (siehe [Home Assistant von außen](#home-assistant-von-außen-mtls)). |
 | homebridge | Wird aktuell nicht genutzt. |
@@ -141,7 +141,7 @@ Kopiert werden die Templates über `tasks/copy-all-templates.yml`:
 - Der ganze `templates/`-Ordner wird nach `/data/<rolle>` gespiegelt, `.j2` wird gerendert.
 - Dateien mit dem Prefix `nr_` lösen keinen Restart aus (das Prefix wird beim Kopieren entfernt).
 - `*.service.j2` landet in `/etc/systemd/system`, `*-logrotate.j2` in `/etc/logrotate.d`.
-- `file_mode` setzt den Modus der Dateien in `/data/<rolle>` (Default `644`). Traefik, Vaultwarden und Homepage nutzen `640`, weil in ihren Dateien Zugangsdaten mit Wirkung über den eigenen Dienst hinaus stehen; die Spielekiste wegen des Admin-Passwort-Hashes.
+- `file_mode` setzt den Modus der Dateien in `/data/<rolle>` (Default `644`). Traefik, Vaultwarden, Homepage und Crowdsec nutzen `640`, weil in ihren Dateien Zugangsdaten mit Wirkung über den eigenen Dienst hinaus stehen; die Spielekiste wegen des Admin-Passwort-Hashes.
 - `copy_exclude` nimmt Templates aus, die die Rolle selbst an einen anderen Ort schreibt (z.B. Mount-Units bei plex und ganymede).
 
 ## SSL Zertifikate
@@ -180,6 +180,26 @@ Zertifikate stellt `scripts/mtls_ca.sh` lokal aus (ECDSA P-256, ein Zertifikat p
 
 Traefik prüft keine Sperrlisten. Geht ein Gerät verloren: neue CA anlegen, `traefik_mtls_ca_cert` ersetzen, traefik ausrollen und alle Geräte neu ausstatten.
 
+## CrowdSec und WAF (drogon)
+
+drogon steht nicht hinter dem Ubiquiti-Router und hat damit weder IDS/IPS noch Geoblocking. Die Schutzschicht dort ist CrowdSec mit AppSec als WAF, angebunden über das Traefik-Plugin [crowdsec-bouncer-traefik-plugin](https://github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin).
+
+- Der Container `crowdsec` (Rolle `crowdsec`) liest das Access-Log von Traefik, sperrt auffällige IPs und prüft als WAF jede Anfrage (Regeln `appsec-virtual-patching` und `appsec-generic-rules`, kein OWASP-CRS).
+- Traefik fragt beides über die Middleware `crowdsec@file` ab (`roles/traefik/templates/conf/dynamic/crowdsec.yml.j2`). Sie hängt am Entrypoint `https`, gilt also für jeden Router, auch künftige, und läuft vor Basic-Auth.
+- Eingeschaltet wird das allein über `crowdsec.yml` in `traefik_dynamic_configs`. Dann lädt `traefik.yml` auch das Plugin.
+- Fällt crowdsec aus, lässt Traefik Anfragen ungeprüft durch. Die Units haben kein `Restart=`, sonst stünden alle Seiten still.
+- Die Plugin-Version ist in `roles/traefik/templates/conf/traefik.yml.j2` gepinnt. Traefik lädt das Plugin bei jedem Start von plugins.traefik.io. Klappt das nicht, liefern alle Router auf drogon Fehler: dann `crowdsec.yml` aus `traefik_dynamic_configs` nehmen und traefik ausrollen.
+- Web-Konsole: Die Instanz meldet sich per Enroll-Key bei [app.crowdsec.net](https://app.crowdsec.net) an und wird dort einmalig bestätigt. Sperren meldet crowdsec zusätzlich in Discord.
+- Vault (`host_vars/drogon/crowdsec.vault.yml`): `vault_crowdsec_discord_webhook`, `vault_crowdsec_enroll_key`, `vault_crowdsec_bouncer_key_traefik`. Den Bouncer-Key nutzen beide Rollen: crowdsec registriert ihn, Traefik meldet sich damit an.
+
+Befehle auf drogon (`docker exec crowdsec …`):
+- `cscli metrics`, `cscli metrics show appsec`: was gelesen und geprüft wird
+- `cscli alerts list`, `cscli decisions list`: Erkennungen und aktive Sperren
+- `cscli decisions delete --ip <ip>`: ausgesperrte IP freigeben
+- `cscli bouncers list`, `cscli console status`: Anbindung von Traefik und Konsole
+
+Schnelltest von außen: `curl -i https://nilslorenzen.de/.env` muss mit 403 enden.
+
 ## Ansible-Vault / Secrets
 
 Secrets können sicher über den Ansible-Vault abgelegt werden.
@@ -213,5 +233,5 @@ Bewusst nicht in diesem Repo, damit es nicht wie ein Versehen aussieht:
 - **Backups** werden außerhalb dieses Repos geregelt.
 - **ufw** wird von `system_config` installiert, aber nicht konfiguriert.
 - **Fehlermails der Units**: alle systemd-Units verweisen auf `OnFailure=unit-status-mail@%n.service`, diese Unit wird aber nirgends angelegt. Fällt ein Dienst aus, kommt also keine Mail.
-- **Crowdsec auf drogon**: drogon (Hetzner) steht nicht hinter dem Ubiquiti-Router und hat damit weder dessen IDS/IPS noch Geoblocking. Crowdsec wäre dort die Schutzschicht, ist aber aus, weil das Traefik-Plugin `crowdsec-bouncer-traefik-plugin` nicht mehr funktioniert. Die Middleware-Labels in der Rolle `traefik` und an den Routern sind auskommentiert. Sollte repariert werden.
+- **Crowdsec auf tyrion**: aus, weil der Ubiquiti-Router IDS/IPS und Geoblocking übernimmt. Geplant ist, die Middleware nur an die öffentlichen Router `plex`, `seerr` und `vaultwarden` zu hängen, nicht an den Entrypoint. Bis dahin stehen in diesen Rollen und im Compose-Template von Traefik noch auskommentierte `crowdsec`-Zeilen aus der alten Einrichtung.
 - **Kein Restart bei Absturz**: die Units starten `docker compose up --abort-on-container-exit` ohne `Restart=` (einzige Ausnahme: `pihole`). Stirbt ein Container, bleibt der ganze Stack unten, bis man eingreift.

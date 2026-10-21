@@ -14,7 +14,7 @@ crafty:
   description: Minecraft Server Manager
   url: https://gitlab.com/crafty-controller/crafty-4
 crowdsec:
-  description: Erkennung und Blockieren von Angriffen, mit Discord-Benachrichtigung.
+  description: Erkennung und Blockieren von Angriffen, mit WAF (AppSec), Web-Konsole und Discord-Benachrichtigung.
   url: https://github.com/crowdsecurity/crowdsec
 cyberchef:
   description: Web-Tool mit fokus auf Text Formatierung und Umwandlung.
