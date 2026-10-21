@@ -10,4 +10,5 @@
 - name: Deploy {{ role_name }}
   ansible.builtin.import_tasks: docker-compose-service.yml
   vars:
+    file_mode: '640' # Admin-Passwort-Hash in der Compose-Datei
     service_description: Spielekiste (Minispiele) von Nils Lorenzen

@@ -141,7 +141,7 @@ Kopiert werden die Templates über `tasks/copy-all-templates.yml`:
 - Der ganze `templates/`-Ordner wird nach `/data/<rolle>` gespiegelt, `.j2` wird gerendert.
 - Dateien mit dem Prefix `nr_` lösen keinen Restart aus (das Prefix wird beim Kopieren entfernt).
 - `*.service.j2` landet in `/etc/systemd/system`, `*-logrotate.j2` in `/etc/logrotate.d`.
-- `file_mode` setzt den Modus der Dateien in `/data/<rolle>` (Default `644`). Traefik, Vaultwarden und Homepage nutzen `640`, weil in ihren Dateien Zugangsdaten mit Wirkung über den eigenen Dienst hinaus stehen.
+- `file_mode` setzt den Modus der Dateien in `/data/<rolle>` (Default `644`). Traefik, Vaultwarden und Homepage nutzen `640`, weil in ihren Dateien Zugangsdaten mit Wirkung über den eigenen Dienst hinaus stehen; die Spielekiste wegen des Admin-Passwort-Hashes.
 - `copy_exclude` nimmt Templates aus, die die Rolle selbst an einen anderen Ort schreibt (z.B. Mount-Units bei plex und ganymede).
 
 ## SSL Zertifikate

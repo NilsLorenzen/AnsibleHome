@@ -26,7 +26,8 @@ Neue Rolle: Skill `new-service-role`.
   `service_restart`) als `vars:` am `import_tasks` – **nie in `defaults/main.yml`**: Rollen-Defaults gelten
   für alle Rollen im Play, und alle Rollen eines Hosts laufen in einem Play.
 - `root` ist `/data/{{ role_name }}` und steht nur in `group_vars/all/services.yml`.
-- `file_mode` Default `644`; `640` bei traefik, vaultwarden, homepage (Zugangsdaten mit Außenwirkung).
+- `file_mode` Default `644`; `640` bei traefik, vaultwarden, homepage (Zugangsdaten mit Außenwirkung)
+  und spielekiste (Admin-Passwort-Hash).
 - `nr_`-Prefix in `templates/`: Datei wird ohne Restart kopiert (Prefix fällt weg).
   `copy_exclude`: Templates, die die Rolle selbst woanders hinschreibt (Mount-Units mit NAS-Passwort,
   Dateien unter `/etc`) – sonst landen sie zusätzlich in `/data`.
