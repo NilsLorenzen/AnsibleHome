@@ -1,0 +1,41 @@
+# Home Assistant (eigene VM, nicht auf tyrion) von außen nur mit Client-Zertifikat (mTLS).
+# Zugriffsgrenze ist der TLS-Handshake, deshalb keine Middleware am Router.
+# TLS-Options gelten pro SNI: Unter traefik_homeassistant_domain darf kein Router ohne mTLS hängen.
+# Zertifikate ausstellen: scripts/mtls_ca.sh
+tls:
+  options:
+    mtls:
+      minVersion: VersionTLS12
+      clientAuth:
+        clientAuthType: RequireAndVerifyClientCert
+        caFiles:
+          - |
+            {{ traefik_mtls_ca_cert | mandatory | trim | indent(12) }}
+
+http:
+  routers:
+    homeassistant-mtls:
+      rule: "Host(`{{ traefik_homeassistant_domain | mandatory }}`)"
+      entryPoints:
+        - https
+      service: homeassistant
+      tls:
+        options: mtls
+        certResolver: {{ traefik_certresolver }}
+        # Wildcard wie bei vaultwarden: ha.nlor.de taucht nicht einzeln in den CT-Logs auf
+        domains:
+          - main: nlor.de
+            sans:
+              - "*.nlor.de"
+
+  services:
+    homeassistant:
+      loadBalancer:
+        servers:
+          - url: "{{ traefik_homeassistant_upstream | mandatory }}"
+        serversTransport: homeassistant-transport
+
+  # HA terminiert selbst TLS mit eigenem Let's-Encrypt-Zertifikat, das wird geprüft
+  serversTransports:
+    homeassistant-transport:
+      serverName: "{{ traefik_homeassistant_servername | mandatory }}"

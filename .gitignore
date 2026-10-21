@@ -6,3 +6,7 @@
 *.env
 .vault_pass*
 *.decrypted
+# mTLS-Schlüssel aus scripts/mtls_ca.sh gehören in Vaultwarden, nicht ins Repo
+*.key
+*.p12
+*.csr

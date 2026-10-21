@@ -4,7 +4,7 @@
     name: web
 
 # Von den Dateien in templates/conf/dynamic/ werden nur die in traefik_dynamic_configs
-# ausgerollt, alle anderen per copy_exclude übersprungen.
+# ausgerollt, alle anderen per copy_exclude übersprungen (und unten vom Host gelöscht).
 - name: Deploy {{ role_name }}
   ansible.builtin.import_tasks: docker-compose-service.yml
   vars:
@@ -14,3 +14,21 @@
          | map('basename') | map('regex_replace', '\.j2$', '')
          | difference(traefik_dynamic_configs)
          | map('regex_replace', '^(.*)$', 'conf/dynamic/\1.j2') | list }}
+
+# Kopiert wird nur, gelöscht nie: Was aus traefik_dynamic_configs (oder dem Repo) verschwindet,
+# bliebe sonst samt seinen Routern auf dem Host aktiv. Kein Restart nötig, der File-Provider
+# beobachtet das Verzeichnis (watch: true).
+- name: Find dynamic configs of {{ role_name }}
+  ansible.builtin.find:
+    paths: "{{ root }}/conf/dynamic"
+    hidden: true
+  register: traefik_dynamic_found
+
+- name: Remove dynamic configs not in traefik_dynamic_configs
+  ansible.builtin.file:
+    path: "{{ item.path }}"
+    state: absent
+  loop: "{{ traefik_dynamic_found.files }}"
+  loop_control:
+    label: "{{ item.path }}"
+  when: item.path | basename not in traefik_dynamic_configs

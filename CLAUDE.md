@@ -38,7 +38,10 @@ Neue Rolle: Skill `new-service-role`.
 
 - Traefik auf tyrion hängt per Port-Forwarding direkt am Internet. Die Zugriffsgrenze ist die Middleware:
   jeder Router braucht `lan-only`, `basic-auth-nils-only` oder `basic-auth-all`. Ohne Middleware nur
-  plex, seerr, vaultwarden (eigene Anmeldung, bewusst öffentlich). Ein fehlendes `middlewares=` ist ein Leck.
+  plex, seerr, vaultwarden (eigene Anmeldung, bewusst öffentlich) und Router mit `tls.options: mtls`
+  (Grenze ist das Client-Zertifikat). Ein fehlendes `middlewares=` ist ein Leck.
+- mTLS (`homeassistant.yml`, `ha.nlor.de`): TLS-Options gelten pro SNI – unter einem mTLS-Host nie einen
+  Router ohne mTLS anlegen. CA-Schlüssel und `.p12` nie ins Repo, nur `traefik_mtls_ca_cert` (öffentlich).
 - Übliches Muster: Router `-lan` (`HeaderRegexp` auf private IPs + `lan-only`) und Router `-app`
   (gleicher Host + `basic-auth-*`) – im LAN ohne Passwort, von außen mit.
 - `lan-only` gibt es nur auf tyrion. drogon hat keinen Router-Schutz (kein IDS/IPS, kein Geoblocking).
@@ -46,7 +49,7 @@ Neue Rolle: Skill `new-service-role`.
   Datei daneben auf den Rollennamen gemappt, im Template mit `| mandatory`.
 - bcrypt-Hashes liegen im Vault mit einfachem `$`; die Traefik-Templates verdoppeln selbst.
 - Traefik-Dynamic-Configs nur über `traefik_dynamic_configs` pro Host: `linkshortener.yml` enthält
-  Router ohne Host-Regel und darf nie auf tyrion landen.
+  Router ohne Host-Regel und darf nie auf tyrion landen. Nicht gelistete Dateien löscht die Rolle vom Host.
 
 ## Prüfen (lokal, ohne Host)
 

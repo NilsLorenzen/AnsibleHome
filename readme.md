@@ -109,7 +109,7 @@ Diese Rollen bleiben im Repo, werden aber aktuell nicht ausgerollt:
 | crafty | Läuft inzwischen als LXC-Container auf Proxmox. |
 | crowdsec | tyrion: IDS/IPS und Geoblocking übernimmt der Ubiquiti-Router. drogon steht nicht hinter diesem Router; dort ist crowdsec aus, weil die Crowdsec-Middleware in Traefik nicht mehr funktioniert (siehe Bekannte Lücken). In beiden Playbooks auskommentiert. |
 | grafana, prometheus | Werden nicht gebraucht. Im Playbook auskommentiert, offene Punkte siehe unten. |
-| homeassistant | Läuft als eigene VM auf Proxmox. |
+| homeassistant | Läuft als eigene VM auf Proxmox, von außen über Traefik auf tyrion (siehe [Home Assistant von außen](#home-assistant-von-außen-mtls)). |
 | homebridge | Wird aktuell nicht genutzt. |
 | littlelink | Ersetzt durch die eigene Website `nilslorenzende`, me.nilslorenzen.de leitet dorthin um. |
 | minecraft_java, minecraft_bedrock | Werden aktuell nicht genutzt. |
@@ -151,14 +151,34 @@ Beide Hosts nutzen dieselbe Rolle `traefik`, die Unterschiede stehen in `host_va
 - `traefik_challenge`: `dns` auf tyrion (INWX, erlaubt Wildcard-Zertifikate), `http` auf drogon
 - `traefik_dashboard_middleware`: Middleware vor dem Traefik-Dashboard
 - `traefik_lan_only_sourcerange`: nur wenn gesetzt, wird die Middleware `lan-only` definiert (tyrion)
-- `traefik_dynamic_configs`: welche Dateien aus `roles/traefik/templates/conf/dynamic/` auf dem Host landen. Alle anderen werden nicht ausgerollt — wichtig, weil z.B. `linkshortener.yml` Router ohne Host-Regel enthält, die auf jeder Domain greifen würden.
+- `traefik_dynamic_configs`: welche Dateien aus `roles/traefik/templates/conf/dynamic/` auf dem Host landen. Alle anderen werden nicht ausgerollt — wichtig, weil z.B. `linkshortener.yml` Router ohne Host-Regel enthält, die auf jeder Domain greifen würden. Jede andere Datei in `/data/traefik/conf/dynamic/` (auch längst aus dem Repo gelöschte) entfernt die Rolle vom Host; Traefik übernimmt das ohne Neustart.
 
 Traefik auf `tyrion` ist über Port-Forwarding 80/443 direkt aus dem Internet erreichbar. Die Zugriffsgrenze ist deshalb die Middleware am jeweiligen Router:
 - `lan-only`: nur aus den eigenen Netzen erreichbar.
 - `basic-auth-nils-only` / `basic-auth-all`: Basic-Auth vor dem Dienst.
 - Ohne Middleware sind nur Dienste mit eigener Anmeldung, die bewusst von außen erreichbar sein sollen (aktuell `plex`, `seerr`, `vaultwarden`).
+- Ebenfalls ohne Middleware: Router mit `tls.options: mtls`. Dort lässt Traefik nur Geräte mit Client-Zertifikat durch (aktuell Home Assistant, siehe unten).
 
 Ein Router ohne `middlewares=`-Label ist also öffentlich.
+
+### Home Assistant von außen (mTLS)
+
+Home Assistant läuft als eigene VM (`homeassistant.home-lorenzen.de:8123`, eigenes Let's-Encrypt-Zertifikat) und ist von außen unter `ha.nlor.de` erreichbar. Traefik auf tyrion leitet dorthin weiter, aber nur für Geräte mit einem Client-Zertifikat der eigenen CA. Ohne Zertifikat bricht schon der TLS-Handshake ab, Home Assistant sieht davon nichts.
+
+- Konfiguration: `roles/traefik/templates/conf/dynamic/homeassistant.yml.j2`, Werte in `host_vars/tyrion/traefik.yml` (`traefik_homeassistant_*`, `traefik_mtls_ca_cert`).
+- DNS: `ha.nlor.de` ist bei INWX ein CNAME auf `home.nlor.de`. `home-lorenzen.de` bleibt öffentlich leer.
+- Home Assistant (`configuration.yaml`): `http:` mit `use_x_forwarded_for: true` und `trusted_proxies: [192.168.10.16]`, sonst antwortet es über Traefik mit 400.
+- Companion App (iPhone, Watch, Mac): interne URL `https://homeassistant.home-lorenzen.de:8123` im Heim-WLAN, externe URL `https://ha.nlor.de`. mTLS ist dort ein Labs-Feature (Einstellungen → Companion App → Debugging → Labs), die `.p12` wird in den Server-Einstellungen der App importiert. Die Watch übernimmt das Zertifikat vom iPhone.
+- Browser auf dem Mac: `.p12` per Schlüsselbundverwaltung in den Anmelde-Schlüsselbund, nicht als `.mobileconfig`.
+
+Zertifikate stellt `scripts/mtls_ca.sh` lokal aus (ECDSA P-256, ein Zertifikat pro Gerät, 2 Jahre gültig):
+
+- `scripts/mtls_ca.sh <verzeichnis> ca` – CA einmalig anlegen, `ca.crt` kommt als `traefik_mtls_ca_cert` in die host_vars.
+- `scripts/mtls_ca.sh <verzeichnis> client <name>` – Zertifikat samt `.p12` für ein Gerät.
+- Das Verzeichnis muss außerhalb des Repos liegen. CA-Schlüssel, `.p12` und die Passwörter liegen in Vaultwarden.
+- Die `.p12` ist mit 3DES/SHA1 verschlüsselt, weil der macOS-Schlüsselbund das AES-Format von OpenSSL 3 ablehnt. Deshalb lange Passwörter nehmen.
+
+Traefik prüft keine Sperrlisten. Geht ein Gerät verloren: neue CA anlegen, `traefik_mtls_ca_cert` ersetzen, traefik ausrollen und alle Geräte neu ausstatten.
 
 ## Ansible-Vault / Secrets
 

@@ -6,3 +6,22 @@ traefik_lan_only_sourcerange: "192.168.10.0/22, 192.168.2.0/24, 172.16.0.0/12, 1
 traefik_metrics: true
 traefik_dynamic_configs:
   - servers-transports.yml
+  - homeassistant.yml
+
+# Home Assistant (eigene VM) von außen per mTLS, siehe templates/conf/dynamic/homeassistant.yml.j2
+traefik_homeassistant_domain: ha.nlor.de
+traefik_homeassistant_upstream: https://192.168.10.70:8123
+traefik_homeassistant_servername: homeassistant.home-lorenzen.de
+# Öffentliches CA-Zertifikat (ca.crt aus scripts/mtls_ca.sh), der CA-Schlüssel liegt in Vaultwarden
+traefik_mtls_ca_cert: |
+  -----BEGIN CERTIFICATE-----
+  MIIBozCCAUqgAwIBAgIUVaulhQ7fqnaD+Dlht8q0Uu88pAowCgYIKoZIzj0EAwIw
+  HjEcMBoGA1UEAwwTQW5zaWJsZUhvbWUgbVRMUyBDQTAeFw0yNjEwMjExMzIzMTZa
+  Fw0zNjEwMTgxMzIzMTZaMB4xHDAaBgNVBAMME0Fuc2libGVIb21lIG1UTFMgQ0Ew
+  WTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAATnWQENuBU3QpAxhtd2jc8VFHqLS0iT
+  KpxkTYJblyFDNL6kTHrU1GKyblzvY7jiILAkYPNzYbuBCUYFwDeM7hezo2YwZDAf
+  BgNVHSMEGDAWgBS40eI3PTl+s+Z3+Z8lxmjHHNCdwTASBgNVHRMBAf8ECDAGAQH/
+  AgEAMA4GA1UdDwEB/wQEAwIBBjAdBgNVHQ4EFgQUuNHiNz05frPmd/mfJcZoxxzQ
+  ncEwCgYIKoZIzj0EAwIDRwAwRAIgUi4K9taRHCffuhqSNSk863RbtU3vbnzHIANI
+  VssHHeoCIB2YNvHj2qDFOrNKJAcjkb6g9FVsies36YK/j/D0lw+j
+  -----END CERTIFICATE-----

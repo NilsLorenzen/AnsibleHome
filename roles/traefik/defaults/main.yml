@@ -13,5 +13,5 @@ traefik_dashboard_middleware: basic-auth-nils-only
 traefik_metrics: false
 
 # Dateinamen aus templates/conf/dynamic/ (ohne .j2), die auf diesem Host ausgerollt werden.
-# Alle anderen werden nicht kopiert.
+# Alle anderen werden nicht kopiert und, falls sie auf dem Host liegen, aus conf/dynamic/ gelöscht.
 traefik_dynamic_configs: []
