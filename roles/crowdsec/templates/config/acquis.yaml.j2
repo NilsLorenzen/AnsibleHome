@@ -4,10 +4,14 @@ filenames:
 labels:
   type: traefik
 ---
-# AppSec (WAF): Traefik schickt jede Anfrage über das Bouncer-Plugin an diesen Port
+# AppSec (WAF): Traefik schickt jede Anfrage über das Bouncer-Plugin an diesen Port.
+# appsec-default blockt die Anfrage selbst (virtuelle Patches, generische Regeln).
+# crs (OWASP Core Rule Set) blockt nicht, sondern zählt: mehr als 5 Treffer in kurzer Zeit sperren die IP
+# (Szenario crowdsecurity/crowdsec-appsec-outofband). Bei Fehlalarmen zuerst hier ansetzen.
 source: appsec
 listen_addr: 0.0.0.0:7422
 appsec_configs:
   - crowdsecurity/appsec-default
+  - crowdsecurity/crs
 labels:
   type: appsec

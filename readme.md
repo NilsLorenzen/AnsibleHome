@@ -184,7 +184,8 @@ Traefik prüft keine Sperrlisten. Geht ein Gerät verloren: neue CA anlegen, `tr
 
 drogon steht nicht hinter dem Ubiquiti-Router und hat damit weder IDS/IPS noch Geoblocking. Die Schutzschicht dort ist CrowdSec mit AppSec als WAF, angebunden über das Traefik-Plugin [crowdsec-bouncer-traefik-plugin](https://github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin).
 
-- Der Container `crowdsec` (Rolle `crowdsec`) liest das Access-Log von Traefik, sperrt auffällige IPs und prüft als WAF jede Anfrage (Regeln `appsec-virtual-patching` und `appsec-generic-rules`, kein OWASP-CRS).
+- Der Container `crowdsec` (Rolle `crowdsec`) liest das Access-Log von Traefik, sperrt auffällige IPs und prüft als WAF jede Anfrage (Regeln `appsec-virtual-patching`, `appsec-generic-rules` und `appsec-wordpress`). Dazu erkennt `crowdsecurity/wordpress` Brute-Force und Ausspähung an WordPress aus den Logs.
+- Zusätzlich läuft das OWASP Core Rule Set (`appsec-crs`, mit den WordPress-Ausnahmen aus `appsec-crs-exclusion-plugin-wordpress`). Es blockt keine einzelne Anfrage, sondern sperrt eine IP nach mehr als 5 Treffern in kurzer Zeit für alle Seiten auf drogon. Das ist die wahrscheinlichste Quelle für Fehlsperren, etwa beim Bearbeiten in WordPress. Dann `cscli alerts list` ansehen und die IP freigeben.
 - Traefik fragt beides über die Middleware `crowdsec@file` ab (`roles/traefik/templates/conf/dynamic/crowdsec.yml.j2`). Sie hängt am Entrypoint `https`, gilt also für jeden Router, auch künftige, und läuft vor Basic-Auth.
 - Eingeschaltet wird das allein über `crowdsec.yml` in `traefik_dynamic_configs`. Dann lädt `traefik.yml` auch das Plugin.
 - Fällt crowdsec aus, lässt Traefik Anfragen ungeprüft durch. Die Units haben kein `Restart=`, sonst stünden alle Seiten still.
