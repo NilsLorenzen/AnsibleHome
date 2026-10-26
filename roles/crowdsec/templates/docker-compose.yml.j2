@@ -11,7 +11,13 @@ services:
     environment:
       TZ: "Europe/Berlin"
       PGID: "1000"
-      COLLECTIONS: "crowdsecurity/traefik crowdsecurity/http-cve crowdsecurity/appsec-virtual-patching crowdsecurity/appsec-generic-rules"
+      # Installiert der Container bei jedem Start. Nur Traefik-Logs, keine Parser für die Dienste dahinter:
+      # Traefik sieht jede Anfrage, ein zweiter Parser würde dieselben Anfragen doppelt zählen.
+      COLLECTIONS: >-
+        crowdsecurity/traefik crowdsecurity/http-cve
+        crowdsecurity/appsec-virtual-patching crowdsecurity/appsec-generic-rules
+        crowdsecurity/appsec-wordpress crowdsecurity/wordpress
+        crowdsecurity/appsec-crs crowdsecurity/appsec-crs-exclusion-plugin-wordpress
       # Registriert den Traefik-Bouncer mit festem Key, das Plugin in Traefik nutzt denselben
       BOUNCER_KEY_traefik: "{{ crowdsec_bouncer_key_traefik | mandatory }}"
       # Anmeldung an der Web-Konsole app.crowdsec.net, die Instanz dort einmalig bestätigen
